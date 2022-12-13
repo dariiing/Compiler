@@ -5,10 +5,17 @@
 %option noyywrap
 %%
 "int"|"float"|"char"|"string" {return TIP;}
-"begin_progr" {return BGIN;}
-"end_progr" {return END;}
-@[_a-zA-Z][_a-zA-Z0-9]* {return ID;}
+"start" {return BGIN;}
+"end" {return END;}
+[a-z]* {return ID;} 
 ":=" {return ASSIGN;}
+"<" {return LESS;}
+">" {return GREATER;}
+"==" {return EQUAL;}
+"!=" {return NOTEQUAL;}
+"if" {return IF;}
+"then" {return THEN;}
+"else" { return ELSE;}
 [0-9]+ {return NR;}
 [ \t] ;
 \n {yylineno++;}

@@ -1,8 +1,16 @@
-int @a;
-string @w();
-int @t(char @q, string @s);
-begin_progr
-@x := 2;
-@y := @x
-@z ( 3 , 7 , 8 );
-end_progr
+int abc;
+string w();
+int t(char q, string s);
+int f();
+
+start
+
+x := 2;
+y := x;
+z ( 3 , 7 , 8 );
+3 < 4 ;
+7>4;
+y!=2;
+1 == x;
+
+end

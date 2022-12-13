@@ -59,7 +59,14 @@ extern int yydebug;
     BGIN = 260,                    /* BGIN  */
     END = 261,                     /* END  */
     ASSIGN = 262,                  /* ASSIGN  */
-    NR = 263                       /* NR  */
+    NR = 263,                      /* NR  */
+    LESS = 264,                    /* LESS  */
+    GREATER = 265,                 /* GREATER  */
+    EQUAL = 266,                   /* EQUAL  */
+    NOTEQUAL = 267,                /* NOTEQUAL  */
+    IF = 268,                      /* IF  */
+    THEN = 269,                    /* THEN  */
+    ELSE = 270                     /* ELSE  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -74,6 +81,13 @@ extern int yydebug;
 #define END 261
 #define ASSIGN 262
 #define NR 263
+#define LESS 264
+#define GREATER 265
+#define EQUAL 266
+#define NOTEQUAL 267
+#define IF 268
+#define THEN 269
+#define ELSE 270
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
