@@ -1,0 +1,8 @@
+int @a;
+string @w();
+int @t(char @q, string @s);
+begin_progr
+@x := 2;
+@y := @x
+@z ( 3 , 7 , 8 );
+end_progr
