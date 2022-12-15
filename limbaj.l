@@ -5,21 +5,24 @@
 %option noyywrap
 %%
 "int"|"float"|"char"|"string"|"bool" {return TIP;}
-"start" {return BGIN;}
-"end" {return END;}
 "if" {return IF;}
 "then" {return THEN;}
 "else" { return ELSE;}
+
 "while" { return WHILE;}
+
+"<="|"<"|">="|">"|"=="|"!=" {return OPR;}
+"&&" {return AND;}
+"||" {return OR;}
+
+"start" {return BGIN;}
+"end" {return END;}
+
+
+"=" {return ASSIGN;}
 [a-z]* {return ID;} 
-":=" {return ASSIGN;}
-"<" {return LESS;}
-"<=" {return LESSEQ;}
-">" {return GREATER;}
-">=" {return GREATEREQ;}
-"==" {return EQUAL;}
-"!=" {return NOTEQUAL;}
 [0-9]+ {return NR;}
+
 [ \t] ;
 \n {yylineno++;}
 . {return yytext[0];}

@@ -60,14 +60,13 @@ extern int yydebug;
     END = 261,                     /* END  */
     ASSIGN = 262,                  /* ASSIGN  */
     NR = 263,                      /* NR  */
-    LESS = 264,                    /* LESS  */
-    GREATER = 265,                 /* GREATER  */
-    EQUAL = 266,                   /* EQUAL  */
-    NOTEQUAL = 267,                /* NOTEQUAL  */
-    IF = 268,                      /* IF  */
-    THEN = 269,                    /* THEN  */
-    ELSE = 270,                    /* ELSE  */
-    WHILE = 271                    /* WHILE  */
+    OPR = 264,                     /* OPR  */
+    IF = 265,                      /* IF  */
+    THEN = 266,                    /* THEN  */
+    ELSE = 267,                    /* ELSE  */
+    WHILE = 268,                   /* WHILE  */
+    AND = 269,                     /* AND  */
+    OR = 270                       /* OR  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -82,14 +81,13 @@ extern int yydebug;
 #define END 261
 #define ASSIGN 262
 #define NR 263
-#define LESS 264
-#define GREATER 265
-#define EQUAL 266
-#define NOTEQUAL 267
-#define IF 268
-#define THEN 269
-#define ELSE 270
-#define WHILE 271
+#define OPR 264
+#define IF 265
+#define THEN 266
+#define ELSE 267
+#define WHILE 268
+#define AND 269
+#define OR 270
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED

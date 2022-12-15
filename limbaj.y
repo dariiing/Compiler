@@ -4,32 +4,42 @@ extern FILE* yyin;
 extern char* yytext;
 extern int yylineno;
 %}
-%token ID TIP BGIN END ASSIGN NR LESS GREATER EQUAL NOTEQUAL IF THEN ELSE WHILE LESSEQ GREATEREQ
+%token ID TIP BGIN END ASSIGN NR OPR IF THEN ELSE WHILE AND OR
+
+%left OPR
+%left '+' '-'
+%left '*' '/' '%'
+%left AND OR
 %start progr
 %%
 progr: declaratii bloc {printf("program corect sintactic\n");}
      ;
 
 declaratii :  declaratie ';'
-	   | declaratii declaratie ';'
-	   ;
-declaratie : TIP ID                     /* pentru variabile */
-           | TIP ID '(' lista_param ')' /* pentru functii */
-           | TIP ID '(' ')'             /* fct fara paramterii */
+	      | declaratii declaratie ';'
+	      ;
+declaratie : TIP ID                     /* variabile */
+           | TIP ID '(' lista_param ')' /* fct cu param */
+           | TIP ID '(' ')'             /* fct fara param */
            ;
-lista_param : param
+lista_param : param 
             | lista_param ','  param 
             ;
             
 param : TIP ID
       ; 
+
+lista_apel : NR
+           | ID
+           | lista_apel ',' NR
+           | lista_apel ',' ID
+           ;
       
 /* bloc */
 bloc : BGIN list END  
      ;
      
 /* lista instructiuni */
-
 
 list : statement ';' 
      | list statement ';'
@@ -38,39 +48,38 @@ list : statement ';'
      | list if 
      | list while
      ;
-cond: ID
+
+/* instructiune */
+
+statement: ID ASSIGN ID           /* x = y */
+         | ID ASSIGN NR  	    /* x = 3 */ 
+         | ID '(' lista_apel ')'  /* z ( 3 , 7 , 8 ) */
+         ;
+
+expr: expr '*' expr
+    | expr '/' expr
+    | expr '+' expr
+    | expr '-' expr
+    | expr '%' expr
+    | expr OPR expr
     | NR
-    | conditii
+    | ID
     ;
 
-conditii: cond LESS cond
-        | cond GREATER cond
-        | cond EQUAL cond
-        | cond NOTEQUAL cond
-        | cond LESSEQ cond
-        | cond GREATEREQ cond
-        | ID
-        | NR
-        ;    
+conditii: expr AND expr
+        | expr OR expr
+        | expr
+        ;
+   
 
-if : IF '(' conditii ')' THEN list
-   | IF '(' conditii ')' THEN list ELSE list 
+if : IF '(' conditii ')' THEN  '{' list '}'
+   | IF '(' conditii ')' THEN  '{' list '}' ELSE  '{' list '}'
    ;
 
 while : WHILE '(' conditii ')' '{' list '}'
      ;
 
 
-/* instructiune */
-
-statement: ID ASSIGN ID           /* x := y */
-         | ID ASSIGN NR  	    /* x := 3 */ 
-         | ID '(' lista_apel ')'  /* z ( 3 , 7 , 8 ) */
-         ;
-
-lista_apel : NR
-           | lista_apel ',' NR
-           ;
 %%
 int yyerror(char * s){
 printf("eroare: %s la linia:%d\n",s,yylineno);
