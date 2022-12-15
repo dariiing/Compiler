@@ -64,8 +64,10 @@ extern int yydebug;
     GREATER = 265,                 /* GREATER  */
     EQUAL = 266,                   /* EQUAL  */
     NOTEQUAL = 267,                /* NOTEQUAL  */
-    LEQ = 268,                     /* LEQ  */
-    GEQ = 269                      /* GEQ  */
+    IF = 268,                      /* IF  */
+    THEN = 269,                    /* THEN  */
+    ELSE = 270,                    /* ELSE  */
+    WHILE = 271                    /* WHILE  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -84,8 +86,10 @@ extern int yydebug;
 #define GREATER 265
 #define EQUAL 266
 #define NOTEQUAL 267
-#define LEQ 268
-#define GEQ 269
+#define IF 268
+#define THEN 269
+#define ELSE 270
+#define WHILE 271
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
