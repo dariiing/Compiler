@@ -4,7 +4,7 @@ extern FILE* yyin;
 extern char* yytext;
 extern int yylineno;
 %}
-%token ID TIP BGIN END ASSIGN NR LESS GREATER EQUAL NOTEQUAL IF THEN ELSE
+%token ID TIP BGIN END ASSIGN NR LESS GREATER EQUAL NOTEQUAL LEQ GEQ
 %start progr
 %%
 progr: declaratii bloc {printf("program corect sintactic\n");}
@@ -36,31 +36,22 @@ list :  statement ';'
      /*| list if ';'*/
      ;
 
-conditii: ID LESS ID
-        | ID LESS NR
-        | NR LESS NR
-        | NR LESS ID
-        | ID GREATER ID
-        | ID GREATER NR
-        | NR GREATER NR
-        | NR GREATER ID
-        | ID EQUAL ID
-        | ID EQUAL NR
-        | NR EQUAL NR
-        | NR EQUAL ID
-        | ID NOTEQUAL ID
-        | ID NOTEQUAL NR
-        | NR NOTEQUAL NR
-        | NR NOTEQUAL ID
+conditii: conditii LESS conditii
+        | '(' conditii LESS conditii ')'
+        | conditii GREATER conditii
+        | '(' conditii GREATER conditii ')'
+        | conditii EQUAL conditii
+        | '(' conditii EQUAL conditii ')'
+        | conditii NOTEQUAL conditii
+        | '('conditii NOTEQUAL conditii ')'
+        | conditii LEQ conditii
+        | '('conditii LEQ conditii ')'
+        | conditii GEQ conditii
+        | '('conditii GEQ conditii ')'
         | ID
         | NR
         ;    
 
-/* 
-if : IF '(' conditii ')' list 
-   | IF '(' conditii ')' THEN list ELSE  list 
-   ;
-*/
 
 /* instructiune */
 statement: ID ASSIGN ID           /* x := y */

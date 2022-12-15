@@ -13,9 +13,9 @@
 ">" {return GREATER;}
 "==" {return EQUAL;}
 "!=" {return NOTEQUAL;}
-"if" {return IF;}
-"then" {return THEN;}
-"else" { return ELSE;}
+"<=" {return LEQ;}
+">=" {return GEQ;}
+
 [0-9]+ {return NR;}
 [ \t] ;
 \n {yylineno++;}

@@ -763,7 +763,7 @@ YY_RULE_SETUP
 case 4:
 YY_RULE_SETUP
 #line 10 "limbaj.l"
-{return ID;} /*only lowercase*/
+{return ID;} 
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
