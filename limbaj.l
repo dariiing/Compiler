@@ -10,6 +10,8 @@
 "else" { return ELSE;}
 
 "while" { return WHILE;}
+"do" {return DO;}
+"for" {return FOR;}
 
 "<="|"<"|">="|">"|"=="|"!=" {return OPR;}
 "&&" {return AND;}

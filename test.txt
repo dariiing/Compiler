@@ -22,4 +22,9 @@ do {
     } 
 while(i<3);
 
+int x = 3;
+for (int x = 1; x < 5; x + 1){
+    y = y * 2;
+}
+
 end

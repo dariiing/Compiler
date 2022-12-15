@@ -4,7 +4,7 @@ extern FILE* yyin;
 extern char* yytext;
 extern int yylineno;
 %}
-%token ID TIP BGIN END ASSIGN NR OPR IF THEN ELSE WHILE AND OR
+%token ID TIP BGIN END ASSIGN NR OPR IF THEN ELSE WHILE AND OR DO FOR
 
 %left OPR
 %left '+' '-'
@@ -41,20 +41,30 @@ bloc : BGIN list END
      
 /* lista instructiuni */
 
-list : statement ';' 
-     | list statement ';'
-     | conditii
-     | list conditii ';'
-     | list if 
-     | list while
+list : statement 
+     | list statement
      ;
 
 /* instructiune */
 
-statement: ID ASSIGN ID           /* x = y */
-         | ID ASSIGN NR  	    /* x = 3 */ 
-         | ID '(' lista_apel ')'  /* z ( 3 , 7 , 8 ) */
+for_stmt :  ID ASSIGN NR
+          | ID ASSIGN ID
+          | TIP ID ASSIGN NR
+          | TIP ID ASSIGN ID
+          ;
+
+
+statement: ID ASSIGN expr ';'
+         | TIP ID ASSIGN expr ';'
+         | ID '(' lista_apel ')' ';'    /* z ( 3 , 7 , 8 ) */
+         | IF '(' conditii ')' THEN  '{' list '}'
+         | IF '(' conditii ')' THEN  '{' list '}' ELSE  '{' list '}'
+         | WHILE '(' conditii ')' '{' list '}'
+         | DO '{' list '}' WHILE '(' conditii ')' ';'
+         | FOR '(' for_stmt ';' conditii ';' expr ')' '{' list '}'
          ;
+
+// sunt o gramada de bullshit uri care merg tho gen: for(x=5; x; x==3) da corect sintactic
 
 expr: expr '*' expr
     | expr '/' expr
@@ -72,12 +82,6 @@ conditii: expr AND expr
         ;
    
 
-if : IF '(' conditii ')' THEN  '{' list '}'
-   | IF '(' conditii ')' THEN  '{' list '}' ELSE  '{' list '}'
-   ;
-
-while : WHILE '(' conditii ')' '{' list '}'
-     ;
 
 
 %%
