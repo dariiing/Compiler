@@ -8,15 +8,18 @@ start
 i = 0;
 x = 2;
 y = x;
+x = x * 5;
 z ( 3 , 7 , abc );
-3 < 4 ;
-7>4;
-y!=2;
-1 == x;
+
 if (x==2 && y==x) then {f(abc);}
+
 if (x==2) then {x = 3;}
 if (x==3) then {x = 3;} else {x = 4;}
-while(i<3) { i= 1;}
+while(i<2) { i = i - 1;}
 
+do { 
+    i = i + 1;
+    } 
+while(i<3);
 
 end
