@@ -16,5 +16,6 @@ y!=2;
 
 if (x==2) then x := 3;
 if (x==3) then x := 3; else x := 4;
-while(i<3) { i:= i+1; }
+while(i<3) { i:= 1;
+ }
 end

@@ -14,7 +14,9 @@
 [a-z]* {return ID;} 
 ":=" {return ASSIGN;}
 "<" {return LESS;}
+"<=" {return LESSEQ;}
 ">" {return GREATER;}
+">=" {return GREATEREQ;}
 "==" {return EQUAL;}
 "!=" {return NOTEQUAL;}
 [0-9]+ {return NR;}
