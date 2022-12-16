@@ -1,6 +1,7 @@
 %{
 #include <stdio.h>
 #include "y.tab.h"
+extern int yylval;
 %}
 %option noyywrap
 %%
@@ -27,7 +28,8 @@
 
 "=" {return ASSIGN;}
 [a-z]* {return ID;} 
-0|[1-9]+[0-9]* {return NR;}
+"true"|"false" { return BOOLEAN;}
+0|[1-9]+[0-9]* { yylval=atoi(yytext); return NR;}
 
 
 [ \t] ;

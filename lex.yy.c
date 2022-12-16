@@ -842,38 +842,38 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 29 "limbaj.l"
+#line 28 "limbaj.l"
 {return ASSIGN;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 30 "limbaj.l"
+#line 29 "limbaj.l"
 {return ID;} 
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 31 "limbaj.l"
+#line 30 "limbaj.l"
 {return NR;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 34 "limbaj.l"
+#line 33 "limbaj.l"
 ;
 	YY_BREAK
 case 21:
 /* rule 21 can match eol */
 YY_RULE_SETUP
-#line 35 "limbaj.l"
+#line 34 "limbaj.l"
 {yylineno++;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 36 "limbaj.l"
+#line 35 "limbaj.l"
 {return yytext[0];}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 37 "limbaj.l"
+#line 36 "limbaj.l"
 ECHO;
 	YY_BREAK
 #line 880 "lex.yy.c"
@@ -1881,4 +1881,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 37 "limbaj.l"
+#line 36 "limbaj.l"

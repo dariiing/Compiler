@@ -3,7 +3,14 @@
 extern FILE* yyin;
 extern char* yytext;
 extern int yylineno;
+
 %}
+
+%union {
+    int int_;
+    char* string_;
+}
+
 %token ID TIP BGIN END ASSIGN NR LSEQ LS GT GTEQ EQ NOTEQ IF ELSE WHILE AND OR DO FOR 
 
 %left EQ NOTEQ GT GTEQ LS LSEQ
@@ -12,6 +19,10 @@ extern int yylineno;
 %left '^' '*' '/' '%' 
 %left '(' ')'
 %left AND OR
+
+
+
+
 
 %start progr
 %%
@@ -28,6 +39,7 @@ declaratie : TIP ID                     /* variabile */
            | TIP ID '(' lista_param ')' /* fct cu param */
            | TIP ID '(' ')'             /* fct fara param */
            ;
+
 lista_param : param 
             | lista_param ','  param 
             ;
@@ -61,9 +73,9 @@ for_stmt :  ID ASSIGN NR
           ;
 
 
-statement: ID ASSIGN expr ';'
+statement: ID ASSIGN expr ';' 
          | TIP ID ASSIGN expr ';'
-         | ID '(' lista_apel ')' ';'    /* z ( 3 , 7 , 8 ) */
+         | ID '(' lista_apel ')' ';'    
          | IF '(' conditii ')' '{' list '}'
          | IF '(' conditii ')' '{' list '}' ELSE  '{' list '}'
          | WHILE '(' conditii ')' '{' list '}'
@@ -73,34 +85,23 @@ statement: ID ASSIGN expr ';'
 
 // sunt o gramada de bullshit uri care merg tho gen: for(x=5; x; x==3) da corect sintactic
 
-expr: expr '*' expr
-    | '(' expr '*' expr ')'
-    | expr '/' expr
-    | '(' expr '/' expr ')'
-    | expr '+' expr
-    | '(' expr '+' expr ')'
-    | expr '-' expr
-    | '(' expr '-' expr ')'
-    | expr '%' expr
-    | '(' expr '%' expr ')'
-    | expr '^' expr
-    | '(' expr '^' expr ')'
-    | expr LS expr
-    | '(' expr LS expr ')'
+
+expr: '(' expr ')' // expresii int
+    | expr '*' expr
+    | expr '/' expr 
+    | expr '+' expr 
+    | expr '-' expr  
+    | expr '%' expr 
+    | expr '^' expr 
+    | expr LS expr // expresii bool
     | expr LSEQ expr
-    | '(' expr LSEQ expr ')'
     | expr GT expr
-    | '(' expr GT expr ')'
     | expr GTEQ expr
-    | '(' expr GTEQ expr ')'
     | expr EQ expr
-    | '(' expr EQ expr ')'
     | expr NOTEQ expr
-    | '(' expr NOTEQ expr ')'
     | '!' expr
-    | '!' '(' expr ')' 
-    | NR
-    | ID
+    | ID 
+    | NR 
     ;
 
 conditii: expr AND expr
