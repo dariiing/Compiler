@@ -4,21 +4,25 @@ extern FILE* yyin;
 extern char* yytext;
 extern int yylineno;
 %}
-%token ID TIP BGIN END ASSIGN NR OPR IF ELSE WHILE AND OR DO FOR
+%token ID TIP BGIN END ASSIGN NR LSEQ LS GT GTEQ EQ NOTEQ IF ELSE WHILE AND OR DO FOR 
 
-%left OPR
+%left EQ NOTEQ GT GTEQ LS LSEQ
 %left '+' '-'
-%left '*' '/' '%'
+%left '!'
+%left '^' '*' '/' '%' 
+%left '(' ')'
 %left AND OR
 
 %start progr
 %%
+
 progr: declaratii bloc {printf("program corect sintactic\n");}
      ;
 
 declaratii :  declaratie ';'
 	      | declaratii declaratie ';'
 	      ;
+
 declaratie : TIP ID                     /* variabile */
            | TIP ID '[' NR ']'          /* vectori */
            | TIP ID '(' lista_param ')' /* fct cu param */
@@ -36,6 +40,7 @@ lista_apel : NR
            | lista_apel ',' NR
            | lista_apel ',' ID
            ;
+
       
 /* bloc */
 bloc : BGIN list END  
@@ -78,8 +83,22 @@ expr: expr '*' expr
     | '(' expr '-' expr ')'
     | expr '%' expr
     | '(' expr '%' expr ')'
-    | expr OPR expr
-    | '(' expr OPR expr ')'
+    | expr '^' expr
+    | '(' expr '^' expr ')'
+    | expr LS expr
+    | '(' expr LS expr ')'
+    | expr LSEQ expr
+    | '(' expr LSEQ expr ')'
+    | expr GT expr
+    | '(' expr GT expr ')'
+    | expr GTEQ expr
+    | '(' expr GTEQ expr ')'
+    | expr EQ expr
+    | '(' expr EQ expr ')'
+    | expr NOTEQ expr
+    | '(' expr NOTEQ expr ')'
+    | '!' expr
+    | '!' '(' expr ')' 
     | NR
     | ID
     ;

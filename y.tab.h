@@ -60,14 +60,19 @@ extern int yydebug;
     END = 261,                     /* END  */
     ASSIGN = 262,                  /* ASSIGN  */
     NR = 263,                      /* NR  */
-    OPR = 264,                     /* OPR  */
-    IF = 265,                      /* IF  */
-    ELSE = 266,                    /* ELSE  */
-    WHILE = 267,                   /* WHILE  */
-    AND = 268,                     /* AND  */
-    OR = 269,                      /* OR  */
-    DO = 270,                      /* DO  */
-    FOR = 271                      /* FOR  */
+    LSEQ = 264,                    /* LSEQ  */
+    LS = 265,                      /* LS  */
+    GT = 266,                      /* GT  */
+    GTEQ = 267,                    /* GTEQ  */
+    EQ = 268,                      /* EQ  */
+    NOTEQ = 269,                   /* NOTEQ  */
+    IF = 270,                      /* IF  */
+    ELSE = 271,                    /* ELSE  */
+    WHILE = 272,                   /* WHILE  */
+    AND = 273,                     /* AND  */
+    OR = 274,                      /* OR  */
+    DO = 275,                      /* DO  */
+    FOR = 276                      /* FOR  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -82,14 +87,19 @@ extern int yydebug;
 #define END 261
 #define ASSIGN 262
 #define NR 263
-#define OPR 264
-#define IF 265
-#define ELSE 266
-#define WHILE 267
-#define AND 268
-#define OR 269
-#define DO 270
-#define FOR 271
+#define LSEQ 264
+#define LS 265
+#define GT 266
+#define GTEQ 267
+#define EQ 268
+#define NOTEQ 269
+#define IF 270
+#define ELSE 271
+#define WHILE 272
+#define AND 273
+#define OR 274
+#define DO 275
+#define FOR 276
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED

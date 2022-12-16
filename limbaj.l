@@ -12,13 +12,18 @@
 "do" {return DO;}
 "for" {return FOR;}
 
-"<="|"<"|">="|">"|"=="|"!=" {return OPR;}
+"<=" {return LSEQ;}
+"<"  {return LS;}
+">=" {return GTEQ;}
+">"  {return GT;}
+"==" {return EQ;}
+"!=" {return NOTEQ;}
+
 "&&" {return AND;}
 "||" {return OR;}
 
 "start" {return BGIN;}
 "end" {return END;}
-
 
 "=" {return ASSIGN;}
 [a-z]* {return ID;} 
