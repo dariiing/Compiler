@@ -22,7 +22,8 @@
 
 "=" {return ASSIGN;}
 [a-z]* {return ID;} 
-[0-9]+ {return NR;}
+0|[1-9]+[0-9]* {return NR;}
+
 
 [ \t] ;
 \n {yylineno++;}

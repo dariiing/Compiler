@@ -69,22 +69,28 @@ statement: ID ASSIGN expr ';'
 // sunt o gramada de bullshit uri care merg tho gen: for(x=5; x; x==3) da corect sintactic
 
 expr: expr '*' expr
+    | '(' expr '*' expr ')'
     | expr '/' expr
+    | '(' expr '/' expr ')'
     | expr '+' expr
+    | '(' expr '+' expr ')'
     | expr '-' expr
+    | '(' expr '-' expr ')'
     | expr '%' expr
+    | '(' expr '%' expr ')'
     | expr OPR expr
+    | '(' expr OPR expr ')'
     | NR
     | ID
     ;
 
 conditii: expr AND expr
+        | '(' expr AND expr ')'
         | expr OR expr
+        | '(' expr OR expr ')'
         | expr
         ;
    
-
-
 
 %%
 int yyerror(char * s){
