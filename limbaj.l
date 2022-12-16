@@ -6,7 +6,6 @@
 %%
 "int"|"float"|"char"|"string"|"bool" {return TIP;}
 "if" {return IF;}
-"then" {return THEN;}
 "else" { return ELSE;}
 
 "while" { return WHILE;}

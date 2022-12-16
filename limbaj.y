@@ -4,12 +4,13 @@ extern FILE* yyin;
 extern char* yytext;
 extern int yylineno;
 %}
-%token ID TIP BGIN END ASSIGN NR OPR IF THEN ELSE WHILE AND OR DO FOR
+%token ID TIP BGIN END ASSIGN NR OPR IF ELSE WHILE AND OR DO FOR
 
 %left OPR
 %left '+' '-'
 %left '*' '/' '%'
 %left AND OR
+
 %start progr
 %%
 progr: declaratii bloc {printf("program corect sintactic\n");}
@@ -19,6 +20,7 @@ declaratii :  declaratie ';'
 	      | declaratii declaratie ';'
 	      ;
 declaratie : TIP ID                     /* variabile */
+           | TIP ID '[' NR ']'          /* vectori */
            | TIP ID '(' lista_param ')' /* fct cu param */
            | TIP ID '(' ')'             /* fct fara param */
            ;
@@ -57,8 +59,8 @@ for_stmt :  ID ASSIGN NR
 statement: ID ASSIGN expr ';'
          | TIP ID ASSIGN expr ';'
          | ID '(' lista_apel ')' ';'    /* z ( 3 , 7 , 8 ) */
-         | IF '(' conditii ')' THEN  '{' list '}'
-         | IF '(' conditii ')' THEN  '{' list '}' ELSE  '{' list '}'
+         | IF '(' conditii ')' '{' list '}'
+         | IF '(' conditii ')' '{' list '}' ELSE  '{' list '}'
          | WHILE '(' conditii ')' '{' list '}'
          | DO '{' list '}' WHILE '(' conditii ')' ';'
          | FOR '(' for_stmt ';' conditii ';' expr ')' '{' list '}'

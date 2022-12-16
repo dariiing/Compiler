@@ -62,13 +62,12 @@ extern int yydebug;
     NR = 263,                      /* NR  */
     OPR = 264,                     /* OPR  */
     IF = 265,                      /* IF  */
-    THEN = 266,                    /* THEN  */
-    ELSE = 267,                    /* ELSE  */
-    WHILE = 268,                   /* WHILE  */
-    AND = 269,                     /* AND  */
-    OR = 270,                      /* OR  */
-    DO = 271,                      /* DO  */
-    FOR = 272                      /* FOR  */
+    ELSE = 266,                    /* ELSE  */
+    WHILE = 267,                   /* WHILE  */
+    AND = 268,                     /* AND  */
+    OR = 269,                      /* OR  */
+    DO = 270,                      /* DO  */
+    FOR = 271                      /* FOR  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -85,13 +84,12 @@ extern int yydebug;
 #define NR 263
 #define OPR 264
 #define IF 265
-#define THEN 266
-#define ELSE 267
-#define WHILE 268
-#define AND 269
-#define OR 270
-#define DO 271
-#define FOR 272
+#define ELSE 266
+#define WHILE 267
+#define AND 268
+#define OR 269
+#define DO 270
+#define FOR 271
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED

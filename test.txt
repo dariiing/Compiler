@@ -1,4 +1,5 @@
 int abc;
+char hey[256];
 string w();
 int t(char q, string s);
 int f();
@@ -11,10 +12,10 @@ y = x;
 x = x * 5;
 z ( 3 , 7 , abc );
 
-if (x==2 && y==x) then {f(abc);}
+if (x==2 && y==x) {f(abc);}
 
-if (x==2) then {x = 3;}
-if (x==3) then {x = 3;} else {x = 4;}
+if (x==2) {x = 3;}
+if (x==3) {x = 3;} else {x = 4;}
 while(i<2) { i = i - 1;}
 
 do { 
