@@ -31,7 +31,7 @@ extern int yylval;
 "true"|"false"                              {return VARBOOL;}
 \"[^\"]*\"                                  {return STRING;} 
 [a-z]*                                      {return ID;} 
-[0-9]+                                      {return NR;}
+0|[1-9]+([0-9])?("."[0-9]+)?                {return NR;}
 "="                                         {return ASSIGN;}
 
 [ \t] ;

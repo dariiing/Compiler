@@ -2,10 +2,10 @@
 #include<stdio.h>
 #include<stdio.h>
 
-int cf = 5;
+int cf = 456.234;
 char hi = "\cf^%&%^^i*HUSIFJCAVZB";
 const char cf = "sugeonufacpointeri";
-const int x = 5;
+const int x = 0;
 int x;
 bool cfff = true;
 bool dnc = false;

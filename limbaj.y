@@ -25,9 +25,8 @@ extern int yylineno;
 %start progr
 %%
 
-// mai trebuie float 
 
-progr   : headers outside_global clase outside_functii main {printf("program corect sintactic");}
+progr   : headers outside_global clase outside_functii main {printf("program corect sintactic\n");}
         ;
 
 headers : headers INCLUDE
