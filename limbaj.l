@@ -4,26 +4,36 @@
 %}
 %option noyywrap
 %%
-"int"|"float"|"char"|"string"|"bool" {return TIP;}
-"if" {return IF;}
-"else" { return ELSE;}
+^"#include"[ ]*<.+\.h>                      {return INCLUDE;}
 
-"while" { return WHILE;}
-"do" {return DO;}
-"for" {return FOR;}
+"Eval"                                      {return EVAL;}
+"TypeOf"                                    {return TYPEOF;}
 
-"<="|"<"|">="|">"|"=="|"!=" {return OPR;}
-"&&" {return AND;}
-"||" {return OR;}
+"class"                                     {return CLASS;}
+"main"                                      {return MAIN;}
+"int"|"float"|"char"|"string"|"bool"|"void" {return TIP;}
+"const"                                     {return CONST;}
+"++"|"--"                                   {return DIGIT;}
+"if"                                        {return IF;}
+"else"                                      {return ELSE;}
 
-"start" {return BGIN;}
-"end" {return END;}
+"while"                                     {return WHILE;}
+"do"                                        {return DO;}
+"for"                                       {return FOR;}
 
 
-"=" {return ASSIGN;}
-[a-z]* {return ID;} 
-[0-9]+ {return NR;}
+"<="|"<"|">="|">"|"=="|"!="                 {return OPR;}
+"&&"                                        {return AND;}
+"||"                                        {return OR;}
+
+"return"                                    {return RETURN;}
+"true"|"false"                              {return VARBOOL;}
+\"[^\"]*\"                                  {return STRING;} 
+[a-z]*                                      {return ID;} 
+[0-9]+                                      {return NR;}
+"="                                         {return ASSIGN;}
 
 [ \t] ;
 \n {yylineno++;}
 . {return yytext[0];}
+

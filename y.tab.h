@@ -54,20 +54,28 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    ID = 258,                      /* ID  */
-    TIP = 259,                     /* TIP  */
-    BGIN = 260,                    /* BGIN  */
-    END = 261,                     /* END  */
-    ASSIGN = 262,                  /* ASSIGN  */
-    NR = 263,                      /* NR  */
-    OPR = 264,                     /* OPR  */
-    IF = 265,                      /* IF  */
-    ELSE = 266,                    /* ELSE  */
-    WHILE = 267,                   /* WHILE  */
-    AND = 268,                     /* AND  */
-    OR = 269,                      /* OR  */
-    DO = 270,                      /* DO  */
-    FOR = 271                      /* FOR  */
+    INCLUDE = 258,                 /* INCLUDE  */
+    MAIN = 259,                    /* MAIN  */
+    TIP = 260,                     /* TIP  */
+    CLASS = 261,                   /* CLASS  */
+    CONST = 262,                   /* CONST  */
+    ID = 263,                      /* ID  */
+    NR = 264,                      /* NR  */
+    ASSIGN = 265,                  /* ASSIGN  */
+    OPR = 266,                     /* OPR  */
+    VARBOOL = 267,                 /* VARBOOL  */
+    STRING = 268,                  /* STRING  */
+    IF = 269,                      /* IF  */
+    ELSE = 270,                    /* ELSE  */
+    DO = 271,                      /* DO  */
+    WHILE = 272,                   /* WHILE  */
+    FOR = 273,                     /* FOR  */
+    AND = 274,                     /* AND  */
+    OR = 275,                      /* OR  */
+    RETURN = 276,                  /* RETURN  */
+    DIGIT = 277,                   /* DIGIT  */
+    EVAL = 278,                    /* EVAL  */
+    TYPEOF = 279                   /* TYPEOF  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -76,20 +84,28 @@ extern int yydebug;
 #define YYEOF 0
 #define YYerror 256
 #define YYUNDEF 257
-#define ID 258
-#define TIP 259
-#define BGIN 260
-#define END 261
-#define ASSIGN 262
-#define NR 263
-#define OPR 264
-#define IF 265
-#define ELSE 266
-#define WHILE 267
-#define AND 268
-#define OR 269
-#define DO 270
-#define FOR 271
+#define INCLUDE 258
+#define MAIN 259
+#define TIP 260
+#define CLASS 261
+#define CONST 262
+#define ID 263
+#define NR 264
+#define ASSIGN 265
+#define OPR 266
+#define VARBOOL 267
+#define STRING 268
+#define IF 269
+#define ELSE 270
+#define DO 271
+#define WHILE 272
+#define FOR 273
+#define AND 274
+#define OR 275
+#define RETURN 276
+#define DIGIT 277
+#define EVAL 278
+#define TYPEOF 279
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED

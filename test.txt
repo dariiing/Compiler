@@ -1,31 +1,71 @@
-int abc;
-char hey[256];
-string w();
-int t(char q, string s);
-int f();
+#include<stdio.h>
+#include<stdio.h>
+#include<stdio.h>
 
-start
+int cf = 5;
+char hi = "\cf^%&%^^i*HUSIFJCAVZB";
+const char cf = "sugeonufacpointeri";
+const int x = 5;
+int x;
+bool cfff = true;
+bool dnc = false;
+bool hey;
 
-i = 0;
-x = 2;
-y = x;
-x = x * 5;
-z ( 3 , 7 , abc );
+class cf{ 
 
-if (x==2 && y==x) {f(abc);}
+    int z = 0;
+    hey = false;
+    while(x>10)
+    {
+        if(x==11) { x = 5; }
+        else 
+        {
+             if(x<20)
+            {
+                z = z + 1;
+                hey = true;
+            }
+        }
+    }
 
-if (x==2) {x = 3;}
-if (x==3) {x = 3;} else {x = 4;}
-while(i<2) { i = i - 1;}
+    char stai(char abc){
 
-do { 
-    i = i + 1;
-    } 
-while(i<3);
+    return abc;
+    }
 
-int x = 3;
-for (int x = 1; x < 5; x + 1){
-    y = y * 2;
+};
+
+
+int f(int y){
+    int z = 0;
+    while(x>10)
+    {
+        if(x==11) { x = 5; }
+        else 
+        {
+             if(x<20)
+            {
+                z++;
+            }
+        }
+    }
+    return z;
 }
 
-end
+
+void help(){
+}
+
+char stai(char abc){
+
+    return abc;
+}
+
+
+main(){
+    char whatever;
+    int sjb;
+    f(sjb);
+    x(j, 5);
+
+}
