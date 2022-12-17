@@ -56,26 +56,31 @@ extern int yydebug;
     YYUNDEF = 257,                 /* "invalid token"  */
     INCLUDE = 258,                 /* INCLUDE  */
     MAIN = 259,                    /* MAIN  */
-    TIP = 260,                     /* TIP  */
-    CLASS = 261,                   /* CLASS  */
-    CONST = 262,                   /* CONST  */
-    ID = 263,                      /* ID  */
-    NR = 264,                      /* NR  */
-    ASSIGN = 265,                  /* ASSIGN  */
-    OPR = 266,                     /* OPR  */
-    VARBOOL = 267,                 /* VARBOOL  */
-    STRING = 268,                  /* STRING  */
-    IF = 269,                      /* IF  */
-    ELSE = 270,                    /* ELSE  */
-    DO = 271,                      /* DO  */
-    WHILE = 272,                   /* WHILE  */
-    FOR = 273,                     /* FOR  */
-    AND = 274,                     /* AND  */
-    OR = 275,                      /* OR  */
-    RETURN = 276,                  /* RETURN  */
-    DIGIT = 277,                   /* DIGIT  */
-    EVAL = 278,                    /* EVAL  */
-    TYPEOF = 279                   /* TYPEOF  */
+    CLASS = 260,                   /* CLASS  */
+    CONST = 261,                   /* CONST  */
+    ID = 262,                      /* ID  */
+    NR = 263,                      /* NR  */
+    ASSIGN = 264,                  /* ASSIGN  */
+    OPR = 265,                     /* OPR  */
+    VARBOOL = 266,                 /* VARBOOL  */
+    STRING = 267,                  /* STRING  */
+    IF = 268,                      /* IF  */
+    ELSE = 269,                    /* ELSE  */
+    DO = 270,                      /* DO  */
+    WHILE = 271,                   /* WHILE  */
+    FOR = 272,                     /* FOR  */
+    AND = 273,                     /* AND  */
+    OR = 274,                      /* OR  */
+    RETURN = 275,                  /* RETURN  */
+    DIGIT = 276,                   /* DIGIT  */
+    TINT = 277,                    /* TINT  */
+    TFLOAT = 278,                  /* TFLOAT  */
+    TCHAR = 279,                   /* TCHAR  */
+    TSTRING = 280,                 /* TSTRING  */
+    TBOOL = 281,                   /* TBOOL  */
+    TVOID = 282,                   /* TVOID  */
+    EVAL = 283,                    /* EVAL  */
+    TYPEOF = 284                   /* TYPEOF  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -86,26 +91,31 @@ extern int yydebug;
 #define YYUNDEF 257
 #define INCLUDE 258
 #define MAIN 259
-#define TIP 260
-#define CLASS 261
-#define CONST 262
-#define ID 263
-#define NR 264
-#define ASSIGN 265
-#define OPR 266
-#define VARBOOL 267
-#define STRING 268
-#define IF 269
-#define ELSE 270
-#define DO 271
-#define WHILE 272
-#define FOR 273
-#define AND 274
-#define OR 275
-#define RETURN 276
-#define DIGIT 277
-#define EVAL 278
-#define TYPEOF 279
+#define CLASS 260
+#define CONST 261
+#define ID 262
+#define NR 263
+#define ASSIGN 264
+#define OPR 265
+#define VARBOOL 266
+#define STRING 267
+#define IF 268
+#define ELSE 269
+#define DO 270
+#define WHILE 271
+#define FOR 272
+#define AND 273
+#define OR 274
+#define RETURN 275
+#define DIGIT 276
+#define TINT 277
+#define TFLOAT 278
+#define TCHAR 279
+#define TSTRING 280
+#define TBOOL 281
+#define TVOID 282
+#define EVAL 283
+#define TYPEOF 284
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED

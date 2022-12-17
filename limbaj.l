@@ -12,7 +12,12 @@ extern int yylval;
 
 "class"                                     {return CLASS;}
 "main"                                      {return MAIN;}
-"int"|"float"|"char"|"string"|"bool"|"void" {return TIP;}
+"int"                                       {return TINT;}
+"float"                                     {return TFLOAT;}
+"char"                                      {return TCHAR;} 
+"string"                                    {return TSTRING;}
+"bool"                                      {return TBOOL;}
+"void"                                      {return TVOID;}
 "const"                                     {return CONST;}
 "++"|"--"                                   {return DIGIT;}
 "if"                                        {return IF;}

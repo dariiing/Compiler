@@ -1,20 +1,19 @@
 #include<stdio.h>
-#include<stdio.h>
-#include<stdio.h>
+#include<addsio.h>
+#include<sfdfds.h>
 
-int cf = 456.234;
-char hi = "\cf^%&%^^i*HUSIFJCAVZB";
-const char cf = "sugeonufacpointeri";
+float cf = 456.234;
+char hi = "%&%^*";
+const char cf = "sugeo";
 const int x = 0;
-int x;
+int y;
 bool cfff = true;
 bool dnc = false;
-bool hey;
 
 class cf{ 
 
     int z = 0;
-    hey = false;
+    bool hey = false;
     while(x>10)
     {
         if(x==11) { x = 5; }
