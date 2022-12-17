@@ -74,7 +74,8 @@ extern FILE* yyin;
 extern char* yytext;
 extern int yylineno;
 
-#line 78 "y.tab.c"
+
+#line 79 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -173,7 +174,17 @@ extern int yydebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+union YYSTYPE
+{
+#line 9 "limbaj.y"
+
+    int int_;
+    char* string_;
+
+#line 179 "y.tab.c"
+
+};
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif

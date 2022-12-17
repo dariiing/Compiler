@@ -1,6 +1,7 @@
 %{
 #include <stdio.h>
 #include "y.tab.h"
+extern int yylval;
 %}
 %option noyywrap
 %%

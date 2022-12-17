@@ -3,6 +3,7 @@
 extern FILE* yyin;
 extern char* yytext;
 extern int yylineno;
+
 %}
 
 
@@ -12,8 +13,14 @@ extern int yylineno;
 %token EVAL TYPEOF
 %left OPR
 %left '+' '-'
-%left '*' '/' '%'
+%left '!'
+%left '^' '*' '/' '%' 
+%left '(' ')'
 %left AND OR
+
+
+
+
 
 %start progr
 %%
