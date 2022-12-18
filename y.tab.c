@@ -85,6 +85,7 @@ void par_fct(char *, char *);
 
 int count = 0; //pt table[] 
 int count_fct = 0; //pt t_fct[]
+int errors = 0;
 
 struct fct{
 
@@ -117,7 +118,7 @@ struct data{
 } table[40];
 
 
-#line 121 "y.tab.c"
+#line 122 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -218,12 +219,12 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 51 "limbaj.y"
+#line 52 "limbaj.y"
 
 
         char *value;
 
-#line 227 "y.tab.c"
+#line 228 "y.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -696,16 +697,16 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    76,    76,    79,    80,    83,    84,    87,    88,    94,
-      95,    96,    99,   100,   101,   102,   103,   104,   105,   106,
-     107,   108,   109,   110,   118,   119,   122,   123,   124,   125,
-     126,   127,   128,   129,   132,   133,   136,   137,   138,   141,
-     142,   145,   146,   147,   150,   151,   154,   155,   156,   157,
-     158,   159,   160,   161,   162,   166,   167,   168,   169,   170,
-     171,   172,   173,   174,   175,   176,   177,   178,   179,   180,
-     181,   182,   185,   186,   187,   188,   191,   192,   195,   196,
-     199,   200,   201,   202,   203,   206,   209,   210,   211,   214,
-     215,   221,   222,   226,   227,   228,   229,   235
+       0,    77,    77,    80,    81,    84,    85,    88,    89,    95,
+      96,    97,   100,   101,   102,   103,   104,   105,   106,   107,
+     108,   109,   110,   111,   119,   120,   123,   124,   125,   126,
+     127,   128,   129,   130,   133,   134,   137,   138,   139,   142,
+     143,   146,   147,   148,   151,   152,   155,   156,   157,   158,
+     159,   160,   161,   162,   163,   167,   168,   169,   170,   171,
+     172,   173,   174,   175,   176,   177,   178,   179,   180,   181,
+     182,   183,   186,   187,   188,   189,   192,   193,   196,   197,
+     200,   201,   202,   203,   204,   207,   210,   211,   212,   215,
+     216,   222,   223,   227,   228,   229,   230,   236
 };
 #endif
 
@@ -1436,265 +1437,265 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* progr: headers outside_global clase outside_functii main  */
-#line 76 "limbaj.y"
+#line 77 "limbaj.y"
                                                             {printf("program corect sintactic\n");}
-#line 1442 "y.tab.c"
+#line 1443 "y.tab.c"
     break;
 
   case 3: /* headers: headers INCLUDE  */
-#line 79 "limbaj.y"
+#line 80 "limbaj.y"
                           {tip_id_val(false, "header", (yyvsp[0].value), "");}
-#line 1448 "y.tab.c"
+#line 1449 "y.tab.c"
     break;
 
   case 4: /* headers: INCLUDE  */
-#line 80 "limbaj.y"
+#line 81 "limbaj.y"
                   {tip_id_val(false, "header", (yyvsp[0].value), "");}
-#line 1454 "y.tab.c"
+#line 1455 "y.tab.c"
     break;
 
   case 12: /* variabila: TIP ID  */
-#line 99 "limbaj.y"
+#line 100 "limbaj.y"
                                                               {tip_id_val(false, (yyvsp[-1].value), (yyvsp[0].value), "");}
-#line 1460 "y.tab.c"
+#line 1461 "y.tab.c"
     break;
 
   case 13: /* variabila: TIP ID '[' NR ']'  */
-#line 100 "limbaj.y"
+#line 101 "limbaj.y"
                                                               {char* x = (char *)malloc(10); sprintf(x, "%s[%s]", (yyvsp[-3].value), (yyvsp[-1].value)); tip_id_val(false, strcat((yyvsp[-4].value), "[]"), x, "");}
-#line 1466 "y.tab.c"
+#line 1467 "y.tab.c"
     break;
 
   case 14: /* variabila: TIP ID ASSIGN NR  */
-#line 101 "limbaj.y"
+#line 102 "limbaj.y"
                                                               {tip_id_val(false, (yyvsp[-3].value), (yyvsp[-2].value), (yyvsp[0].value));}
-#line 1472 "y.tab.c"
+#line 1473 "y.tab.c"
     break;
 
   case 15: /* variabila: TIP ID ASSIGN ID  */
-#line 102 "limbaj.y"
+#line 103 "limbaj.y"
                                                               {tip_id_val(false, (yyvsp[-3].value), (yyvsp[-2].value), (yyvsp[0].value));}
-#line 1478 "y.tab.c"
+#line 1479 "y.tab.c"
     break;
 
   case 16: /* variabila: TIP ID ASSIGN VARBOOL  */
-#line 103 "limbaj.y"
+#line 104 "limbaj.y"
                                                               {tip_id_val(false, (yyvsp[-3].value), (yyvsp[-2].value), (yyvsp[0].value));}
-#line 1484 "y.tab.c"
+#line 1485 "y.tab.c"
     break;
 
   case 17: /* variabila: TIP ID ASSIGN STRING  */
-#line 104 "limbaj.y"
+#line 105 "limbaj.y"
                                                               {tip_id_val(false, (yyvsp[-3].value), (yyvsp[-2].value), (yyvsp[0].value));}
-#line 1490 "y.tab.c"
+#line 1491 "y.tab.c"
     break;
 
   case 18: /* variabila: CONST TIP ID  */
-#line 105 "limbaj.y"
+#line 106 "limbaj.y"
                                                               {tip_id_val(true, (yyvsp[-1].value), (yyvsp[0].value), "");}
-#line 1496 "y.tab.c"
+#line 1497 "y.tab.c"
     break;
 
   case 19: /* variabila: CONST TIP ID ASSIGN expr  */
-#line 106 "limbaj.y"
+#line 107 "limbaj.y"
                                                               {tip_id_val(true, (yyvsp[-3].value), (yyvsp[-2].value), (yyvsp[0].value));}
-#line 1502 "y.tab.c"
+#line 1503 "y.tab.c"
     break;
 
   case 20: /* variabila: CONST TIP ID ASSIGN operator  */
-#line 107 "limbaj.y"
+#line 108 "limbaj.y"
                                                               {tip_id_val(true, (yyvsp[-3].value), (yyvsp[-2].value), (yyvsp[0].value));}
-#line 1508 "y.tab.c"
+#line 1509 "y.tab.c"
     break;
 
   case 21: /* variabila: CONST TIP ID ASSIGN VARBOOL  */
-#line 108 "limbaj.y"
+#line 109 "limbaj.y"
                                                               {tip_id_val(true, (yyvsp[-3].value), (yyvsp[-2].value), (yyvsp[0].value));}
-#line 1514 "y.tab.c"
+#line 1515 "y.tab.c"
     break;
 
   case 22: /* variabila: CONST TIP ID ASSIGN STRING  */
-#line 109 "limbaj.y"
+#line 110 "limbaj.y"
                                                               {tip_id_val(true, (yyvsp[-3].value), (yyvsp[-2].value), (yyvsp[0].value));}
-#line 1520 "y.tab.c"
+#line 1521 "y.tab.c"
     break;
 
   case 26: /* functie: TIP ID '(' parametri ')' '{' instructiuni '}'  */
-#line 122 "limbaj.y"
+#line 123 "limbaj.y"
                                                                                 {tip_fct(false, (yyvsp[-7].value), (yyvsp[-6].value), "");}
-#line 1526 "y.tab.c"
+#line 1527 "y.tab.c"
     break;
 
   case 27: /* functie: TIP ID '(' parametri ')' '{' '}'  */
-#line 123 "limbaj.y"
+#line 124 "limbaj.y"
                                                                                 {tip_fct(false, (yyvsp[-6].value), (yyvsp[-5].value), "");}
-#line 1532 "y.tab.c"
+#line 1533 "y.tab.c"
     break;
 
   case 28: /* functie: TIP ID '(' parametri ')' '{' instructiuni RETURN ret ';' '}'  */
-#line 124 "limbaj.y"
+#line 125 "limbaj.y"
                                                                                 {tip_fct(false, (yyvsp[-10].value), (yyvsp[-9].value), (yyvsp[-10].value));}
-#line 1538 "y.tab.c"
+#line 1539 "y.tab.c"
     break;
 
   case 29: /* functie: TIP ID '(' parametri ')' '{' RETURN ret ';' '}'  */
-#line 125 "limbaj.y"
+#line 126 "limbaj.y"
                                                                                 {tip_fct(false, (yyvsp[-9].value), (yyvsp[-8].value), (yyvsp[-9].value));}
-#line 1544 "y.tab.c"
+#line 1545 "y.tab.c"
     break;
 
   case 30: /* functie: CONST TIP ID '(' parametri ')' '{' instructiuni '}'  */
-#line 126 "limbaj.y"
+#line 127 "limbaj.y"
                                                                                 {tip_fct(true, (yyvsp[-7].value), (yyvsp[-6].value), (yyvsp[-7].value));}
-#line 1550 "y.tab.c"
+#line 1551 "y.tab.c"
     break;
 
   case 31: /* functie: CONST TIP ID '(' parametri ')' '{' '}'  */
-#line 127 "limbaj.y"
+#line 128 "limbaj.y"
                                                                                 {tip_fct(true, (yyvsp[-6].value), (yyvsp[-5].value), (yyvsp[-6].value));}
-#line 1556 "y.tab.c"
+#line 1557 "y.tab.c"
     break;
 
   case 32: /* functie: CONST TIP ID '(' parametri ')' '{' instructiuni RETURN ret ';' '}'  */
-#line 128 "limbaj.y"
+#line 129 "limbaj.y"
                                                                                 {tip_fct(true, (yyvsp[-10].value), (yyvsp[-9].value), (yyvsp[-10].value));}
-#line 1562 "y.tab.c"
+#line 1563 "y.tab.c"
     break;
 
   case 33: /* functie: CONST TIP ID '(' parametri ')' '{' RETURN ret ';' '}'  */
-#line 129 "limbaj.y"
+#line 130 "limbaj.y"
                                                                                 {tip_fct(true, (yyvsp[-9].value), (yyvsp[-8].value), (yyvsp[-9].value));}
-#line 1568 "y.tab.c"
+#line 1569 "y.tab.c"
     break;
 
   case 41: /* parametru: TIP ID  */
-#line 145 "limbaj.y"
+#line 146 "limbaj.y"
                                 {par_fct((yyvsp[-1].value), (yyvsp[0].value));}
-#line 1574 "y.tab.c"
+#line 1575 "y.tab.c"
     break;
 
   case 42: /* parametru: TIP ID '[' NR ']'  */
-#line 146 "limbaj.y"
+#line 147 "limbaj.y"
                                 {char* y = (char *)malloc(10); sprintf(y, "%s[%s]", (yyvsp[-3].value), (yyvsp[-1].value)); par_fct(strcat((yyvsp[-4].value), "[]"), y);}
-#line 1580 "y.tab.c"
+#line 1581 "y.tab.c"
     break;
 
   case 46: /* const_: CONST TIP ID ';'  */
-#line 154 "limbaj.y"
+#line 155 "limbaj.y"
                                                   {tip_id_val(true, (yyvsp[-2].value), (yyvsp[-1].value), "");}
-#line 1586 "y.tab.c"
+#line 1587 "y.tab.c"
     break;
 
   case 47: /* const_: CONST TIP ID ASSIGN expr ';'  */
-#line 155 "limbaj.y"
+#line 156 "limbaj.y"
                                                   {tip_id_val(true, (yyvsp[-4].value), (yyvsp[-3].value), (yyvsp[-1].value));}
-#line 1592 "y.tab.c"
+#line 1593 "y.tab.c"
     break;
 
   case 48: /* const_: CONST TIP ID ASSIGN operator ';'  */
-#line 156 "limbaj.y"
+#line 157 "limbaj.y"
                                                   {tip_id_val(true, (yyvsp[-4].value), (yyvsp[-3].value), (yyvsp[-1].value));}
-#line 1598 "y.tab.c"
+#line 1599 "y.tab.c"
     break;
 
   case 49: /* const_: CONST TIP ID ASSIGN VARBOOL ';'  */
-#line 157 "limbaj.y"
+#line 158 "limbaj.y"
                                                   {tip_id_val(true, (yyvsp[-4].value), (yyvsp[-3].value), (yyvsp[-1].value));}
-#line 1604 "y.tab.c"
+#line 1605 "y.tab.c"
     break;
 
   case 50: /* const_: CONST TIP ID ASSIGN STRING ';'  */
-#line 158 "limbaj.y"
+#line 159 "limbaj.y"
                                                   {tip_id_val(true, (yyvsp[-4].value), (yyvsp[-3].value), (yyvsp[-1].value));}
-#line 1610 "y.tab.c"
+#line 1611 "y.tab.c"
     break;
 
   case 56: /* stmt: TIP ID ';'  */
-#line 167 "limbaj.y"
+#line 168 "limbaj.y"
                                                 {tip_id_val(false, (yyvsp[-2].value), (yyvsp[-1].value), "");}
-#line 1616 "y.tab.c"
+#line 1617 "y.tab.c"
     break;
 
   case 57: /* stmt: TIP ID ASSIGN expr ';'  */
-#line 168 "limbaj.y"
+#line 169 "limbaj.y"
                                                 {tip_id_val(false, (yyvsp[-4].value), (yyvsp[-3].value), (yyvsp[-1].value));}
-#line 1622 "y.tab.c"
+#line 1623 "y.tab.c"
     break;
 
   case 58: /* stmt: TIP ID ASSIGN operator ';'  */
-#line 169 "limbaj.y"
+#line 170 "limbaj.y"
                                                 {tip_id_val(false, (yyvsp[-4].value), (yyvsp[-3].value), (yyvsp[-1].value));}
-#line 1628 "y.tab.c"
+#line 1629 "y.tab.c"
     break;
 
   case 59: /* stmt: TIP ID ASSIGN VARBOOL ';'  */
-#line 170 "limbaj.y"
+#line 171 "limbaj.y"
                                                 {tip_id_val(false, (yyvsp[-4].value), (yyvsp[-3].value), (yyvsp[-1].value));}
-#line 1634 "y.tab.c"
+#line 1635 "y.tab.c"
     break;
 
   case 60: /* stmt: TIP ID ASSIGN STRING ';'  */
-#line 171 "limbaj.y"
+#line 172 "limbaj.y"
                                                 {tip_id_val(false, (yyvsp[-4].value), (yyvsp[-3].value), (yyvsp[-1].value));}
-#line 1640 "y.tab.c"
+#line 1641 "y.tab.c"
     break;
 
   case 72: /* for_stmt: TIP ID ASSIGN NR  */
-#line 185 "limbaj.y"
+#line 186 "limbaj.y"
                             {tip_id_val(false, (yyvsp[-3].value), (yyvsp[-2].value), (yyvsp[0].value));}
-#line 1646 "y.tab.c"
+#line 1647 "y.tab.c"
     break;
 
   case 73: /* for_stmt: TIP ID ASSIGN ID  */
-#line 186 "limbaj.y"
+#line 187 "limbaj.y"
                             {tip_id_val(false, (yyvsp[-3].value), (yyvsp[-2].value), (yyvsp[0].value));}
-#line 1652 "y.tab.c"
+#line 1653 "y.tab.c"
     break;
 
   case 78: /* operator: NR  */
-#line 195 "limbaj.y"
+#line 196 "limbaj.y"
               {(yyval.value) = (yyvsp[0].value);}
-#line 1658 "y.tab.c"
+#line 1659 "y.tab.c"
     break;
 
   case 79: /* operator: ID  */
-#line 196 "limbaj.y"
+#line 197 "limbaj.y"
               {(yyval.value) = (yyvsp[0].value);}
-#line 1664 "y.tab.c"
+#line 1665 "y.tab.c"
     break;
 
   case 80: /* expr: operator '*' operator  */
-#line 199 "limbaj.y"
+#line 200 "limbaj.y"
                              {char* a = (char *)malloc(10); sprintf(a, "%s*%s", (yyvsp[-2].value), (yyvsp[0].value)); (yyval.value) = a;}
-#line 1670 "y.tab.c"
+#line 1671 "y.tab.c"
     break;
 
   case 81: /* expr: operator '/' operator  */
-#line 200 "limbaj.y"
+#line 201 "limbaj.y"
                              {char* b = (char *)malloc(10); sprintf(b, "%s/%s", (yyvsp[-2].value), (yyvsp[0].value)); (yyval.value) = b;}
-#line 1676 "y.tab.c"
+#line 1677 "y.tab.c"
     break;
 
   case 82: /* expr: operator '+' operator  */
-#line 201 "limbaj.y"
+#line 202 "limbaj.y"
                              {char* c = (char *)malloc(10); sprintf(c, "%s+%s", (yyvsp[-2].value), (yyvsp[0].value)); (yyval.value) = c;}
-#line 1682 "y.tab.c"
+#line 1683 "y.tab.c"
     break;
 
   case 83: /* expr: operator '-' operator  */
-#line 202 "limbaj.y"
+#line 203 "limbaj.y"
                              {char* d = (char *)malloc(10); sprintf(d, "%s-%s", (yyvsp[-2].value), (yyvsp[0].value)); (yyval.value) = d;}
-#line 1688 "y.tab.c"
+#line 1689 "y.tab.c"
     break;
 
   case 84: /* expr: operator '%' operator  */
-#line 203 "limbaj.y"
+#line 204 "limbaj.y"
                              {char* e = (char *)malloc(10); sprintf(e, "%s\%%s", (yyvsp[-2].value), (yyvsp[0].value)); (yyval.value) = e;}
-#line 1694 "y.tab.c"
+#line 1695 "y.tab.c"
     break;
 
 
-#line 1698 "y.tab.c"
+#line 1699 "y.tab.c"
 
       default: break;
     }
@@ -1887,58 +1888,105 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 238 "limbaj.y"
+#line 239 "limbaj.y"
 
 int yyerror(char * s){
-printf("eroare: %s la linia:%d\n",s,yylineno);
+        printf("eroare: %s la linia:%d\n",s,yylineno);
+        errors = 1;
 }
 
 int main(int argc, char** argv){
         yyin=fopen(argv[1],"r");
         yyparse();
-        printf("\n\n");
-        printf("                             SYMBOL TABLE  VARIABLES                      \n");
-        printf("-----------------------------------------------------------------------------------------\n");
-        printf("        TYPE                        NAME             VALUE        LINE NO\n");
-        int i;
-        for(i=0; i<count; i++) {
-		printf("%s\t\t\t%s\t\t\t%s\t\t%d\n", table[i].type, table[i].name, table[i].value, table[i].line_number);
-	}
-        printf("\n\n");
-
-        printf("                             SYMBOL TABLE  FUNCTIONS                     \n");
-        printf("---------------------------------------------------------------------------------------------------\n");
-        printf("        TYPE                 NAME             RETURN         LINE NO                    param\n");
-        int j;
-        for(j = 0; j < count_fct; j++){
-
-                printf("%s\t\t\t%s\t\t\t %s\t\t   %d\t %s %s\n", t_fct[j].type, t_fct[j].name, t_fct[j].ret, t_fct[j].rownum, t_fct[j].param_fct[0].type, t_fct[j].param_fct[0].name);
-	
+        fclose(yyin);
+        FILE* fp;
+        fp = fopen("symbol_table.txt", "w+");
+        if(errors==0){
+                fprintf(fp,"\n\n");
+                fprintf(fp,"                                  SYMBOL TABLE  VARIABLES                                      \n");
+                fprintf(fp,"-----------------------------------------------------------------------------------------------\n");
+                fprintf(fp,"      TYPE                           NAME                                VALUE       LINE NO   \n");
+                fprintf(fp,"-----------------------------------------------------------------------------------------------\n");
+                int i, max = 0 ;
+                for(i=0; i<count; i++) {
+                        if(strlen(table[i].name)>max) {
+                                max = strlen(table[i].name);
+                        }
+                }
+                 printf("%d\n",max);
+                 int temp;
+                for(i=0; i<count; i++) {
+                         if(strlen(table[i].name)!=max)
+                         {
+                                 temp = max - strlen(table[i].name);
+                                 char *const_ptr;
+                                 const_ptr = (char*)malloc(24);
+                                 strcat(const_ptr, table[i].name);
+                                 while( temp != 0)
+                                {
+                                  strcat(const_ptr, " ");
+                                         temp--;
+                                }
+                                table[i].name = const_ptr;
+                        }
+                }
+                for(i=0; i<count; i++) {
+		        fprintf(fp,"%s\t\t\t%s\t\t\t%s\t\t%d\n", table[i].type, table[i].name, table[i].value, table[i].line_number);
+                        fprintf(fp,"-----------------------------------------------------------------------------------------------\n");
+	        }
+/* 
+                printf("                             SYMBOL TABLE  FUNCTIONS                     \n");
+                printf("---------------------------------------------------------------------------------------------------\n");
+                printf("      TYPE                   NAME             RETURN         LINE NO                    param\n");
+                int j;
+                for(j = 0; j < count_fct; j++){
+                        printf("%s\t\t\t%s\t\t\t %s\t\t   %d\t %s %s\n", t_fct[j].type, t_fct[j].name, t_fct[j].ret, t_fct[j].rownum, t_fct[j].param_fct[0].type, t_fct[j].param_fct[0].name);
+                } */
         }
 
 }
 
 void tip_id_val(bool cnst, char* typ, char* idd, char* vall){
-
         if(cnst == false){
-                table[count].type = typ;
-                printf("ALOOOOOdvsfbdzhdgOOOOOOOOOOOOOOOOOOJNWDOI\n");
+                char *const_ptr;
+                const_ptr = (char*)malloc(24);
+
+                strcat(const_ptr, "     ");
+                strcat(const_ptr, typ);
+                strcat(const_ptr, "   ");
+                table[count].type = const_ptr;
 
         }
         else{
-                printf("ALOOOOOOOOOOOOOOOOOOOOOOOJNWDOI\n");
 
                 char *const_ptr;
                 const_ptr = (char*)malloc(24);
 
-                strcat(const_ptr, "const ");
+                strcat(const_ptr, "   const ");
                 strcat(const_ptr, typ);
                 table[count].type = const_ptr;
                 
         }
-
-        table[count].name = idd;
-        table[count].value = vall;
+        if(strlen(idd)< 10){
+                char *const_ptr;
+                const_ptr = (char*)malloc(24);
+                strcat(const_ptr, "       ");
+                strcat(const_ptr, idd);
+                table[count].name = const_ptr;
+        }
+        else{
+                table[count].name = idd;
+        }
+        if(strlen(vall)< 2){
+                char *const_ptr;
+                const_ptr = (char*)malloc(24);
+                strcat(const_ptr, "   ");
+                strcat(const_ptr, vall);
+                table[count].value = const_ptr;
+        }
+        else{
+                table[count].value = vall;
+        }
         table[count].line_number = yylineno;
         count++;
 }
@@ -1974,8 +2022,11 @@ void tip_fct(bool cnst, char * typ, char *idd, char *rett){
 
         
         if(cnst == false){
-
-                t_fct[count_fct].type = typ;
+                char *const_ptr;
+                const_ptr = (char*)malloc(24);
+                strcat(const_ptr, "      ");
+                strcat(const_ptr, typ);
+                t_fct[count_fct].type = const_ptr;
 
         }
 

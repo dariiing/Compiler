@@ -15,6 +15,7 @@ void par_fct(char *, char *);
 
 int count = 0; //pt table[] 
 int count_fct = 0; //pt t_fct[]
+int errors = 0;
 
 struct fct{
 
@@ -237,55 +238,102 @@ main : MAIN '(' ')' '{' instructiuni '}'
 
 %%
 int yyerror(char * s){
-printf("eroare: %s la linia:%d\n",s,yylineno);
+        printf("eroare: %s la linia:%d\n",s,yylineno);
+        errors = 1;
 }
 
 int main(int argc, char** argv){
         yyin=fopen(argv[1],"r");
         yyparse();
-        printf("\n\n");
-        printf("                             SYMBOL TABLE  VARIABLES                      \n");
-        printf("-----------------------------------------------------------------------------------------\n");
-        printf("        TYPE                        NAME             VALUE        LINE NO\n");
-        int i;
-        for(i=0; i<count; i++) {
-		printf("%s\t\t\t%s\t\t\t%s\t\t%d\n", table[i].type, table[i].name, table[i].value, table[i].line_number);
-	}
-        printf("\n\n");
-
-        printf("                             SYMBOL TABLE  FUNCTIONS                     \n");
-        printf("---------------------------------------------------------------------------------------------------\n");
-        printf("        TYPE                 NAME             RETURN         LINE NO                    param\n");
-        int j;
-        for(j = 0; j < count_fct; j++){
-
-                printf("%s\t\t\t%s\t\t\t %s\t\t   %d\t %s %s\n", t_fct[j].type, t_fct[j].name, t_fct[j].ret, t_fct[j].rownum, t_fct[j].param_fct[0].type, t_fct[j].param_fct[0].name);
-	
+        fclose(yyin);
+        FILE* fp;
+        fp = fopen("symbol_table.txt", "w+");
+        if(errors==0){
+                fprintf(fp,"\n\n");
+                fprintf(fp,"                                  SYMBOL TABLE  VARIABLES                                      \n");
+                fprintf(fp,"-----------------------------------------------------------------------------------------------\n");
+                fprintf(fp,"      TYPE                           NAME                                VALUE       LINE NO   \n");
+                fprintf(fp,"-----------------------------------------------------------------------------------------------\n");
+                int i, max = 0 ;
+                for(i=0; i<count; i++) {
+                        if(strlen(table[i].name)>max) {
+                                max = strlen(table[i].name);
+                        }
+                }
+                 printf("%d\n",max);
+                 int temp;
+                for(i=0; i<count; i++) {
+                         if(strlen(table[i].name)!=max)
+                         {
+                                 temp = max - strlen(table[i].name);
+                                 char *const_ptr;
+                                 const_ptr = (char*)malloc(24);
+                                 strcat(const_ptr, table[i].name);
+                                 while( temp != 0)
+                                {
+                                  strcat(const_ptr, " ");
+                                         temp--;
+                                }
+                                table[i].name = const_ptr;
+                        }
+                }
+                for(i=0; i<count; i++) {
+		        fprintf(fp,"%s\t\t\t%s\t\t\t%s\t\t%d\n", table[i].type, table[i].name, table[i].value, table[i].line_number);
+                        fprintf(fp,"-----------------------------------------------------------------------------------------------\n");
+	        }
+/* 
+                printf("                             SYMBOL TABLE  FUNCTIONS                     \n");
+                printf("---------------------------------------------------------------------------------------------------\n");
+                printf("      TYPE                   NAME             RETURN         LINE NO                    param\n");
+                int j;
+                for(j = 0; j < count_fct; j++){
+                        printf("%s\t\t\t%s\t\t\t %s\t\t   %d\t %s %s\n", t_fct[j].type, t_fct[j].name, t_fct[j].ret, t_fct[j].rownum, t_fct[j].param_fct[0].type, t_fct[j].param_fct[0].name);
+                } */
         }
 
 }
 
 void tip_id_val(bool cnst, char* typ, char* idd, char* vall){
-
         if(cnst == false){
-                table[count].type = typ;
-                printf("ALOOOOOdvsfbdzhdgOOOOOOOOOOOOOOOOOOJNWDOI\n");
+                char *const_ptr;
+                const_ptr = (char*)malloc(24);
+
+                strcat(const_ptr, "     ");
+                strcat(const_ptr, typ);
+                strcat(const_ptr, "   ");
+                table[count].type = const_ptr;
 
         }
         else{
-                printf("ALOOOOOOOOOOOOOOOOOOOOOOOJNWDOI\n");
 
                 char *const_ptr;
                 const_ptr = (char*)malloc(24);
 
-                strcat(const_ptr, "const ");
+                strcat(const_ptr, "   const ");
                 strcat(const_ptr, typ);
                 table[count].type = const_ptr;
                 
         }
-
-        table[count].name = idd;
-        table[count].value = vall;
+        if(strlen(idd)< 10){
+                char *const_ptr;
+                const_ptr = (char*)malloc(24);
+                strcat(const_ptr, "       ");
+                strcat(const_ptr, idd);
+                table[count].name = const_ptr;
+        }
+        else{
+                table[count].name = idd;
+        }
+        if(strlen(vall)< 2){
+                char *const_ptr;
+                const_ptr = (char*)malloc(24);
+                strcat(const_ptr, "   ");
+                strcat(const_ptr, vall);
+                table[count].value = const_ptr;
+        }
+        else{
+                table[count].value = vall;
+        }
         table[count].line_number = yylineno;
         count++;
 }
@@ -321,8 +369,11 @@ void tip_fct(bool cnst, char * typ, char *idd, char *rett){
 
         
         if(cnst == false){
-
-                t_fct[count_fct].type = typ;
+                char *const_ptr;
+                const_ptr = (char*)malloc(24);
+                strcat(const_ptr, "      ");
+                strcat(const_ptr, typ);
+                t_fct[count_fct].type = const_ptr;
 
         }
 
