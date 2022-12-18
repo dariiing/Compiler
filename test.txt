@@ -2,20 +2,29 @@
 #include<addsio.h>
 #include<sfdfds.h>
 
-float cf = 456.234;
-char hi = "%&%^*";
-const char cf = "sugeo";
-const int x = 0;
-int y;
-bool cfff = true;
-bool dnc = false;
+float f = 456.234;
+char c = "%&%^*";
+const char cc = "sugeo";
+const int ci = 0;
+int ii;
+bool bi = true;
+bool bii = false;
+int v[5];
+char cii[256];
+bool bo[24];
+
 
 class cf{ 
 
     int z = 0;
     bool hey = false;
+    int x = x + 1;
+    char madoare = "capul";
     while(x>10)
     {
+        int he = s% 34;
+        int cf = cf - 10;
+        int aada = aada / 3;
         if(x==11) { x = 5; }
         else 
         {
@@ -52,10 +61,9 @@ int f(int y){
 }
 
 
-void help(){
-}
+void help(){}
 
-char stai(char abc){
+char st(char ac){
 
     return abc;
 }

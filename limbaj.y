@@ -1,43 +1,72 @@
 %{
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
 extern FILE* yyin;
 extern char* yytext;
 extern int yylineno;
 extern int count_lines;
 
-int count = 0; //pt table[]
-int q;
-char type[10];
-char id[10];
+void tip_id_val(bool, char *, char *, char*);
+void tip_fct(bool, char *, char *, char*);
+void par_fct(char *, char *);
+
+int count = 0; //pt table[] 
+int count_fct = 0; //pt t_fct[]
+
+struct fct{
+
+        struct param{
+                char* type;
+                char* name;
+                char* value;
+                
+        } param_fct[5];
+
+        
+        char* type;
+        char* name;
+        char* ret;
+        int rownum;
+        int nr_param;
+        bool const_fct;
+
+}t_fct[40];
 
 struct data{
-        char* value;
-        char* data_type;
+
         char* type;
+        char* name;
+        char* value;
+
         int line_number;
+        bool const_var; 
+
 } table[40];
 
-int search(char *);
-void insert_id();
-void add_in_table(char);
-void insert_type();
 %}
 
+%union {
 
+        char *value;
+}
 
-%token INCLUDE MAIN  CLASS CONST ID NR ASSIGN OPR VARBOOL STRING IF ELSE DO WHILE FOR AND OR RETURN DIGIT TINT TFLOAT TCHAR TSTRING TBOOL TVOID
+%token MAIN CLASS CONST ASSIGN OPR IF ELSE DO WHILE FOR AND OR RETURN DIGIT 
 
 %token EVAL TYPEOF
+
+%token<value> ID TIP VARBOOL STRING INCLUDE NR
+%type<value> operator
+%type<value> expr
+
 %left OPR
 %left '+' '-'
 %left '!'
 %left '^' '*' '/' '%' 
 %left '(' ')'
 %left AND OR
-
-
-
 
 
 %start progr
@@ -47,8 +76,8 @@ void insert_type();
 progr   : headers outside_global clase outside_functii main {printf("program corect sintactic\n");}
         ;
 
-headers : headers INCLUDE
-        | INCLUDE
+headers : headers INCLUDE {tip_id_val(false, "header", $2, "");}
+        | INCLUDE {tip_id_val(false, "header", $1, "");}
         ;
 
 outside_global : global;
@@ -63,30 +92,23 @@ outside_functii : functii
 // variabile globale
 	
 global  : variabila ';'
-	    | global variabila ';'
-	    | global CONST {strcpy(type,"const");} variabila ';'
-            | CONST {strcpy(type,"const ");} variabila ';'
-            | eval_type
-	    ;
-
-datatype: TINT      { insert_type(); }
-        | TFLOAT    { insert_type(); }
-        | TCHAR     { insert_type(); }
-        | TSTRING   { insert_type(); }
-        | TBOOL     { insert_type(); }
-        | TVOID     { insert_type(); }
+        | global variabila ';'
+        | global CONST variabila ';'
+        | CONST variabila ';'
+        | eval_type
         ;
 
-id_table: ID { insert_id(); }
-        ;
-
-variabila : datatype id_table 		         { add_in_table('V'); }       /* variabila simpla */
-	  | datatype id_table '[' NR ']'	 { add_in_table('V'); }      /* vectori */
-          | datatype id_table ASSIGN operator    { add_in_table('V'); }
-          | datatype id_table ASSIGN VARBOOL     { add_in_table('V'); }
-          | datatype id_table ASSIGN STRING      { add_in_table('V'); }
+variabila : TIP  ID                   /* variabila simpla */  {tip_id_val(false, $1, $2, "");}	              
+	  | TIP  ID '[' NR ']'	      /* vectori */           {char* x = (char *)malloc(10); sprintf(x, "%s[%s]", $2, $4); tip_id_val(false, strcat($1, "[]"), x, "");}	
+          | TIP  ID ASSIGN NR                                 {tip_id_val(false, $1, $2, $4);}
+          | TIP  ID ASSIGN ID                                 {tip_id_val(false, $1, $2, $4);}
+          | TIP  ID ASSIGN VARBOOL                            {tip_id_val(false, $1, $2, $4);}
+          | TIP  ID ASSIGN STRING                             {tip_id_val(false, $1, $2, $4);}
 	  ;
 	
+        // int vector[5] = {1, 2, 3, 4, 5};
+
+
 // functii
 
 functii : functii functie 
@@ -95,13 +117,13 @@ functii : functii functie
 	| functie 
 	;
 	
-functie : datatype id_table '(' parametri ')' '{' instructiuni '}'
-        | datatype id_table '(' parametri ')' '{' '}'
-        | datatype id_table '(' parametri ')' '{' instructiuni RETURN ret ';' '}'
-        | datatype id_table '(' parametri ')' '{' RETURN ret ';' '}'
+functie : TIP ID '(' parametri ')' '{' instructiuni '}'                 {tip_fct(false, $1, $2, "");}
+        | TIP ID '(' parametri ')' '{' '}'                              {tip_fct(false, $1, $2, "");}
+        | TIP ID '(' parametri ')' '{' instructiuni RETURN ret ';' '}'  {tip_fct(false, $1, $2, $1);}
+        | TIP ID '(' parametri ')' '{' RETURN ret ';' '}'               {tip_fct(false, $1, $2, $1);}
 	;
 
-eval_type : EVAL '(' parametri ')' ';'
+eval_type : EVAL '(' parametri ')' ';' 
           | TYPEOF '(' parametri ')' ';'
           ;
 
@@ -114,8 +136,8 @@ parametri : parametru
 	  | parametri ',' parametru
 	  ;
 
-parametru : datatype id_table
-	  | datatype id_table '[' NR ']'
+parametru : TIP ID              {par_fct($1, $2);}             
+	  | TIP ID '[' NR ']'   {char* y = (char *)malloc(10); sprintf(y, "%s[%s]", $2, $4); par_fct(strcat($1, "[]"), y);}
           |
 	  ;
 
@@ -123,29 +145,30 @@ instructiuni : stmt
 	     | instructiuni  stmt 
 	     ;
 	  
-const_ : CONST datatype id_table ';'                  { add_in_table('V'); }
-       | CONST datatype id_table ASSIGN expr ';'      { add_in_table('V'); }
-       | CONST datatype id_table ASSIGN operator ';'  { add_in_table('V'); }
-       | CONST datatype id_table ASSIGN VARBOOL ';'   { add_in_table('V'); }
-       | CONST datatype id_table ASSIGN STRING ';'    { add_in_table('V'); }
-       | CONST id_table ASSIGN expr ';'               { add_in_table('V'); }
-       | CONST id_table ASSIGN operator ';'           { add_in_table('V'); }
-       | CONST id_table ASSIGN VARBOOL ';'            { add_in_table('V'); }
-       | CONST id_table ASSIGN STRING ';'             { add_in_table('V'); }
+const_ : CONST TIP ID                  ';'        {tip_id_val(true, $2, $3, "");}    
+       | CONST TIP ID ASSIGN expr      ';'        {tip_id_val(true, $2, $3, $5);}
+       | CONST TIP ID ASSIGN operator  ';'        {tip_id_val(true, $2, $3, $5);}
+       | CONST TIP ID ASSIGN VARBOOL   ';'        {tip_id_val(true, $2, $3, $5);}
+       | CONST TIP ID ASSIGN STRING    ';'        {tip_id_val(true, $2, $3, $5);}
+       | CONST ID ASSIGN expr          ';'                
+       | CONST ID ASSIGN operator      ';'            
+       | CONST ID ASSIGN VARBOOL       ';'             
+       | CONST ID ASSIGN STRING        ';'            
        ;
 
+
 stmt : const_
-     | datatype id_table                     { add_in_table('V'); } ';'
-     | datatype id_table ASSIGN expr         { add_in_table('V'); } ';'
-     | datatype id_table ASSIGN operator     { add_in_table('V'); } ';'
-     | datatype id_table ASSIGN VARBOOL      { add_in_table('V'); } ';'
-     | datatype id_table ASSIGN STRING       { add_in_table('V'); } ';'
-     | id_table ASSIGN expr                  ';'
-     | id_table ASSIGN operator              { add_in_table('V'); } ';'
-     | id_table ASSIGN VARBOOL               { add_in_table('V'); } ';'
-     | id_table ASSIGN STRING                { add_in_table('V'); } ';'
-     | ID DIGIT ';'
-     | ID '(' apel_fct ')' ';'
+     | TIP ID                            ';'    {tip_id_val(false, $1, $2, "");}
+     | TIP ID ASSIGN expr                ';'    {tip_id_val(false, $1, $2, $4);}
+     | TIP ID ASSIGN operator            ';'    {tip_id_val(false, $1, $2, $4);}	
+     | TIP ID ASSIGN VARBOOL             ';'    {tip_id_val(false, $1, $2, $4);}
+     | TIP ID ASSIGN STRING              ';'    {tip_id_val(false, $1, $2, $4);}
+     | ID ASSIGN expr                    ';'
+     | ID ASSIGN operator                ';'
+     | ID ASSIGN VARBOOL                 ';'
+     | ID ASSIGN STRING                  ';'
+     | ID DIGIT                          ';'
+     | ID '(' apel_fct ')'               ';'
      | IF '(' conditii ')' '{' instructiuni '}'
      | IF '(' conditii ')' '{' instructiuni '}' ELSE '{' instructiuni '}'
      | WHILE '(' conditii ')' '{' instructiuni '}'
@@ -153,9 +176,9 @@ stmt : const_
      | FOR '(' for_stmt ';' conditii ';' for_expr ')' '{' instructiuni '}'
      ;
 
-for_stmt : datatype ID ASSIGN NR
-         | datatype ID ASSIGN ID
-         | ID ASSIGN NR
+for_stmt : TIP ID ASSIGN NR {tip_id_val(false, $1, $2, $4);}	
+         | TIP ID ASSIGN ID {tip_id_val(false, $1, $2, $4);}	
+         | ID ASSIGN NR 
          | ID ASSIGN ID
          ;
 
@@ -163,15 +186,15 @@ for_expr : ID ASSIGN expr
          | ID DIGIT
 	 ;
 	 
-operator : NR
-	 | ID
+operator : NR {$$ = $1;}
+	 | ID {$$ = $1;}
 	 ;
 	 
-expr : operator '*' operator
-     | operator '/' operator
-     | operator '+' operator
-     | operator '-' operator
-     | operator '%' operator
+expr : operator '*' operator {char* a = (char *)malloc(10); sprintf(a, "%s*%s", $1, $3); $$ = a;} 
+     | operator '/' operator {char* b = (char *)malloc(10); sprintf(b, "%s/%s", $1, $3); $$ = b;}
+     | operator '+' operator {char* c = (char *)malloc(10); sprintf(c, "%s+%s", $1, $3); $$ = c;}
+     | operator '-' operator {char* d = (char *)malloc(10); sprintf(d, "%s-%s", $1, $3); $$ = d;}
+     | operator '%' operator {char* e = (char *)malloc(10); sprintf(e, "%s\%%s", $1, $3); $$ = e;}
      ;
 
 comparatii : operator OPR operator
@@ -215,57 +238,89 @@ int main(int argc, char** argv){
         yyin=fopen(argv[1],"r");
         yyparse();
         printf("\n\n");
-        printf("                        SYMBOL TABLE                        \n");
-        printf("------------------------------------------------------------\n");
-        printf("VARIABLE        TYPE                     VALUE       LINE NO\n");
+        printf("                             SYMBOL TABLE  VARIABLES                      \n");
+        printf("-----------------------------------------------------------------------------------------\n");
+        printf("        TYPE                        NAME             VALUE        LINE NO\n");
         int i;
         for(i=0; i<count; i++) {
-		printf("%s\t\t%s\t\t%s\t\t%d\t\t\n", table[i].type, table[i].data_type, table[i].value, table[i].line_number);
+		printf("%s\t\t\t%s\t\t\t%s\t\t%d\n", table[i].type, table[i].name, table[i].value, table[i].line_number);
 	}
+        printf("\n\n");
 
-} 
+        printf("                             SYMBOL TABLE  FUNCTIONS                     \n");
+        printf("---------------------------------------------------------------------------------------------------\n");
+        printf("        TYPE                 NAME             RETURN         LINE NO                    param\n");
+        int j;
+        for(j = 0; j < count_fct; j++){
 
-int search(char *type) {
-	int i;
-	for(i=count-1; i>=0; i--) {
-		if(strcmp(table[i].value, type)==0) {
-			return -1;
-			break;
-		}
-	}
-	return 0;
+                printf("%s\t\t\t%s\t\t\t %s\t\t   %d\t %s %s\n", t_fct[j].type, t_fct[j].name, t_fct[j].ret, t_fct[j].rownum, t_fct[j].param_fct[0].type, t_fct[j].param_fct[0].name);
+	
+        }
+
 }
 
-void insert_type() {
-        if(strcmp(type,"const")==0){
-                strcat(type, " ");
-                strcat(type, yytext);
+void tip_id_val(bool cnst, char* typ, char* idd, char* vall){
+
+        if(cnst == false){
+                table[count].type = typ;
         }
+        else {
+
+                strcat(table[count].type, "const ");
+                strcat(table[count].type, typ);
+        }
+
+        table[count].name = idd;
+        table[count].value = vall;
+        table[count].line_number = yylineno;
+        count++;
+}
+
+// parametrii functie
+
+void par_fct(char * typ, char *idd){
+
+        int ce_dq = 0;
+        ce_dq = t_fct[count_fct].nr_param;
+
+        if(typ != NULL){
+
+        t_fct[count_fct].param_fct[ce_dq].type = typ;
+        t_fct[count_fct].param_fct[ce_dq].name = idd;}
         else{
-	        strcpy(type, yytext);
-                strcat(type, "      ");
+
+                t_fct[count_fct].param_fct[ce_dq].type = "";
+                t_fct[count_fct].param_fct[ce_dq].name = "";
+
         }
+
+        t_fct[count_fct].rownum = yylineno;
+
+        t_fct[count_fct].nr_param++;
+        
 }
 
-void insert_id() {
-	strcpy(id, yytext);
-}
+// tip + nume + return functie
 
-void add_in_table(char c) {
-  q=search(yytext);
-  int i;
-  if(!q) {
-    	if(c == 'V') {
-                /* char* temp;             daca scriu chestia asta nu imi mai verifica urmatoarele variabile globale
-                strcpy(temp,yytext);
-                if(strcmp(yytext,";")>=0){
-                        strcpy(temp,"no value");
-                }  */
-		table[count].value=strdup(yytext);
-		table[count].data_type=strdup(type);
-		table[count].line_number=yylineno;
-                table[count].type=strdup(id);
-		count++;
-		}
-	}
+void tip_fct(bool cnst, char * typ, char *idd, char *rett){
+
+        if(cnst == false){
+                t_fct[count_fct].type = typ;
+        }
+        else {
+
+                strcat(t_fct[count_fct].type ,"const ");
+                strcat(t_fct[count_fct].type, typ);
+        }
+
+        t_fct[count_fct].name = idd;
+        t_fct[count_fct].ret = rett;
+        if(t_fct[count_fct].nr_param == 0){
+                t_fct[count_fct].rownum = yylineno;
+        }
+        
+
+        count_fct++;
+
+
 }

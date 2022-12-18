@@ -1,23 +1,18 @@
 %{
 #include <stdio.h>
 #include "y.tab.h"
-extern int yylval;
+
 %}
 %option noyywrap
 %%
-^"#include"[ ]*<.+\.h>                      {return INCLUDE;}
+^"#include"[ ]*<.+\.h>                      {yylval.value = strdup(yytext); return INCLUDE;}
 
 "Eval"                                      {return EVAL;}
 "TypeOf"                                    {return TYPEOF;}
 
 "class"                                     {return CLASS;}
 "main"                                      {return MAIN;}
-"int"                                       {return TINT;}
-"float"                                     {return TFLOAT;}
-"char"                                      {return TCHAR;} 
-"string"                                    {return TSTRING;}
-"bool"                                      {return TBOOL;}
-"void"                                      {return TVOID;}
+"int"|"float"|"char"|"string"|"bool"|"void" {yylval.value = strdup(yytext); return TIP;}
 "const"                                     {return CONST;}
 "++"|"--"                                   {return DIGIT;}
 "if"                                        {return IF;}
@@ -33,10 +28,10 @@ extern int yylval;
 "||"                                        {return OR;}
 
 "return"                                    {return RETURN;}
-"true"|"false"                              {return VARBOOL;}
-\"[^\"]*\"                                  {return STRING;} 
-[a-z]*                                      {return ID;} 
-0|[1-9]+([0-9])?("."[0-9]+)?                {return NR;}
+"true"|"false"                              {yylval.value = strdup(yytext); return VARBOOL;}
+\"[^\"]*\"                                  {yylval.value = strdup(yytext); return STRING;} 
+[a-z]*                                      {yylval.value = strdup(yytext); return ID;}    
+0|[1-9]+([0-9])?("."[0-9]+)?                {yylval.value = strdup(yytext); return NR;}
 "="                                         {return ASSIGN;}
 
 [ \t] ;
