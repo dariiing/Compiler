@@ -201,7 +201,7 @@ expr : operator '*' operator {char* a = (char *)malloc(10); sprintf(a, "%s*%s", 
      | operator '/' operator {char* b = (char *)malloc(10); sprintf(b, "%s/%s", $1, $3); $$ = b;}
      | operator '+' operator {char* c = (char *)malloc(10); sprintf(c, "%s+%s", $1, $3); $$ = c;}
      | operator '-' operator {char* d = (char *)malloc(10); sprintf(d, "%s-%s", $1, $3); $$ = d;}
-     | operator '%' operator {char* e = (char *)malloc(10); sprintf(e, "%s\%%s", $1, $3); $$ = e;}
+     | operator '%' operator {char* e = (char *)malloc(10); sprintf(e, "%s%%%s", $1, $3); $$ = e;}
      ;
 
 comparatii : operator OPR operator
@@ -354,6 +354,7 @@ int main(int argc, char** argv){
                         fprintf(fp,"\t%d\t\t\t%s\t\t\t%s\t\t\t%s\t\t\t %s %s\n ", t_fct[j].rownum, t_fct[j].type, t_fct[j].name, t_fct[j].ret, t_fct[j].param_fct[0].type, t_fct[j].param_fct[0].name);
                         fprintf(fp,"---------------------------------------------------------------------------------------------------\n");
                 }
+                fclose(fp);
         }
 
 }

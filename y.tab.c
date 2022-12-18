@@ -1690,7 +1690,7 @@ yyreduce:
 
   case 84: /* expr: operator '%' operator  */
 #line 204 "limbaj.y"
-                             {char* e = (char *)malloc(10); sprintf(e, "%s\%%s", (yyvsp[-2].value), (yyvsp[0].value)); (yyval.value) = e;}
+                             {char* e = (char *)malloc(10); sprintf(e, "%s%%%s", (yyvsp[-2].value), (yyvsp[0].value)); (yyval.value) = e;}
 #line 1695 "y.tab.c"
     break;
 
@@ -2007,6 +2007,7 @@ int main(int argc, char** argv){
                         fprintf(fp,"\t%d\t\t\t%s\t\t\t%s\t\t\t%s\t\t\t %s %s\n ", t_fct[j].rownum, t_fct[j].type, t_fct[j].name, t_fct[j].ret, t_fct[j].param_fct[0].type, t_fct[j].param_fct[0].name);
                         fprintf(fp,"---------------------------------------------------------------------------------------------------\n");
                 }
+                fclose(fp);
         }
 
 }
