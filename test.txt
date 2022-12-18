@@ -16,10 +16,10 @@ bool bo[24];
 
 class cf{ 
 
-    int z = 0;
+    int z = 123738324438323993;
     bool hey = false;
     int x = x + 1;
-    char madoare = "capul";
+    char madoare = "capuuuuuuuuuul";
     while(x>10)
     {
         int he = s% 34;

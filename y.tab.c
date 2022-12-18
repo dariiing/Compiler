@@ -1900,21 +1900,20 @@ int main(int argc, char** argv){
         yyparse();
         fclose(yyin);
         FILE* fp;
-        fp = fopen("symbol_table.txt", "w+");
         if(errors==0){
+                fp = fopen("symbol_table.txt", "w+");
                 fprintf(fp,"\n\n");
-                fprintf(fp,"                                  SYMBOL TABLE  VARIABLES                                      \n");
-                fprintf(fp,"-----------------------------------------------------------------------------------------------\n");
-                fprintf(fp,"      TYPE                           NAME                                VALUE       LINE NO   \n");
-                fprintf(fp,"-----------------------------------------------------------------------------------------------\n");
+                fprintf(fp,"                               SYMBOL TABLE  VARIABLES                                                   \n");
+                fprintf(fp,"---------------------------------------------------------------------------------------------------------\n");
+                fprintf(fp,"      TYPE                       NAME                    VALUE                    LINE NO                \n");
+                fprintf(fp,"---------------------------------------------------------------------------------------------------------\n");
                 int i, max = 0 ;
                 for(i=0; i<count; i++) {
                         if(strlen(table[i].name)>max) {
                                 max = strlen(table[i].name);
                         }
                 }
-                 printf("%d\n",max);
-                 int temp;
+                int temp;
                 for(i=0; i<count; i++) {
                          if(strlen(table[i].name)!=max)
                          {
@@ -1930,18 +1929,84 @@ int main(int argc, char** argv){
                                 table[i].name = const_ptr;
                         }
                 }
+                max = 0;
+                for(i=0; i<count; i++) {
+                        if(strlen(table[i].value)>max) {
+                                max = strlen(table[i].value);
+                        }
+                }
+                for(i=0; i<count; i++) {
+                         if(strlen(table[i].value)!=max)
+                         {
+                                 temp = max - strlen(table[i].value);
+                                 char *const_ptr;
+                                 const_ptr = (char*)malloc(24);
+                                 strcat(const_ptr, table[i].value);
+                                 while( temp != 0)
+                                {
+                                  strcat(const_ptr, " ");
+                                  temp--;
+                                }
+                                table[i].value = const_ptr;
+                        }
+                }
                 for(i=0; i<count; i++) {
 		        fprintf(fp,"%s\t\t\t%s\t\t\t%s\t\t%d\n", table[i].type, table[i].name, table[i].value, table[i].line_number);
-                        fprintf(fp,"-----------------------------------------------------------------------------------------------\n");
+                        fprintf(fp,"---------------------------------------------------------------------------------------------------------\n");
 	        }
-/* 
-                printf("                             SYMBOL TABLE  FUNCTIONS                     \n");
-                printf("---------------------------------------------------------------------------------------------------\n");
-                printf("      TYPE                   NAME             RETURN         LINE NO                    param\n");
+                fclose(fp);
+                fp = fopen("symbol_function_table.txt", "w+");
+                fprintf(fp,"                                       SYMBOL TABLE  FUNCTIONS                                      \n");
+                fprintf(fp,"----------------------------------------------------------------------------------------------------\n");
+                fprintf(fp,"   LINE NO           TYPE           NAME           RETURN              PARAM                        \n");
+                fprintf(fp,"----------------------------------------------------------------------------------------------------\n");
                 int j;
+                max = 0;
+                for(i=0; i<count_fct; i++) {
+                        if(strlen(t_fct[i].name)>max) {
+                                max = strlen( t_fct[i].name);
+                        }
+                }
+                for(i=0; i<count_fct; i++) {
+                         if(strlen( t_fct[i].name)!=max)
+                         {
+                                 temp = max - strlen( t_fct[i].name);
+                                 char *const_ptr;
+                                 const_ptr = (char*)malloc(24);
+                                 strcat(const_ptr,  t_fct[i].name);
+                                 while( temp != 0)
+                                {
+                                  strcat(const_ptr, " ");
+                                         temp--;
+                                }
+                                 t_fct[i].name = const_ptr;
+                        }
+                }
+                max = 0;
+                 for(i=0; i<count_fct; i++) {
+                        if(strlen(t_fct[i].ret)>max) {
+                                max = strlen( t_fct[i].ret);
+                        }
+                }
+                for(i=0; i<count_fct; i++) {
+                         if(strlen( t_fct[i].ret)!=max)
+                         {
+                                 temp = max - strlen( t_fct[i].ret);
+                                 char *const_ptr;
+                                 const_ptr = (char*)malloc(24);
+                                 strcat(const_ptr,  t_fct[i].ret);
+                                 while( temp != 0)
+                                {
+                                  strcat(const_ptr, " ");
+                                         temp--;
+                                }
+                                 t_fct[i].ret = const_ptr;
+                        }
+                }
                 for(j = 0; j < count_fct; j++){
-                        printf("%s\t\t\t%s\t\t\t %s\t\t   %d\t %s %s\n", t_fct[j].type, t_fct[j].name, t_fct[j].ret, t_fct[j].rownum, t_fct[j].param_fct[0].type, t_fct[j].param_fct[0].name);
-                } */
+                        fprintf(fp,"\t%d\t\t\t%s\t\t\t%s\t\t\t%s\t\t\t %s %s\n ", t_fct[j].rownum, t_fct[j].type, t_fct[j].name, t_fct[j].ret, t_fct[j].param_fct[0].type, t_fct[j].param_fct[0].name);
+                        fprintf(fp,"---------------------------------------------------------------------------------------------------\n");
+                }
         }
 
 }
@@ -1977,16 +2042,7 @@ void tip_id_val(bool cnst, char* typ, char* idd, char* vall){
         else{
                 table[count].name = idd;
         }
-        if(strlen(vall)< 2){
-                char *const_ptr;
-                const_ptr = (char*)malloc(24);
-                strcat(const_ptr, "   ");
-                strcat(const_ptr, vall);
-                table[count].value = const_ptr;
-        }
-        else{
-                table[count].value = vall;
-        }
+        table[count].value = vall;
         table[count].line_number = yylineno;
         count++;
 }
@@ -2024,8 +2080,9 @@ void tip_fct(bool cnst, char * typ, char *idd, char *rett){
         if(cnst == false){
                 char *const_ptr;
                 const_ptr = (char*)malloc(24);
-                strcat(const_ptr, "      ");
+                strcat(const_ptr, "   ");
                 strcat(const_ptr, typ);
+                strcat(const_ptr, "   ");
                 t_fct[count_fct].type = const_ptr;
 
         }
@@ -2042,7 +2099,15 @@ void tip_fct(bool cnst, char * typ, char *idd, char *rett){
         }
 
         t_fct[count_fct].name = idd;
-        t_fct[count_fct].ret = rett;
+        if(strlen(rett)<0){
+                char *const_ptr;
+                const_ptr = (char*)malloc(24);
+                strcat(const_ptr, "N/A");
+                t_fct[count_fct].ret = const_ptr;
+        }
+        else{
+                t_fct[count_fct].ret = rett;
+        }
         if(t_fct[count_fct].nr_param == 0){
                 t_fct[count_fct].rownum = yylineno;
         }
