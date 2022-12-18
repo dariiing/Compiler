@@ -93,8 +93,6 @@ outside_functii : functii
 	
 global  : variabila ';'
         | global variabila ';'
-        | global CONST variabila ';'
-        | CONST variabila ';'
         | eval_type
         ;
 
@@ -104,6 +102,12 @@ variabila : TIP  ID                   /* variabila simpla */  {tip_id_val(false,
           | TIP  ID ASSIGN ID                                 {tip_id_val(false, $1, $2, $4);}
           | TIP  ID ASSIGN VARBOOL                            {tip_id_val(false, $1, $2, $4);}
           | TIP  ID ASSIGN STRING                             {tip_id_val(false, $1, $2, $4);}
+          | CONST TIP ID                                      {tip_id_val(true, $2, $3, "");}    
+          | CONST TIP ID ASSIGN expr                          {tip_id_val(true, $2, $3, $5);}
+          | CONST TIP ID ASSIGN operator                      {tip_id_val(true, $2, $3, $5);}
+          | CONST TIP ID ASSIGN VARBOOL                       {tip_id_val(true, $2, $3, $5);}
+          | CONST TIP ID ASSIGN STRING                        {tip_id_val(true, $2, $3, $5);}
+          | 
 	  ;
 	
         // int vector[5] = {1, 2, 3, 4, 5};
@@ -112,15 +116,17 @@ variabila : TIP  ID                   /* variabila simpla */  {tip_id_val(false,
 // functii
 
 functii : functii functie 
-        | CONST functie 
-        | functii CONST functie 
 	| functie 
 	;
 	
-functie : TIP ID '(' parametri ')' '{' instructiuni '}'                 {tip_fct(false, $1, $2, "");}
-        | TIP ID '(' parametri ')' '{' '}'                              {tip_fct(false, $1, $2, "");}
-        | TIP ID '(' parametri ')' '{' instructiuni RETURN ret ';' '}'  {tip_fct(false, $1, $2, $1);}
-        | TIP ID '(' parametri ')' '{' RETURN ret ';' '}'               {tip_fct(false, $1, $2, $1);}
+functie : TIP ID '(' parametri ')' '{' instructiuni '}'                         {tip_fct(false, $1, $2, "");}
+        | TIP ID '(' parametri ')' '{' '}'                                      {tip_fct(false, $1, $2, "");}
+        | TIP ID '(' parametri ')' '{' instructiuni RETURN ret ';' '}'          {tip_fct(false, $1, $2, $1);}
+        | TIP ID '(' parametri ')' '{' RETURN ret ';' '}'                       {tip_fct(false, $1, $2, $1);}
+        | CONST TIP ID '(' parametri ')' '{' instructiuni'}'                    {tip_fct(true, $2, $3, $2);}
+        | CONST TIP ID '(' parametri ')' '{' '}'                                {tip_fct(true, $2, $3, $2);}
+        | CONST TIP ID '(' parametri ')' '{' instructiuni RETURN ret ';' '}'    {tip_fct(true, $2, $3, $2);}
+        | CONST TIP ID '(' parametri ')' '{' RETURN ret ';' '}'                 {tip_fct(true, $2, $3, $2);}
 	;
 
 eval_type : EVAL '(' parametri ')' ';' 
@@ -263,11 +269,19 @@ void tip_id_val(bool cnst, char* typ, char* idd, char* vall){
 
         if(cnst == false){
                 table[count].type = typ;
-        }
-        else {
+                printf("ALOOOOOdvsfbdzhdgOOOOOOOOOOOOOOOOOOJNWDOI\n");
 
-                strcat(table[count].type, "const ");
-                strcat(table[count].type, typ);
+        }
+        else{
+                printf("ALOOOOOOOOOOOOOOOOOOOOOOOJNWDOI\n");
+
+                char *const_ptr;
+                const_ptr = (char*)malloc(24);
+
+                strcat(const_ptr, "const ");
+                strcat(const_ptr, typ);
+                table[count].type = const_ptr;
+                
         }
 
         table[count].name = idd;
@@ -289,8 +303,9 @@ void par_fct(char * typ, char *idd){
         t_fct[count_fct].param_fct[ce_dq].name = idd;}
         else{
 
-                t_fct[count_fct].param_fct[ce_dq].type = "";
-                t_fct[count_fct].param_fct[ce_dq].name = "";
+                strcpy(t_fct[count_fct].param_fct[ce_dq].type, "");
+                strcpy(t_fct[count_fct].param_fct[ce_dq].name, "");
+        
 
         }
 
@@ -304,13 +319,22 @@ void par_fct(char * typ, char *idd){
 
 void tip_fct(bool cnst, char * typ, char *idd, char *rett){
 
+        
         if(cnst == false){
-                t_fct[count_fct].type = typ;
-        }
-        else {
 
-                strcat(t_fct[count_fct].type ,"const ");
-                strcat(t_fct[count_fct].type, typ);
+                t_fct[count_fct].type = typ;
+
+        }
+
+        if(cnst == true) {
+
+                char *const_ptr;
+                const_ptr = (char*)malloc(24);
+
+                strcat(const_ptr, "const ");
+                strcat(const_ptr, typ);
+                t_fct[count_fct].type = const_ptr;
+
         }
 
         t_fct[count_fct].name = idd;
