@@ -13,6 +13,11 @@ void tip_id_val(bool, char *, char *, char*);
 void tip_fct(bool, char *, char *, char*);
 void par_fct(char *, char *);
 
+bool found(char *);
+bool fct_found(char*);
+
+int var_used;
+int fct_used;
 int count = 0; //pt table[] 
 int count_fct = 0; //pt t_fct[]
 int errors = 0;
@@ -145,7 +150,7 @@ parametri : parametru
 
 parametru : TIP ID              {par_fct($1, $2);}             
 	  | TIP ID '[' NR ']'   {char* y = (char *)malloc(10); sprintf(y, "%s[%s]", $2, $4); par_fct(strcat($1, "[]"), y);}
-          |
+          |                     {par_fct("", "");}
 	  ;
 
 instructiuni : stmt 
@@ -153,7 +158,7 @@ instructiuni : stmt
 	     ;
 	  
 const_ : CONST TIP ID                  ';'        {tip_id_val(true, $2, $3, "");}    
-       | CONST TIP ID ASSIGN expr      ';'        {tip_id_val(true, $2, $3, $5);}
+     //| CONST TIP ID ASSIGN expr      ';'        {tip_id_val(true, $2, $3, $5);}
        | CONST TIP ID ASSIGN operator  ';'        {tip_id_val(true, $2, $3, $5);}
        | CONST TIP ID ASSIGN VARBOOL   ';'        {tip_id_val(true, $2, $3, $5);}
        | CONST TIP ID ASSIGN STRING    ';'        {tip_id_val(true, $2, $3, $5);}
@@ -166,7 +171,7 @@ const_ : CONST TIP ID                  ';'        {tip_id_val(true, $2, $3, "");
 
 stmt : const_
      | TIP ID                            ';'    {tip_id_val(false, $1, $2, "");}
-     | TIP ID ASSIGN expr                ';'    {tip_id_val(false, $1, $2, $4);}
+   //| TIP ID ASSIGN expr                ';'    {tip_id_val(false, $1, $2, $4);}
      | TIP ID ASSIGN operator            ';'    {tip_id_val(false, $1, $2, $4);}	
      | TIP ID ASSIGN VARBOOL             ';'    {tip_id_val(false, $1, $2, $4);}
      | TIP ID ASSIGN STRING              ';'    {tip_id_val(false, $1, $2, $4);}
@@ -212,8 +217,14 @@ conditii : comparatii AND comparatii
          | comparatii
 	 ;
 
+
 apel_fct : operator 
          | apel_fct ',' operator
+         | apel_fct ',' expr
+         | expr
+         | ID '(' apel_fct ')' 
+         | apel_fct ',' ID '(' apel_fct ')' 
+         |
          ;
 
 
@@ -228,12 +239,23 @@ instr_clasa : functii
             | instructiuni functii
             | functii instructiuni
             | instructiuni
+            | functii instructiuni functii
+            | instructiuni functii instructiuni
             ;
-
 
 // main()
 
+apel_clase : ID '.' ID '(' apel_fct ')' ';'
+           | ID '.' ID ';'
+           | ID '.' ID ASSIGN expr
+           | apel_clase ID '.' ID '(' apel_fct ')' ';'
+           | apel_clase ID '.' ID                  ';'
+           | apel_clase ID '.' ID ASSIGN expr      ';'
+
 main : MAIN '(' ')' '{' instructiuni '}'
+     | MAIN '(' ')' '{' apel_clase instructiuni '}'
+     | MAIN '(' ')' '{' instructiuni apel_clase '}'
+     | MAIN '(' ')' '{' apel_clase instructiuni apel_clase '}'
      ;
 
 %%
@@ -360,39 +382,46 @@ int main(int argc, char** argv){
 }
 
 void tip_id_val(bool cnst, char* typ, char* idd, char* vall){
-        if(cnst == false){
-                char *const_ptr;
-                const_ptr = (char*)malloc(24);
 
-                strcat(const_ptr, "     ");
-                strcat(const_ptr, typ);
-                strcat(const_ptr, "   ");
-                table[count].type = const_ptr;
+        if(found(idd) == false){
+                if(cnst == false){
+                        char *const_ptr;
+                        const_ptr = (char*)malloc(24);
 
+                        strcat(const_ptr, "     ");
+                        strcat(const_ptr, typ);
+                        strcat(const_ptr, "   ");
+                        table[count].type = const_ptr;
+
+                }
+                else{
+
+                        char *const_ptr;
+                        const_ptr = (char*)malloc(24);
+
+                        strcat(const_ptr, "   const ");
+                        strcat(const_ptr, typ);
+                        table[count].type = const_ptr;
+                        
+                }
+                if(strlen(idd)< 10){
+                        char *const_ptr;
+                        const_ptr = (char*)malloc(24);
+                        strcat(const_ptr, "       ");
+                        strcat(const_ptr, idd);
+                        table[count].name = const_ptr;
+                }
+                else{
+                        table[count].name = idd;
+                }
+                table[count].value = vall;
+                table[count].line_number = yylineno;
+                count++;
         }
         else{
-
-                char *const_ptr;
-                const_ptr = (char*)malloc(24);
-
-                strcat(const_ptr, "   const ");
-                strcat(const_ptr, typ);
-                table[count].type = const_ptr;
-                
+                printf("name <%s> is already in use at line: %d", idd, var_used);
+                exit(0);
         }
-        if(strlen(idd)< 10){
-                char *const_ptr;
-                const_ptr = (char*)malloc(24);
-                strcat(const_ptr, "       ");
-                strcat(const_ptr, idd);
-                table[count].name = const_ptr;
-        }
-        else{
-                table[count].name = idd;
-        }
-        table[count].value = vall;
-        table[count].line_number = yylineno;
-        count++;
 }
 
 // parametrii functie
@@ -424,44 +453,99 @@ void par_fct(char * typ, char *idd){
 
 void tip_fct(bool cnst, char * typ, char *idd, char *rett){
 
-        
-        if(cnst == false){
-                char *const_ptr;
-                const_ptr = (char*)malloc(24);
-                strcat(const_ptr, "   ");
-                strcat(const_ptr, typ);
-                strcat(const_ptr, "   ");
-                t_fct[count_fct].type = const_ptr;
+        if(fct_found(idd) == false){
+                if(cnst == false){
+                        char *const_ptr;
+                        const_ptr = (char*)malloc(24);
+                        strcat(const_ptr, "   ");
+                        strcat(const_ptr, typ);
+                        strcat(const_ptr, "   ");
+                        t_fct[count_fct].type = const_ptr;
 
-        }
+                }
 
-        if(cnst == true) {
+                if(cnst == true) {
 
-                char *const_ptr;
-                const_ptr = (char*)malloc(24);
+                        char *const_ptr;
+                        const_ptr = (char*)malloc(24);
 
-                strcat(const_ptr, "const ");
-                strcat(const_ptr, typ);
-                t_fct[count_fct].type = const_ptr;
+                        strcat(const_ptr, "const ");
+                        strcat(const_ptr, typ);
+                        t_fct[count_fct].type = const_ptr;
 
-        }
+                }
 
-        t_fct[count_fct].name = idd;
-        if(strlen(rett)<0){
-                char *const_ptr;
-                const_ptr = (char*)malloc(24);
-                strcat(const_ptr, "N/A");
-                t_fct[count_fct].ret = const_ptr;
-        }
-        else{
-                t_fct[count_fct].ret = rett;
-        }
-        if(t_fct[count_fct].nr_param == 0){
+                t_fct[count_fct].name = idd;
+                if(strlen(rett)<0){
+                        char *const_ptr;
+                        const_ptr = (char*)malloc(24);
+                        strcat(const_ptr, "N/A");
+                        t_fct[count_fct].ret = const_ptr;
+                }
+                else{
+                        t_fct[count_fct].ret = rett;
+                }
+                
+                if(t_fct[count_fct].nr_param == 0){
                 t_fct[count_fct].rownum = yylineno;
+                }
+                
+
+                count_fct++;
+       }
+       else{
+                printf("name <%s> is already in use at line: %d", idd, fct_used);
+                exit(0);
         }
-        
-
-        count_fct++;
 
 
+}
+
+bool found(char* variable){
+
+        // variables
+        int i;
+        var_used = 0;
+        for(i = 0; i < count; i++){
+                
+                char *x;
+                x = (char*)malloc(strlen(table[i].name));
+                strcpy(x, table[i].name);
+                char *pch;
+                pch = strtok (x," ");
+                
+                if(pch != NULL){
+                        strcpy(x, pch);
+                }
+                if(strcmp(x, variable) == 0){
+                        var_used = table[i].line_number;
+                        return true;
+                }
+                
+        }
+        return false;
+}
+bool fct_found(char* variable){
+
+        // functions
+        int i;
+        fct_used = 0;
+        for(i = 0; i < count_fct; i++){
+                
+                char *x;
+                x = (char*)malloc(strlen(t_fct[i].name));
+                strcpy(x, t_fct[i].name);
+                char *pch;
+                pch = strtok (x," ");
+                
+                if(pch != NULL){
+                        strcpy(x, pch);
+                }
+                if(strcmp(x, variable) == 0){
+                        fct_used = t_fct[i].rownum;
+                        return true;
+                }
+                
+        }
+        return false;
 }

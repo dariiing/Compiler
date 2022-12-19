@@ -1,78 +1,118 @@
 #include<stdio.h>
-#include<addsio.h>
-#include<sfdfds.h>
-
-float f = 456.234;
-char c = "%&%^*";
-const char cc = "sugeo";
-const int ci = 0;
-int ii;
-bool bi = true;
-bool bii = false;
-int v[5];
-char cii[256];
-bool bo[24];
+#include<string.h>
+#include<fcntl.h>
 
 
-class cf{ 
 
-    int z = 123738324438323993;
-    bool hey = false;
-    int x = x + 1;
+float a = 456.234;
+int b = 5;
+const int c = 0;
+
+
+char d = "%&%^*";
+const char e = "asta este";
+
+int f; int g; bool h0;
+
+bool h1 = true;
+bool h2 = false;
+
+int vector[5];
+char text[256];
+bool adv[24];
+
+
+class attempt{ 
+
+
+    int m = 123738324438323993;
+    bool n = false;
+    int p1;
+    p1 = p1 + 5;
+
     char madoare = "capuuuuuuuuuul";
+
+    int x;
+    
+    
     while(x>10)
     {
-        int he = s% 34;
-        int cf = cf - 10;
-        int aada = aada / 3;
+        int p2;
+        p2 = p2 % 3;
+
+        int p3;
+        p3 = p3 - 10;
+        int p4;
+        p4 = p3 / 3;
+
         if(x==11) { x = 5; }
         else 
         {
              if(x<20)
             {
-                z = z + 1;
+                p2 = p2 + 1;
                 hey = true;
             }
         }
     }
 
-    const char stai(char abc){
-
-    return abc;
+    const char help(char abc){
+        return abc;
     }
 
 };
 
+int atmpt1(){
+    return cf;
+}
 
-int f(int y){
-    int z = 0;
+
+int fct1(int y){
+
+    int q = 0;
+    x = 2;
+
     while(x>10)
     {
-        if(x==11) { x = 5; }
+        if(q == 2) { q = q * 2; }
         else 
         {
-             if(x<20)
+             if(q <= 20)
             {
-                z++;
+                q++;
             }
         }
     }
-    return z;
+    return q;
 }
 
 
-void help(){}
+void fct2(){}
 
-char st(char ac){
-
-    return abc;
+char fct3(int par1, char par2){
+    return par2;
 }
+
+
+
+
 
 
 main(){
+
+
+    attempt.y();
+    attempt.x = 2 + 2;
+
     char whatever;
     int sjb;
     f(sjb);
-    x(j, 5);
 
+    x(j, 5);
+    fct1(2*3);
+    fct1(fct1(x));
+    fct1(fct2(2+3), fct3(5));
+    attempt.help(sjb);
+
+    
 }
