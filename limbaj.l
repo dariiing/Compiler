@@ -5,7 +5,7 @@
 %}
 %option noyywrap
 %%
-^"#include"[ ]*<.+\.h>                      {yylval.value = strdup(yytext); return INCLUDE;}
+"#include"[ ]*<.+\.h>                      {yylval.value = strdup(yytext); return INCLUDE;}
 
 "Eval"                                      {return EVAL;}
 "TypeOf"                                    {return TYPEOF;}
