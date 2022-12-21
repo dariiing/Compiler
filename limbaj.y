@@ -99,7 +99,6 @@ outside_functii : functii
 	
 global  : variabila ';'
         | global variabila ';'
-        | eval_type /* in main*/
         ;
 
 variabila : TIP  ID                   /* variabila simpla */  {tip_id_val(false, $1, $2, "");}	              
@@ -134,10 +133,6 @@ functie : TIP ID '(' parametri ')' '{' instructiuni '}'                         
         | CONST TIP ID '(' parametri ')' '{' instructiuni RETURN ret ';' '}'    {tip_fct(true, $2, $3, $2);}
         | CONST TIP ID '(' parametri ')' '{' RETURN ret ';' '}'                 {tip_fct(true, $2, $3, $2);}
 	;
-
-eval_type : EVAL '(' parametri ')' ';' 
-          | TYPEOF '(' parametri ')' ';'
-          ;
 
 ret : operator
     | VARBOOL
@@ -186,7 +181,12 @@ stmt : const_
      | WHILE '(' conditii ')' '{' instructiuni '}'
      | DO '{' instructiuni '}' WHILE '(' conditii ')' ';'
      | FOR '(' for_stmt ';' conditii ';' for_expr ')' '{' instructiuni '}'
+     | eval_type /* in main*/           ';'
      ;
+
+ eval_type : EVAL '(' parametri ')' ';' 
+           | TYPEOF '(' parametri ')' ';'
+           ;
 
 for_stmt : TIP ID ASSIGN NR {tip_id_val(false, $1, $2, $4);}	
          | TIP ID ASSIGN ID {tip_id_val(false, $1, $2, $4);}	
