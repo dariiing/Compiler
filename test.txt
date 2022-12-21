@@ -34,28 +34,6 @@ class attempt{
 
     int x;
     
-    
-    while(x>10)
-    {
-        int p2;
-        p2 = p2 % 3;
-
-        int p3;
-        p3 = p3 - 10;
-        int p4;
-        p4 = p3 / 3;
-
-        if(x==11) { x = 5; }
-        else 
-        {
-             if(x<20)
-            {
-                p2 = p2 + 1;
-                hey = true;
-            }
-        }
-    }
-
     const char help(char abc, char bcd){
         return abc;
     }
@@ -80,6 +58,26 @@ int fct1(int y){
              if(q <= 20)
             {
                 q++;
+            }
+        }
+    }
+     while(x>10)
+    {
+        int p2;
+        p2 = p2 % 3;
+
+        int p3;
+        p3 = p3 - 10;
+        int p4;
+        p4 = p3 / 3;
+
+        if(x==11) { x = 5; }
+        else 
+        {
+             if(x<20)
+            {
+                p2 = p2 + 1;
+                hey = true;
             }
         }
     }

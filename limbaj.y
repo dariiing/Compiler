@@ -184,14 +184,29 @@ clase : clase CLASS ID '{' instr_clasa '}' ';' // class abcd{ }
  
 
 instr_clasa : functii
-            | instructiuni functii
-            | functii instructiuni
-            | instructiuni
-            | functii instructiuni functii
-            | instructiuni functii instructiuni
+            | instructiuni_clasa functii
+            | functii instructiuni_clasa
+            | instructiuni_clasa
+            | functii instructiuni_clasa functii
+            | instructiuni_clasa functii instructiuni_clasa
             ;
 
-// main()
+instructiuni_clasa : stmt_clasa
+	           | instructiuni_clasa  stmt_clasa
+	           ;
+
+stmt_clasa : TIP ID                            ';'    {tip_id_val(false, $1, $2, "");}
+         //| TIP ID ASSIGN expr                ';'    {tip_id_val(false, $1, $2, $4);}
+           | TIP ID ASSIGN operator            ';'    {tip_id_val(false, $1, $2, $4);}	
+           | TIP ID ASSIGN VARBOOL             ';'    {tip_id_val(false, $1, $2, $4);}
+           | TIP ID ASSIGN STRING              ';'    {tip_id_val(false, $1, $2, $4);}
+           | ID ASSIGN expr                    ';'
+           | ID ASSIGN operator                ';'
+           | ID ASSIGN VARBOOL                 ';'
+           | ID ASSIGN STRING                  ';'
+           | ID DIGIT                          ';'
+           | ID '(' apel_fct ')'               ';'
+           ;
 
 apel_clase : ID '.' ID '(' apel_fct ')' ';'
            | ID '.' ID ';'
