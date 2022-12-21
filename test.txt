@@ -56,7 +56,7 @@ class attempt{
         }
     }
 
-    const char help(char abc){
+    const char help(char abc, char bcd){
         return abc;
     }
 

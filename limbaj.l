@@ -30,7 +30,7 @@
 "return"                                    {return RETURN;}
 "true"|"false"                              {yylval.value = strdup(yytext); return VARBOOL;}
 \"[^\"]*\"                                  {yylval.value = strdup(yytext); return STRING;} 
-[a-zA-Z][a-z0-9A-Z]*                                      {yylval.value = strdup(yytext); return ID;}    
+[a-zA-Z][a-z0-9A-Z]*                        {yylval.value = strdup(yytext); return ID;}    
 0|[1-9]+([0-9])?("."[0-9]+)?                {yylval.value = strdup(yytext); return NR;}
 "="                                         {return ASSIGN;}
 

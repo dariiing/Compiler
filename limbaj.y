@@ -82,8 +82,8 @@ struct data{
 progr   : headers outside_global clase outside_functii main {printf("program corect sintactic\n");}
         ;
 
-headers : headers INCLUDE {tip_id_val(false, "header", $2, "");}
-        | INCLUDE {tip_id_val(false, "header", $1, "");}
+headers : headers INCLUDE 
+        | INCLUDE 
         ;
 
 outside_global : global;
@@ -99,7 +99,7 @@ outside_functii : functii
 	
 global  : variabila ';'
         | global variabila ';'
-        | eval_type
+        | eval_type /* in main*/
         ;
 
 variabila : TIP  ID                   /* variabila simpla */  {tip_id_val(false, $1, $2, "");}	              
@@ -326,9 +326,9 @@ int main(int argc, char** argv){
                 fclose(fp);
                 fp = fopen("symbol_function_table.txt", "w+");
                 fprintf(fp,"                                       SYMBOL TABLE  FUNCTIONS                                      \n");
-                fprintf(fp,"--------------------------------------------------------------------------------------------------------------------\n");
+                fprintf(fp,"----------------------------------------------------------------------------------------------------\n");
                 fprintf(fp,"   LINE NO           TYPE           NAME           RETURN              PARAM                        \n");
-                fprintf(fp,"--------------------------------------------------------------------------------------------------------------------\n");
+                fprintf(fp,"----------------------------------------------------------------------------------------------------\n");
                 int j;
                 max = 0;
                 for(i=0; i<count_fct; i++) {
@@ -373,16 +373,9 @@ int main(int argc, char** argv){
                         }
                 }
                 for(j = 0; j < count_fct; j++){
-                        fprintf(fp,"\t%d\t\t\t%s\t\t\t%s\t\t\t%s\t\t\t", t_fct[j].rownum, t_fct[j].type, t_fct[j].name, t_fct[j].ret);
-
-                        for(i = 0; i < t_fct[j].nr_param; i++){
-                                fprintf(fp, "(%s %s) ", t_fct[j].param_fct[i].type, t_fct[j].param_fct[i].name);
-                                
-                        }
-                        fprintf(fp,"\n--------------------------------------------------------------------------------------------------------------------\n");
-                        
+                        fprintf(fp,"\t%d\t\t\t%s\t\t\t%s\t\t\t%s\t\t\t %s %s\n ", t_fct[j].rownum, t_fct[j].type, t_fct[j].name, t_fct[j].ret, t_fct[j].param_fct[0].type, t_fct[j].param_fct[0].name);
+                        fprintf(fp,"---------------------------------------------------------------------------------------------------\n");
                 }
-                
                 fclose(fp);
         }
 
@@ -435,17 +428,17 @@ void tip_id_val(bool cnst, char* typ, char* idd, char* vall){
 
 void par_fct(char * typ, char *idd){
 
-        int x = 0;
-        x = t_fct[count_fct].nr_param;
+        int ce_dq = 0;
+        ce_dq = t_fct[count_fct].nr_param;
 
         if(typ != NULL){
 
-        t_fct[count_fct].param_fct[x].type = typ;
-        t_fct[count_fct].param_fct[x].name = idd;}
+        t_fct[count_fct].param_fct[ce_dq].type = typ;
+        t_fct[count_fct].param_fct[ce_dq].name = idd;}
         else{
 
-                strcpy(t_fct[count_fct].param_fct[x].type, "");
-                strcpy(t_fct[count_fct].param_fct[x].name, "");
+                strcpy(t_fct[count_fct].param_fct[ce_dq].type, "");
+                strcpy(t_fct[count_fct].param_fct[ce_dq].name, "");
         
 
         }
