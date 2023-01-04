@@ -81,10 +81,14 @@ int fct1(int y){
         }
     }
 
-    if( x > 10 && 7<10 || true != false ){
+    if( x > 10 && 7<10 || true != false && 3<0 ){
         while( true || false ){
                 int z = 3;
         }
+    }
+
+    if( x>10 && (3+0)<11 || (((true) && false) < true)){
+        int ajdd;
     }
     return q;
 }
@@ -109,5 +113,14 @@ main(){
     fct3(2*3);
     fct1(fct1(x));
     fct1(fct2(2+3), fct3(5));
+    
+    if( x>10 && (3+0)<11 || (((true) && false) < true)){
+        int ajddddd;
+    }
+
     attempt.help(sjb);
+
+    if( x>10 && (3+0)<11111){
+        int ajdddjsjssdddd;
+    }
 }
