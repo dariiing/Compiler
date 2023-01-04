@@ -118,11 +118,11 @@ stmt : const_
      | TIP ID ASSIGN operator            ';'    {tip_id_val(false, $1, $2, $4);}	
      | TIP ID ASSIGN VARBOOL             ';'    {tip_id_val(false, $1, $2, $4);}
      | TIP ID ASSIGN STRING              ';'    {tip_id_val(false, $1, $2, $4);}
-     | ID ASSIGN expr                    ';'
-     | ID ASSIGN operator                ';'
-     | ID ASSIGN VARBOOL                 ';'
-     | ID ASSIGN STRING                  ';'
-     | ID DIGIT                          ';'
+     | ID ASSIGN expr                    ';'    {search_var($1);}
+     | ID ASSIGN operator                ';'    {search_var($1);}
+     | ID ASSIGN VARBOOL                 ';'    {search_var($1);}
+     | ID ASSIGN STRING                  ';'    {search_var($1);}
+     | ID DIGIT                          ';'    {search_var($1);}
      | ID '(' apel_fct ')'               ';'     {search_function($1);}
      | IF '(' conditii ')' '{' instructiuni '}'
      | IF '(' conditii ')' '{' instructiuni '}' ELSE '{' instructiuni '}'
@@ -201,12 +201,12 @@ stmt_clasa : TIP ID                            ';'    {tip_id_val(false, $1, $2,
            | TIP ID ASSIGN operator            ';'    {tip_id_val(false, $1, $2, $4);}	
            | TIP ID ASSIGN VARBOOL             ';'    {tip_id_val(false, $1, $2, $4);}
            | TIP ID ASSIGN STRING              ';'    {tip_id_val(false, $1, $2, $4);}
-           | ID ASSIGN expr                    ';'
-           | ID ASSIGN operator                ';'
-           | ID ASSIGN VARBOOL                 ';'
-           | ID ASSIGN STRING                  ';'
-           | ID DIGIT                          ';'
-           | ID '(' apel_fct ')'               ';'
+           | ID ASSIGN expr                    ';'    {search_var($1);}
+           | ID ASSIGN operator                ';'    {search_var($1);}
+           | ID ASSIGN VARBOOL                 ';'    {search_var($1);}
+           | ID ASSIGN STRING                  ';'    {search_var($1);}
+           | ID DIGIT                          ';'    {search_var($1);}
+           | ID '(' apel_fct ')'               ';'     {search_function($1);}
            ;
 
 apel_clase : ID '.' ID '(' apel_fct ')' ';'

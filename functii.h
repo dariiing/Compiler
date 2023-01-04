@@ -128,12 +128,28 @@ void search_function(char* name) // daca exista sau nu functia resp
    int ok = 0, i;
    for (i = 0; i < count_fct; i++) {
          if (strstr(t_fct[i].name, name) !=NULL) {
-            ok =1;
+            ok = 1;
          }
    }
    if(ok==0) {
         char s[200];
-        sprintf(s,"Functia <%s> nu exista", name);
+        sprintf(s,"Functia <%s> nu a fost declarata", name);
+        yyerror(s);
+        exit(0);
+   }
+}
+
+void search_var(char* name) // daca exista sau nu functia resp
+{
+   int ok = 0, i;
+   for (i = 0; i < count; i++) {
+         if (strstr(table[i].name, name) !=NULL) {
+            ok = 1;
+         }
+   }
+   if(ok==0) {
+        char s[200];
+        sprintf(s,"Variabila <%s> nu a fost declarata", name);
         yyerror(s);
         exit(0);
    }
