@@ -80,6 +80,12 @@ int fct1(int y){
             }
         }
     }
+
+    if( x > 10 && 7<10 || true != false ){
+        while( true || false ){
+                int z = 3;
+        }
+    }
     return q;
 }
 
@@ -104,6 +110,4 @@ main(){
     fct1(fct1(x));
     fct1(fct2(2+3), fct3(5));
     attempt.help(sjb);
-
-    
 }

@@ -15,7 +15,6 @@ extern char* yytext;
 %token EVAL TYPEOF
 
 %token<value> ID TIP VARBOOL STRING INCLUDE NR
-%type<value> operator
 %type<value> expr
 
 %left OPR
@@ -61,8 +60,8 @@ variabila : TIP  ID                   /* variabila simpla */  {tip_id_val(false,
           | TIP  ID ASSIGN STRING                             {tip_id_val(false, $1, $2, $4);}
           | CONST TIP ID                                      {tip_id_val(true, $2, $3, "");}    
           | CONST TIP ID ASSIGN expr                          {tip_id_val(true, $2, $3, $5);}
-          | CONST TIP ID ASSIGN NR                            {tip_id_val(true, $2, $3, $5);}
-          | CONST TIP ID ASSIGN ID                            {tip_id_val(true, $2, $3, $5);}
+          /* | CONST TIP ID ASSIGN NR                            {tip_id_val(true, $2, $3, $5);}
+          | CONST TIP ID ASSIGN ID                            {tip_id_val(true, $2, $3, $5);} */
           | CONST TIP ID ASSIGN VARBOOL                       {tip_id_val(true, $2, $3, $5);}
           | CONST TIP ID ASSIGN STRING                        {tip_id_val(true, $2, $3, $5);}
           | 
@@ -104,14 +103,14 @@ instructiuni : stmt
 	     ;
 	  
 const_ : CONST TIP ID                  ';'        {tip_id_val(true, $2, $3, "");}    
-     //| CONST TIP ID ASSIGN expr      ';'        {tip_id_val(true, $2, $3, $5);}
-       | CONST TIP ID ASSIGN NR        ';'        {tip_id_val(true, $2, $3, $5);}
-       | CONST TIP ID ASSIGN ID        ';'        {tip_id_val(true, $2, $3, $5);}
+       | CONST TIP ID ASSIGN expr      ';'        {tip_id_val(true, $2, $3, $5);}
+       /* | CONST TIP ID ASSIGN NR     ';'        {tip_id_val(true, $2, $3, $5);}
+       | CONST TIP ID ASSIGN ID        ';'        {tip_id_val(true, $2, $3, $5);} */
        | CONST TIP ID ASSIGN VARBOOL   ';'        {tip_id_val(true, $2, $3, $5);}
        | CONST TIP ID ASSIGN STRING    ';'        {tip_id_val(true, $2, $3, $5);}
        | CONST ID ASSIGN expr          ';'                
-       | CONST ID ASSIGN NR            ';'
-       | CONST ID ASSIGN ID            ';'              
+       /* | CONST ID ASSIGN NR         ';'
+       | CONST ID ASSIGN ID            ';'               */
        | CONST ID ASSIGN VARBOOL       ';'             
        | CONST ID ASSIGN STRING        ';'            
        ;
@@ -125,8 +124,8 @@ stmt : const_
      | TIP ID ASSIGN VARBOOL             ';'    {tip_id_val(false, $1, $2, $4);}
      | TIP ID ASSIGN STRING              ';'    {tip_id_val(false, $1, $2, $4);}
      | ID ASSIGN expr                    ';'    {search_var($1);}
-     | ID ASSIGN NR                      ';'    {search_var($1);}
-     | ID ASSIGN ID                      ';'    {search_var($1);}
+     /* | ID ASSIGN NR                      ';'    {search_var($1);}
+     | ID ASSIGN ID                      ';'    {search_var($1);} */
      | ID ASSIGN VARBOOL                 ';'    {search_var($1);}
      | ID ASSIGN STRING                  ';'    {search_var($1);}
      | ID DIGIT                          ';'    {search_var($1);}
@@ -152,31 +151,27 @@ for_stmt : TIP ID ASSIGN NR {tip_id_val(false, $1, $2, $4);}
 for_expr : ID ASSIGN expr
          | ID DIGIT
 	 ;
-	 
-operator : NR {$$ = $1;}
-	 | ID {$$ = $1;}
-	 ;
-	 
-expr : operator '*' operator {char* a = (char *)malloc(10); sprintf(a, "%s*%s", $1, $3); $$ = a;} 
-     | operator '/' operator {char* b = (char *)malloc(10); sprintf(b, "%s/%s", $1, $3); $$ = b;}
-     | operator '+' operator {char* c = (char *)malloc(10); sprintf(c, "%s+%s", $1, $3); $$ = c;}
-     | operator '-' operator {char* d = (char *)malloc(10); sprintf(d, "%s-%s", $1, $3); $$ = d;}
-     | operator '%' operator {char* e = (char *)malloc(10); sprintf(e, "%s%%%s", $1, $3); $$ = e;}
+
+//expresii aritmetice 
+expr : expr '*' expr {char* a = (char *)malloc(10); sprintf(a, "%s*%s", $1, $3); $$ = a;} 
+     | expr '/' expr {char* b = (char *)malloc(10); sprintf(b, "%s/%s", $1, $3); $$ = b;}
+     | expr '+' expr {char* c = (char *)malloc(10); sprintf(c, "%s+%s", $1, $3); $$ = c;}
+     | expr '-' expr {char* d = (char *)malloc(10); sprintf(d, "%s-%s", $1, $3); $$ = d;}
+     | expr '%' expr {char* e = (char *)malloc(10); sprintf(e, "%s%%%s", $1, $3); $$ = e;}
+     | expr '^' expr {char* e = (char *)malloc(10); sprintf(e, "%s^%s", $1, $3); $$ = e;}
+     | NR {$$ = $1;}
+     | ID {$$ = $1;}
      ;
-     
-
-comparatii : operator OPR operator
-	   ;
-    
-conditii : comparatii AND comparatii
-	 | comparatii OR comparatii
-         | comparatii
+//expresii boolene
+conditii : expr          //"<="|"<"|">="|">"|"=="|"!="
+         | conditii OPR conditii  // ex: true != false
+         | conditii AND conditii   
+	 | conditii OR conditii
+         | VARBOOL                //true / false
 	 ;
 
 
-apel_fct : NR
-         | ID
-         | apel_fct ',' apel_fct
+apel_fct : apel_fct ',' apel_fct
          | expr
          | ID '(' apel_fct ')' 
          |
@@ -209,8 +204,8 @@ stmt_clasa : TIP ID                            ';'    {tip_id_val(false, $1, $2,
            | TIP ID ASSIGN VARBOOL             ';'    {tip_id_val(false, $1, $2, $4);}
            | TIP ID ASSIGN STRING              ';'    {tip_id_val(false, $1, $2, $4);}
            | ID ASSIGN expr                    ';'    {search_var($1);}
-           | ID ASSIGN ID                      ';'    {search_var($1);}
-           | ID ASSIGN NR                      ';'    {search_var($1);}
+           /* | ID ASSIGN ID                      ';'    {search_var($1);}
+           | ID ASSIGN NR                      ';'    {search_var($1);} */
            | ID ASSIGN VARBOOL                 ';'    {search_var($1);}
            | ID ASSIGN STRING                  ';'    {search_var($1);}
            | ID DIGIT                          ';'    {search_var($1);}
