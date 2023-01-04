@@ -159,6 +159,7 @@ int yyerror(char * s){
         printf("%s -> eroare la linia: %d\n",s,yylineno);
         errors = 1;
 }
+
 //informatii despre variabile
 
 void tip_id_val(bool cnst, char* typ, char* idd, char* vall){

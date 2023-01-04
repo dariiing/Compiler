@@ -89,8 +89,8 @@ apel_clase : ID '.' ID '(' apel_fct ')' ';'
            | apel_clase ID '.' ID                  ';'
            | apel_clase ID '.' ID ASSIGN expr      ';'
 
-
-main : MAIN '(' ')' '{' instructiuni'}'
+//trb facut asta recursiv :)))))
+main : MAIN '(' ')' '{' instructiuni '}'
      | MAIN '(' ')' '{' apel_clase instructiuni '}'
      | MAIN '(' ')' '{' instructiuni apel_clase '}'
      | MAIN '(' ')' '{' apel_clase instructiuni apel_clase '}'
