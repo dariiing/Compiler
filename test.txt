@@ -8,7 +8,6 @@ float a = 456.274;
 int b = 5;
 const int c = 0;
 
-
 char d = "%&%^*";
 const char e = "asta este";
 
@@ -91,17 +90,12 @@ char fct3(int par1, char par2, int x[5]){
     return par2;
 }
 
-
-
-
-
-
 main(){
 
 
     attempt.y();
     attempt.x = 2 + 2;
-
+    
     char whatever;
     int sjb;
     int sdkdkkd = 35;

@@ -24,6 +24,7 @@ extern char* yytext;
 %left '^' '*' '/' '%' 
 %left '(' ')'
 %left AND OR
+%left ','
 
 
 %start progr
@@ -60,7 +61,8 @@ variabila : TIP  ID                   /* variabila simpla */  {tip_id_val(false,
           | TIP  ID ASSIGN STRING                             {tip_id_val(false, $1, $2, $4);}
           | CONST TIP ID                                      {tip_id_val(true, $2, $3, "");}    
           | CONST TIP ID ASSIGN expr                          {tip_id_val(true, $2, $3, $5);}
-          | CONST TIP ID ASSIGN operator                      {tip_id_val(true, $2, $3, $5);}
+          | CONST TIP ID ASSIGN NR                            {tip_id_val(true, $2, $3, $5);}
+          | CONST TIP ID ASSIGN ID                            {tip_id_val(true, $2, $3, $5);}
           | CONST TIP ID ASSIGN VARBOOL                       {tip_id_val(true, $2, $3, $5);}
           | CONST TIP ID ASSIGN STRING                        {tip_id_val(true, $2, $3, $5);}
           | 
@@ -82,7 +84,8 @@ functie : TIP ID '(' parametri ')' '{' instructiuni '}'                         
         | CONST TIP ID '(' parametri ')' '{' RETURN ret ';' '}'                 {tip_fct(true, $2, $3, $2);}
 	;
 
-ret : operator
+ret : ID
+    | NR
     | VARBOOL
     | STRING
     ;
@@ -102,11 +105,13 @@ instructiuni : stmt
 	  
 const_ : CONST TIP ID                  ';'        {tip_id_val(true, $2, $3, "");}    
      //| CONST TIP ID ASSIGN expr      ';'        {tip_id_val(true, $2, $3, $5);}
-       | CONST TIP ID ASSIGN operator  ';'        {tip_id_val(true, $2, $3, $5);}
+       | CONST TIP ID ASSIGN NR        ';'        {tip_id_val(true, $2, $3, $5);}
+       | CONST TIP ID ASSIGN ID        ';'        {tip_id_val(true, $2, $3, $5);}
        | CONST TIP ID ASSIGN VARBOOL   ';'        {tip_id_val(true, $2, $3, $5);}
        | CONST TIP ID ASSIGN STRING    ';'        {tip_id_val(true, $2, $3, $5);}
        | CONST ID ASSIGN expr          ';'                
-       | CONST ID ASSIGN operator      ';'            
+       | CONST ID ASSIGN NR            ';'
+       | CONST ID ASSIGN ID            ';'              
        | CONST ID ASSIGN VARBOOL       ';'             
        | CONST ID ASSIGN STRING        ';'            
        ;
@@ -115,11 +120,13 @@ const_ : CONST TIP ID                  ';'        {tip_id_val(true, $2, $3, "");
 stmt : const_
      | TIP ID                            ';'    {tip_id_val(false, $1, $2, "");}
    //| TIP ID ASSIGN expr                ';'    {tip_id_val(false, $1, $2, $4);}
-     | TIP ID ASSIGN operator            ';'    {tip_id_val(false, $1, $2, $4);}	
+     | TIP ID ASSIGN NR                  ';'    {tip_id_val(false, $1, $2, $4);}
+     | TIP ID ASSIGN ID                  ';'    {tip_id_val(false, $1, $2, $4);}	
      | TIP ID ASSIGN VARBOOL             ';'    {tip_id_val(false, $1, $2, $4);}
      | TIP ID ASSIGN STRING              ';'    {tip_id_val(false, $1, $2, $4);}
      | ID ASSIGN expr                    ';'    {search_var($1);}
-     | ID ASSIGN operator                ';'    {search_var($1);}
+     | ID ASSIGN NR                      ';'    {search_var($1);}
+     | ID ASSIGN ID                      ';'    {search_var($1);}
      | ID ASSIGN VARBOOL                 ';'    {search_var($1);}
      | ID ASSIGN STRING                  ';'    {search_var($1);}
      | ID DIGIT                          ';'    {search_var($1);}
@@ -167,12 +174,11 @@ conditii : comparatii AND comparatii
 	 ;
 
 
-apel_fct : operator 
-         | apel_fct ',' operator
-         | apel_fct ',' expr
+apel_fct : NR
+         | ID
+         | apel_fct ',' apel_fct
          | expr
          | ID '(' apel_fct ')' 
-         | apel_fct ',' ID '(' apel_fct ')' 
          |
          ;
 
@@ -198,11 +204,13 @@ instructiuni_clasa : stmt_clasa
 
 stmt_clasa : TIP ID                            ';'    {tip_id_val(false, $1, $2, "");}
          //| TIP ID ASSIGN expr                ';'    {tip_id_val(false, $1, $2, $4);}
-           | TIP ID ASSIGN operator            ';'    {tip_id_val(false, $1, $2, $4);}	
+           | TIP ID ASSIGN ID                  ';'    {tip_id_val(false, $1, $2, $4);}	
+           | TIP ID ASSIGN NR                  ';'    {tip_id_val(false, $1, $2, $4);}	
            | TIP ID ASSIGN VARBOOL             ';'    {tip_id_val(false, $1, $2, $4);}
            | TIP ID ASSIGN STRING              ';'    {tip_id_val(false, $1, $2, $4);}
            | ID ASSIGN expr                    ';'    {search_var($1);}
-           | ID ASSIGN operator                ';'    {search_var($1);}
+           | ID ASSIGN ID                      ';'    {search_var($1);}
+           | ID ASSIGN NR                      ';'    {search_var($1);}
            | ID ASSIGN VARBOOL                 ';'    {search_var($1);}
            | ID ASSIGN STRING                  ';'    {search_var($1);}
            | ID DIGIT                          ';'    {search_var($1);}
@@ -231,4 +239,3 @@ int main(int argc, char** argv){
         fclose(yyin);
         print_table(errors);
 }
-
