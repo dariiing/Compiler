@@ -71,6 +71,7 @@ void par_fct(char * typ, char *idd){
 }
 
 // tip + nume + return functie
+//verifica daca variabilele/functiile sunt initializate de doua ori
 
 bool found(char* variable){
 
@@ -122,6 +123,26 @@ bool fct_found(char* variable){
         return false;
 }
 
+void search_function(char* name) // daca exista sau nu functia resp
+{
+   int ok = 0, i;
+   for (i = 0; i < count_fct; i++) {
+         if (strstr(t_fct[i].name, name) !=NULL) {
+            ok =1;
+         }
+   }
+   if(ok==0) {
+        char s[200];
+        sprintf(s,"Functia <%s> nu exista", name);
+        yyerror(s);
+        exit(0);
+   }
+}
+
+int yyerror(char * s){
+        printf("%s -> eroare la linia: %d\n",s,yylineno);
+        errors = 1;
+}
 //informatii despre variabile
 
 void tip_id_val(bool cnst, char* typ, char* idd, char* vall){
@@ -162,7 +183,9 @@ void tip_id_val(bool cnst, char* typ, char* idd, char* vall){
                 count++;
         }
         else{
-                printf("name <%s> is already in use at line: %d", idd, var_used);
+                char s[200];
+                sprintf(s,"Variabila <%s> este deja declarata la linia %d", idd,var_used);
+                yyerror(s);
                 exit(0);
         }
 }
@@ -203,7 +226,9 @@ void tip_fct(bool cnst, char * typ, char *idd, char *rett){
                 count_fct++;
        }
        else{
-                printf("name <%s> is already in use at line: %d", idd, fct_used);
+                char s[200];
+                sprintf(s,"Functia <%s> este deja declarata la linia %d", idd, var_used);
+                yyerror(s);
                 exit(0);
         }
 

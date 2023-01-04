@@ -123,7 +123,7 @@ stmt : const_
      | ID ASSIGN VARBOOL                 ';'
      | ID ASSIGN STRING                  ';'
      | ID DIGIT                          ';'
-     | ID '(' apel_fct ')'               ';'
+     | ID '(' apel_fct ')'               ';'     {search_function($1);}
      | IF '(' conditii ')' '{' instructiuni '}'
      | IF '(' conditii ')' '{' instructiuni '}' ELSE '{' instructiuni '}'
      | WHILE '(' conditii ')' '{' instructiuni '}'
@@ -156,6 +156,7 @@ expr : operator '*' operator {char* a = (char *)malloc(10); sprintf(a, "%s*%s", 
      | operator '-' operator {char* d = (char *)malloc(10); sprintf(d, "%s-%s", $1, $3); $$ = d;}
      | operator '%' operator {char* e = (char *)malloc(10); sprintf(e, "%s%%%s", $1, $3); $$ = e;}
      ;
+     
 
 comparatii : operator OPR operator
 	   ;
@@ -222,10 +223,7 @@ main : MAIN '(' ')' '{' instructiuni '}'
      ;
 
 %%
-int yyerror(char * s){
-        printf("eroare: %s la linia:%d\n",s,yylineno);
-        errors = 1;
-}
+
 
 int main(int argc, char** argv){
         yyin=fopen(argv[1],"r");

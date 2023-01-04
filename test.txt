@@ -44,7 +44,6 @@ int atmpt1(){
     return cf;
 }
 
-
 int fct1(int y){
 
     int q = 0;
@@ -104,10 +103,7 @@ main(){
 
     char whatever;
     int sjb;
-    f(sjb);
-
-    x(j, 5);
-    fct1(2*3);
+    fct3(2*3);
     fct1(fct1(x));
     fct1(fct2(2+3), fct3(5));
     attempt.help(sjb);
