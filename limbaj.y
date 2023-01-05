@@ -189,20 +189,20 @@ for_expr : ID ASSIGN expr
 	 ;
 
 //expresii aritmetice 
-expr : expr '*' expr         {char* a = (char *)malloc(10); sprintf(a, "%s*%s", $1, $3); $$ = a;} 
-     | '(' expr '*' expr ')' {char* a = (char *)malloc(10); sprintf(a, "%s*%s", $2, $4); $$ = a;} 
-     | expr '/' expr         {char* b = (char *)malloc(10); sprintf(b, "%s/%s", $1, $3); $$ = b;}
-     | '(' expr '/' expr ')' {char* b = (char *)malloc(10); sprintf(b, "%s/%s", $2, $4); $$ = b;}
-     | expr '+' expr         {char* c = (char *)malloc(10); sprintf(c, "%s+%s", $1, $3); $$ = c;}
-     | '(' expr '+' expr ')' {char* c = (char *)malloc(10); sprintf(c, "%s+%s", $2, $4); $$ = c;}
-     | expr '-' expr         {char* d = (char *)malloc(10); sprintf(d, "%s-%s", $1, $3); $$ = d;}
-     | '(' expr '-' expr ')' {char* d = (char *)malloc(10); sprintf(d, "%s-%s", $2, $4); $$ = d;}
-     | expr '%' expr         {char* e = (char *)malloc(10); sprintf(e, "%s%%%s", $1, $3); $$ = e;}
-     | '(' expr '%' expr ')' {char* e = (char *)malloc(10); sprintf(e, "%s%%%s", $2, $4); $$ = e;}
-     | expr '^' expr         {char* e = (char *)malloc(10); sprintf(e, "%s^%s", $1, $3); $$ = e;}
-     | '(' expr '^' expr ')' {char* e = (char *)malloc(10); sprintf(e, "%s^%s", $2, $4); $$ = e;}
-     | NR                    {$$ = $1;}
-     | ID                    {$$ = $1;}
+expr : expr '*' expr         { $$ = createNode("*", $1, $3); /*char* a = (char *)malloc(10); sprintf(a, "%s*%s", $1, $3); $$ = a;*/} 
+     | '(' expr '*' expr ')' { $$ = createNode("*", $2, $4); /*char* a = (char *)malloc(10); sprintf(a, "%s*%s", $2, $4); $$ = a;*/} 
+     | expr '/' expr         { $$ = createNode("/", $1, $3); /*char* b = (char *)malloc(10); sprintf(b, "%s/%s", $1, $3); $$ = b;*/}
+     | '(' expr '/' expr ')' { $$ = createNode("/", $2, $4); /*char* b = (char *)malloc(10); sprintf(b, "%s/%s", $2, $4); $$ = b;*/}
+     | expr '+' expr         { $$ = createNode("+", $1, $3); /*char* c = (char *)malloc(10); sprintf(c, "%s+%s", $1, $3); $$ = c;*/}
+     | '(' expr '+' expr ')' { $$ = createNode("+", $2, $4); /*char* c = (char *)malloc(10); sprintf(c, "%s+%s", $2, $4); $$ = c;*/}
+     | expr '-' expr         { $$ = createNode("-", $1, $3); /*char* d = (char *)malloc(10); sprintf(d, "%s-%s", $1, $3); $$ = d;*/}
+     | '(' expr '-' expr ')' { $$ = createNode("-", $2, $4); /*char* d = (char *)malloc(10); sprintf(d, "%s-%s", $2, $4); $$ = d;*/}
+     | expr '%' expr         { $$ = createNode("%", $1, $3); /*char* e = (char *)malloc(10); sprintf(e, "%s%%%s", $1, $3); $$ = e;*/}
+     | '(' expr '%' expr ')' { $$ = createNode("%", $2, $4); /*char* e = (char *)malloc(10); sprintf(e, "%s%%%s", $2, $4); $$ = e;*/}
+     | expr '^' expr         { $$ = createNode("^", $1, $3); /*char* e = (char *)malloc(10); sprintf(e, "%s^%s", $1, $3); $$ = e;*/}
+     | '(' expr '^' expr ')' { $$ = createNode("^", $2, $4); /*char* e = (char *)malloc(10); sprintf(e, "%s^%s", $2, $4); $$ = e;*/}
+     | NR                    {$$ = createNode($1, NULL, NULL);}
+     | ID                    {$$ = createNode($1, NULL, NULL);}
      ;
 
 //expresii boolene
@@ -232,5 +232,8 @@ int main(int argc, char** argv){
         yyin=fopen(argv[1],"r");
         yyparse();
         fclose(yyin);
+
+        printTree(root,0);
+        //printf("Result: %d\n", evaluateTree(root));
         print_table(errors);
 }

@@ -1755,85 +1755,85 @@ yyreduce:
 
   case 104: /* expr: expr '*' expr  */
 #line 192 "limbaj.y"
-                             {char* a = (char *)malloc(10); sprintf(a, "%s*%s", (yyvsp[-2].value), (yyvsp[0].value)); (yyval.value) = a;}
+                             { (yyval.value) = createNode("*", (yyvsp[-2].value), (yyvsp[0].value)); /*char* a = (char *)malloc(10); sprintf(a, "%s*%s", $1, $3); $$ = a;*/}
 #line 1760 "y.tab.c"
     break;
 
   case 105: /* expr: '(' expr '*' expr ')'  */
 #line 193 "limbaj.y"
-                             {char* a = (char *)malloc(10); sprintf(a, "%s*%s", (yyvsp[-3].value), (yyvsp[-1].value)); (yyval.value) = a;}
+                             { (yyval.value) = createNode("*", (yyvsp[-3].value), (yyvsp[-1].value)); /*char* a = (char *)malloc(10); sprintf(a, "%s*%s", $2, $4); $$ = a;*/}
 #line 1766 "y.tab.c"
     break;
 
   case 106: /* expr: expr '/' expr  */
 #line 194 "limbaj.y"
-                             {char* b = (char *)malloc(10); sprintf(b, "%s/%s", (yyvsp[-2].value), (yyvsp[0].value)); (yyval.value) = b;}
+                             { (yyval.value) = createNode("/", (yyvsp[-2].value), (yyvsp[0].value)); /*char* b = (char *)malloc(10); sprintf(b, "%s/%s", $1, $3); $$ = b;*/}
 #line 1772 "y.tab.c"
     break;
 
   case 107: /* expr: '(' expr '/' expr ')'  */
 #line 195 "limbaj.y"
-                             {char* b = (char *)malloc(10); sprintf(b, "%s/%s", (yyvsp[-3].value), (yyvsp[-1].value)); (yyval.value) = b;}
+                             { (yyval.value) = createNode("/", (yyvsp[-3].value), (yyvsp[-1].value)); /*char* b = (char *)malloc(10); sprintf(b, "%s/%s", $2, $4); $$ = b;*/}
 #line 1778 "y.tab.c"
     break;
 
   case 108: /* expr: expr '+' expr  */
 #line 196 "limbaj.y"
-                             {char* c = (char *)malloc(10); sprintf(c, "%s+%s", (yyvsp[-2].value), (yyvsp[0].value)); (yyval.value) = c;}
+                             { (yyval.value) = createNode("+", (yyvsp[-2].value), (yyvsp[0].value)); /*char* c = (char *)malloc(10); sprintf(c, "%s+%s", $1, $3); $$ = c;*/}
 #line 1784 "y.tab.c"
     break;
 
   case 109: /* expr: '(' expr '+' expr ')'  */
 #line 197 "limbaj.y"
-                             {char* c = (char *)malloc(10); sprintf(c, "%s+%s", (yyvsp[-3].value), (yyvsp[-1].value)); (yyval.value) = c;}
+                             { (yyval.value) = createNode("+", (yyvsp[-3].value), (yyvsp[-1].value)); /*char* c = (char *)malloc(10); sprintf(c, "%s+%s", $2, $4); $$ = c;*/}
 #line 1790 "y.tab.c"
     break;
 
   case 110: /* expr: expr '-' expr  */
 #line 198 "limbaj.y"
-                             {char* d = (char *)malloc(10); sprintf(d, "%s-%s", (yyvsp[-2].value), (yyvsp[0].value)); (yyval.value) = d;}
+                             { (yyval.value) = createNode("-", (yyvsp[-2].value), (yyvsp[0].value)); /*char* d = (char *)malloc(10); sprintf(d, "%s-%s", $1, $3); $$ = d;*/}
 #line 1796 "y.tab.c"
     break;
 
   case 111: /* expr: '(' expr '-' expr ')'  */
 #line 199 "limbaj.y"
-                             {char* d = (char *)malloc(10); sprintf(d, "%s-%s", (yyvsp[-3].value), (yyvsp[-1].value)); (yyval.value) = d;}
+                             { (yyval.value) = createNode("-", (yyvsp[-3].value), (yyvsp[-1].value)); /*char* d = (char *)malloc(10); sprintf(d, "%s-%s", $2, $4); $$ = d;*/}
 #line 1802 "y.tab.c"
     break;
 
   case 112: /* expr: expr '%' expr  */
 #line 200 "limbaj.y"
-                             {char* e = (char *)malloc(10); sprintf(e, "%s%%%s", (yyvsp[-2].value), (yyvsp[0].value)); (yyval.value) = e;}
+                             { (yyval.value) = createNode("%", (yyvsp[-2].value), (yyvsp[0].value)); /*char* e = (char *)malloc(10); sprintf(e, "%s%%%s", $1, $3); $$ = e;*/}
 #line 1808 "y.tab.c"
     break;
 
   case 113: /* expr: '(' expr '%' expr ')'  */
 #line 201 "limbaj.y"
-                             {char* e = (char *)malloc(10); sprintf(e, "%s%%%s", (yyvsp[-3].value), (yyvsp[-1].value)); (yyval.value) = e;}
+                             { (yyval.value) = createNode("%", (yyvsp[-3].value), (yyvsp[-1].value)); /*char* e = (char *)malloc(10); sprintf(e, "%s%%%s", $2, $4); $$ = e;*/}
 #line 1814 "y.tab.c"
     break;
 
   case 114: /* expr: expr '^' expr  */
 #line 202 "limbaj.y"
-                             {char* e = (char *)malloc(10); sprintf(e, "%s^%s", (yyvsp[-2].value), (yyvsp[0].value)); (yyval.value) = e;}
+                             { (yyval.value) = createNode("^", (yyvsp[-2].value), (yyvsp[0].value)); /*char* e = (char *)malloc(10); sprintf(e, "%s^%s", $1, $3); $$ = e;*/}
 #line 1820 "y.tab.c"
     break;
 
   case 115: /* expr: '(' expr '^' expr ')'  */
 #line 203 "limbaj.y"
-                             {char* e = (char *)malloc(10); sprintf(e, "%s^%s", (yyvsp[-3].value), (yyvsp[-1].value)); (yyval.value) = e;}
+                             { (yyval.value) = createNode("^", (yyvsp[-3].value), (yyvsp[-1].value)); /*char* e = (char *)malloc(10); sprintf(e, "%s^%s", $2, $4); $$ = e;*/}
 #line 1826 "y.tab.c"
     break;
 
   case 116: /* expr: NR  */
 #line 204 "limbaj.y"
-                             {(yyval.value) = (yyvsp[0].value);}
+                             {(yyval.value) = createNode((yyvsp[0].value), NULL, NULL);}
 #line 1832 "y.tab.c"
     break;
 
   case 117: /* expr: ID  */
 #line 205 "limbaj.y"
-                             {(yyval.value) = (yyvsp[0].value);}
+                             {(yyval.value) = createNode((yyvsp[0].value), NULL, NULL);}
 #line 1838 "y.tab.c"
     break;
 
@@ -2039,5 +2039,8 @@ int main(int argc, char** argv){
         yyin=fopen(argv[1],"r");
         yyparse();
         fclose(yyin);
+
+        printTree(root,0);
+        //printf("Result: %d\n", evaluateTree(root));
         print_table(errors);
 }

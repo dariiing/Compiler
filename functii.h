@@ -368,4 +368,63 @@ void print_table (int errors)
         }
 }
 
+typedef struct node {
+        char *value;
+        struct node *left;
+        struct node *right;
+} Node;
+
+Node *root;
+
+Node *createNode(char *value, Node *left, Node *right)
+ {
+        Node *node = (Node *) malloc(sizeof(Node));
+        node->value = value;
+        node->left = left;
+        node->right = right;
+        return node;
+}
+
+
+void printTree(Node *node, int level) {
+        if (node == NULL) return;
+        printTree(node->right, level+1);
+        int i;
+        for (i = 0; i < level; i++){
+             printf(" ");
+        }
+        printf("%s\n", node->value);
+        printTree(node->left, level+1);
+}
+
+void free_ast(Node* root) {
+    if (root != NULL) {
+        free_ast(root->left); 
+        free_ast(root->right);
+        free(root);
+    }
+}
+
+
+int evaluateTree(Node *node) {
+        if (node == NULL) return 0;
+        if (node->left == NULL && node->right == NULL) {
+                return atoi(node->value);
+        }
+        int left = evaluateTree(node->left);
+        int right = evaluateTree(node->right);
+        if (strcmp(node->value, "+") == 0) {
+                return left + right;
+        }
+        if (strcmp(node->value, "-") == 0) {
+                return left - right;
+        }
+        if (strcmp(node->value, "*") == 0) {
+                return left * right;
+        }
+        if (strcmp(node->value, "/") == 0) {
+                return left / right;
+        }
+    return 0;
+}
 #endif
