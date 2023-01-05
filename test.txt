@@ -108,7 +108,8 @@ main(){
     char whatever;
     int sjb;
     int sdkdkkd = 35;
-    int skksksks =  28;
+    int ajjsjddjjs = x + 3;
+    int skksksks =  true;
     fct3(2*3);
     fct1(fct1(x));
     fct1(fct2(2+3), fct3(5));
@@ -118,12 +119,20 @@ main(){
     }
     
     attempt.help(sjb);
+    int sjjsksdjjsksds = "alo gara";
+    int djjdjsjjsksdjjsksds = 1 + 2;
+    sjjsksdjjsksds = sjjsksdjjsksds + 10; 
 
     if( (23+10)<20 ){
         int ajdddjsjssdddd;
     }
-
+    
     attempt.help(sddjb);
+
+     int zzzz;
+     zzzz = 4 + 3;
+
 }
+
 
 

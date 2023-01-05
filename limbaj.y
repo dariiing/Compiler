@@ -85,9 +85,6 @@ stmt_clasa : TIP ID                            ';'    {tip_id_val(false, $1, $2,
 apel_clase : ID '.' ID '(' apel_fct ')'            ';'
            | ID '.' ID                             ';'
            | ID '.' ID ASSIGN expr
-           /* | apel_clase ID '.' ID '(' apel_fct ')' ';'
-           | apel_clase ID '.' ID                  ';'
-           | apel_clase ID '.' ID ASSIGN expr      ';' */
 
 apel_fct : apel_fct ',' apel_fct
          | expr
