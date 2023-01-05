@@ -82,21 +82,29 @@ stmt_clasa : TIP ID                            ';'    {tip_id_val(false, $1, $2,
            | ID '(' apel_fct ')'               ';'    {search_function($1);}
            ;
 
-apel_clase : ID '.' ID '(' apel_fct ')' ';'
-           | ID '.' ID ';'
+apel_clase : ID '.' ID '(' apel_fct ')'            ';'
+           | ID '.' ID                             ';'
            | ID '.' ID ASSIGN expr
-           | apel_clase ID '.' ID '(' apel_fct ')' ';'
+           /* | apel_clase ID '.' ID '(' apel_fct ')' ';'
            | apel_clase ID '.' ID                  ';'
-           | apel_clase ID '.' ID ASSIGN expr      ';'
+           | apel_clase ID '.' ID ASSIGN expr      ';' */
 
-//trb facut asta recursiv :)))))
-main : MAIN '(' ')' '{' instructiuni '}'
-     | MAIN '(' ')' '{' apel_clase instructiuni '}'
-     | MAIN '(' ')' '{' instructiuni apel_clase '}'
-     | MAIN '(' ')' '{' apel_clase instructiuni apel_clase '}'
-     | MAIN '(' ')' '{' apel_clase instructiuni apel_clase instructiuni'}'
+apel_fct : apel_fct ',' apel_fct
+         | expr
+         | ID '(' apel_fct ')' 
+         |
+         ;
+
+
+main : MAIN '(' ')' '{' instr_main '}'
      ;
 
+instr_main: instr_main stmt
+          | instr_main apel_clase
+          | stmt
+          | apel_clase
+          ;
+   
           
 variabila : TIP  ID                   /* variabila simpla */  {tip_id_val(false, $1, $2, "");}	              
 	  | TIP  ID '[' NR ']'	      /* vectori */           {char* x = (char *)malloc(10); sprintf(x, "%s[%s]", $2, $4); tip_id_val(false, strcat($1, "[]"), x, "");}	
@@ -216,14 +224,6 @@ conditii : expr                   //"<="|"<"|">="|">"|"=="|"!="
          | VARBOOL                //true / false
 	 | '(' VARBOOL ')' 
          ;
-
-
-apel_fct : apel_fct ',' apel_fct
-         | expr
-         | ID '(' apel_fct ')' 
-         |
-         ;
-
 
 %%
 
