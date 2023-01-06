@@ -139,7 +139,7 @@ void search_function(char* name) // daca exista sau nu functia resp
    }
 }
 
-void search_var(char* name) // daca exista sau nu functia resp
+void search_var(char* name) // daca exista sau nu variabila resp
 {
    int ok = 0, i;
    for (i = 0; i < count; i++) {
@@ -153,6 +153,72 @@ void search_var(char* name) // daca exista sau nu functia resp
         yyerror(s);
         exit(0);
    }
+}
+
+//TIP ID ASSIGN expr 
+
+void verif_type_var(char *id, char *expr){
+   int i,ok = 1;
+   char type[30];
+   char *p;
+   for (i = 0; i < count; i++) { // caut in tabel tipul variabilei 
+         if (strstr(table[i].name, id) !=NULL) {
+            strcpy(type, table[i].type);
+         }
+        }
+   if(strstr(type,"int")!=NULL){//daca e de tip int => expresia de tip int
+        if(strstr(expr,"+")==NULL || strstr(expr,"-")==NULL || strstr(expr,"*")==NULL || strstr(expr,"/")==NULL|| strstr(expr,"%")==NULL|| strstr(expr,"^")==NULL) // daca nu contine asta ins ca e doar un nr
+         {
+                if(strstr(expr,".")!=NULL  || strstr(expr,"true")!=NULL || strstr(expr,"false")!=NULL || strstr(expr,"\"")!=NULL) // e nr float
+                {
+                  char s[200];
+                  sprintf(s,"Variabila <%s> nu contine o valoare de tip int",id);
+                  yyerror(s);
+                  exit(0);
+                }
+         }
+   }
+    else if(strstr(type,"float")!=NULL){
+        if(strstr(expr,"+")==NULL || strstr(expr,"-")==NULL || strstr(expr,"*")==NULL || strstr(expr,"/")==NULL|| strstr(expr,"%")==NULL|| strstr(expr,"^")==NULL) // daca nu contine asta ins ca e doar un nr
+         {
+                if(strstr(expr,".")==NULL || strstr(expr,"true")!=NULL || strstr(expr,"false")!=NULL || strstr(expr,"\"")!=NULL) // e nr float
+                {
+                  char s[200];
+                  sprintf(s,"Variabila <%s> nu contine o valoare de tip float",id);
+                  yyerror(s);
+                  exit(0);
+                }
+         }
+   }
+   else if(strstr(type,"bool")!=NULL){
+        int ok = 0;
+        if(strstr(expr,"false")==NULL) 
+       {
+        // char s[200];
+        // sprintf(s,"Variabila <%s> nu contine o valoare de tip bool",id);
+        // yyerror(s);
+        // exit(0);
+        ok = 1;
+       }
+       if(ok == 1 && strstr(expr,"true")==NULL) 
+       {
+        char s[200];
+        sprintf(s,"Variabila <%s> nu contine o valoare de tip bool",id);
+        yyerror(s);
+        exit(0);
+       }
+
+   }
+   else if(strstr(type,"char")!=NULL){
+        if(strstr(expr,"\"")==NULL || strstr(expr,"true")!=NULL || strstr(expr,"false")!=NULL)
+       {
+        char s[200];
+        sprintf(s,"Variabila <%s> nu contine o valoare de tip char",id);
+        yyerror(s);
+        exit(0);
+       }
+   }
+
 }
 
 int yyerror(char * s){

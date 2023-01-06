@@ -659,16 +659,16 @@ static const yytype_uint8 yyrline[] =
        0,    33,    33,    36,    37,    40,    41,    44,    45,    51,
       52,    57,    58,    62,    63,    64,    65,    66,    67,    70,
       71,    74,    75,    76,    77,    78,    79,    80,    81,    82,
-      85,    86,    87,    92,    93,    94,    95,   101,   104,   105,
-     106,   107,   111,   112,   113,   114,   115,   116,   117,   118,
-     119,   120,   121,   126,   127,   130,   131,   132,   133,   134,
-     135,   136,   137,   140,   141,   142,   143,   146,   147,   150,
-     151,   152,   155,   156,   159,   160,   161,   162,   163,   164,
-     165,   169,   170,   171,   172,   173,   174,   175,   176,   177,
-     178,   179,   180,   181,   182,   183,   184,   187,   188,   191,
-     192,   193,   194,   197,   198,   202,   203,   204,   205,   206,
-     207,   208,   209,   210,   211,   212,   213,   214,   215,   219,
-     220,   221,   222,   223,   224,   225,   226,   227
+      85,    86,    87,    89,    90,    91,    92,    96,    99,   100,
+     101,   102,   106,   107,   108,   109,   110,   111,   112,   113,
+     114,   115,   116,   121,   122,   125,   126,   127,   128,   129,
+     130,   131,   132,   135,   136,   137,   138,   141,   142,   145,
+     146,   147,   150,   151,   154,   155,   156,   157,   158,   159,
+     160,   164,   165,   166,   167,   168,   169,   170,   171,   172,
+     173,   174,   175,   176,   177,   178,   179,   182,   183,   186,
+     187,   188,   189,   192,   193,   197,   198,   199,   200,   201,
+     202,   203,   204,   205,   206,   207,   208,   209,   210,   214,
+     215,   216,   217,   218,   219,   220,   221,   222
 };
 #endif
 
@@ -1469,37 +1469,37 @@ yyreduce:
 
   case 22: /* stmt_clasa: TIP ID ASSIGN expr ';'  */
 #line 75 "limbaj.y"
-                                                      {tip_id_val(false, (yyvsp[-4].value), (yyvsp[-3].value), (yyvsp[-1].value));}
+                                                      {tip_id_val(false, (yyvsp[-4].value), (yyvsp[-3].value), (yyvsp[-1].value)); verif_type_var((yyvsp[-3].value),(yyvsp[-1].value));}
 #line 1474 "y.tab.c"
     break;
 
   case 23: /* stmt_clasa: TIP ID ASSIGN VARBOOL ';'  */
 #line 76 "limbaj.y"
-                                                      {tip_id_val(false, (yyvsp[-4].value), (yyvsp[-3].value), (yyvsp[-1].value));}
+                                                      {tip_id_val(false, (yyvsp[-4].value), (yyvsp[-3].value), (yyvsp[-1].value)); verif_type_var((yyvsp[-3].value),(yyvsp[-1].value));}
 #line 1480 "y.tab.c"
     break;
 
   case 24: /* stmt_clasa: TIP ID ASSIGN STRING ';'  */
 #line 77 "limbaj.y"
-                                                      {tip_id_val(false, (yyvsp[-4].value), (yyvsp[-3].value), (yyvsp[-1].value));}
+                                                      {tip_id_val(false, (yyvsp[-4].value), (yyvsp[-3].value), (yyvsp[-1].value)); verif_type_var((yyvsp[-3].value),(yyvsp[-1].value));}
 #line 1486 "y.tab.c"
     break;
 
   case 25: /* stmt_clasa: ID ASSIGN expr ';'  */
 #line 78 "limbaj.y"
-                                                      {search_var((yyvsp[-3].value));}
+                                                      {search_var((yyvsp[-3].value)); verif_type_var((yyvsp[-3].value),(yyvsp[-1].value));}
 #line 1492 "y.tab.c"
     break;
 
   case 26: /* stmt_clasa: ID ASSIGN VARBOOL ';'  */
 #line 79 "limbaj.y"
-                                                      {search_var((yyvsp[-3].value));}
+                                                      {search_var((yyvsp[-3].value)); verif_type_var((yyvsp[-3].value),(yyvsp[-1].value));}
 #line 1498 "y.tab.c"
     break;
 
   case 27: /* stmt_clasa: ID ASSIGN STRING ';'  */
 #line 80 "limbaj.y"
-                                                      {search_var((yyvsp[-3].value));}
+                                                      {search_var((yyvsp[-3].value)); verif_type_var((yyvsp[-3].value),(yyvsp[-1].value));}
 #line 1504 "y.tab.c"
     break;
 
@@ -1516,302 +1516,302 @@ yyreduce:
     break;
 
   case 42: /* variabila: TIP ID  */
-#line 111 "limbaj.y"
+#line 106 "limbaj.y"
                                                               {tip_id_val(false, (yyvsp[-1].value), (yyvsp[0].value), "");}
 #line 1522 "y.tab.c"
     break;
 
   case 43: /* variabila: TIP ID '[' NR ']'  */
-#line 112 "limbaj.y"
+#line 107 "limbaj.y"
                                                               {char* x = (char *)malloc(10); sprintf(x, "%s[%s]", (yyvsp[-3].value), (yyvsp[-1].value)); tip_id_val(false, strcat((yyvsp[-4].value), "[]"), x, "");}
 #line 1528 "y.tab.c"
     break;
 
   case 44: /* variabila: TIP ID ASSIGN NR  */
-#line 113 "limbaj.y"
-                                                              {tip_id_val(false, (yyvsp[-3].value), (yyvsp[-2].value), (yyvsp[0].value));}
+#line 108 "limbaj.y"
+                                                              {tip_id_val(false, (yyvsp[-3].value), (yyvsp[-2].value), (yyvsp[0].value)); verif_type_var((yyvsp[-2].value),(yyvsp[0].value));}
 #line 1534 "y.tab.c"
     break;
 
   case 45: /* variabila: TIP ID ASSIGN ID  */
-#line 114 "limbaj.y"
-                                                              {tip_id_val(false, (yyvsp[-3].value), (yyvsp[-2].value), (yyvsp[0].value));}
+#line 109 "limbaj.y"
+                                                              {tip_id_val(false, (yyvsp[-3].value), (yyvsp[-2].value), (yyvsp[0].value)); verif_type_var((yyvsp[-2].value),(yyvsp[0].value));}
 #line 1540 "y.tab.c"
     break;
 
   case 46: /* variabila: TIP ID ASSIGN VARBOOL  */
-#line 115 "limbaj.y"
-                                                              {tip_id_val(false, (yyvsp[-3].value), (yyvsp[-2].value), (yyvsp[0].value));}
+#line 110 "limbaj.y"
+                                                              {tip_id_val(false, (yyvsp[-3].value), (yyvsp[-2].value), (yyvsp[0].value)); verif_type_var((yyvsp[-2].value),(yyvsp[0].value));}
 #line 1546 "y.tab.c"
     break;
 
   case 47: /* variabila: TIP ID ASSIGN STRING  */
-#line 116 "limbaj.y"
-                                                              {tip_id_val(false, (yyvsp[-3].value), (yyvsp[-2].value), (yyvsp[0].value));}
+#line 111 "limbaj.y"
+                                                              {tip_id_val(false, (yyvsp[-3].value), (yyvsp[-2].value), (yyvsp[0].value)); verif_type_var((yyvsp[-2].value),(yyvsp[0].value));}
 #line 1552 "y.tab.c"
     break;
 
   case 48: /* variabila: CONST TIP ID  */
-#line 117 "limbaj.y"
+#line 112 "limbaj.y"
                                                               {tip_id_val(true, (yyvsp[-1].value), (yyvsp[0].value), "");}
 #line 1558 "y.tab.c"
     break;
 
   case 49: /* variabila: CONST TIP ID ASSIGN expr  */
-#line 118 "limbaj.y"
-                                                              {tip_id_val(true, (yyvsp[-3].value), (yyvsp[-2].value), (yyvsp[0].value));}
+#line 113 "limbaj.y"
+                                                              {tip_id_val(true, (yyvsp[-3].value), (yyvsp[-2].value), (yyvsp[0].value)); verif_type_var((yyvsp[-2].value),(yyvsp[0].value));}
 #line 1564 "y.tab.c"
     break;
 
   case 50: /* variabila: CONST TIP ID ASSIGN VARBOOL  */
-#line 119 "limbaj.y"
-                                                              {tip_id_val(true, (yyvsp[-3].value), (yyvsp[-2].value), (yyvsp[0].value));}
+#line 114 "limbaj.y"
+                                                              {tip_id_val(true, (yyvsp[-3].value), (yyvsp[-2].value), (yyvsp[0].value)); verif_type_var((yyvsp[-2].value),(yyvsp[0].value));}
 #line 1570 "y.tab.c"
     break;
 
   case 51: /* variabila: CONST TIP ID ASSIGN STRING  */
-#line 120 "limbaj.y"
-                                                              {tip_id_val(true, (yyvsp[-3].value), (yyvsp[-2].value), (yyvsp[0].value));}
+#line 115 "limbaj.y"
+                                                              {tip_id_val(true, (yyvsp[-3].value), (yyvsp[-2].value), (yyvsp[0].value)); verif_type_var((yyvsp[-2].value),(yyvsp[0].value));}
 #line 1576 "y.tab.c"
     break;
 
   case 55: /* functie: TIP ID '(' parametri ')' '{' instructiuni '}'  */
-#line 130 "limbaj.y"
+#line 125 "limbaj.y"
                                                                                 {tip_fct(false, (yyvsp[-7].value), (yyvsp[-6].value), "");}
 #line 1582 "y.tab.c"
     break;
 
   case 56: /* functie: TIP ID '(' parametri ')' '{' '}'  */
-#line 131 "limbaj.y"
+#line 126 "limbaj.y"
                                                                                 {tip_fct(false, (yyvsp[-6].value), (yyvsp[-5].value), "");}
 #line 1588 "y.tab.c"
     break;
 
   case 57: /* functie: TIP ID '(' parametri ')' '{' instructiuni RETURN ret ';' '}'  */
-#line 132 "limbaj.y"
+#line 127 "limbaj.y"
                                                                                 {tip_fct(false, (yyvsp[-10].value), (yyvsp[-9].value), (yyvsp[-10].value));}
 #line 1594 "y.tab.c"
     break;
 
   case 58: /* functie: TIP ID '(' parametri ')' '{' RETURN ret ';' '}'  */
-#line 133 "limbaj.y"
+#line 128 "limbaj.y"
                                                                                 {tip_fct(false, (yyvsp[-9].value), (yyvsp[-8].value), (yyvsp[-9].value));}
 #line 1600 "y.tab.c"
     break;
 
   case 59: /* functie: CONST TIP ID '(' parametri ')' '{' instructiuni '}'  */
-#line 134 "limbaj.y"
+#line 129 "limbaj.y"
                                                                                 {tip_fct(true, (yyvsp[-7].value), (yyvsp[-6].value), (yyvsp[-7].value));}
 #line 1606 "y.tab.c"
     break;
 
   case 60: /* functie: CONST TIP ID '(' parametri ')' '{' '}'  */
-#line 135 "limbaj.y"
+#line 130 "limbaj.y"
                                                                                 {tip_fct(true, (yyvsp[-6].value), (yyvsp[-5].value), (yyvsp[-6].value));}
 #line 1612 "y.tab.c"
     break;
 
   case 61: /* functie: CONST TIP ID '(' parametri ')' '{' instructiuni RETURN ret ';' '}'  */
-#line 136 "limbaj.y"
+#line 131 "limbaj.y"
                                                                                 {tip_fct(true, (yyvsp[-10].value), (yyvsp[-9].value), (yyvsp[-10].value));}
 #line 1618 "y.tab.c"
     break;
 
   case 62: /* functie: CONST TIP ID '(' parametri ')' '{' RETURN ret ';' '}'  */
-#line 137 "limbaj.y"
+#line 132 "limbaj.y"
                                                                                 {tip_fct(true, (yyvsp[-9].value), (yyvsp[-8].value), (yyvsp[-9].value));}
 #line 1624 "y.tab.c"
     break;
 
   case 69: /* parametru: TIP ID  */
-#line 150 "limbaj.y"
+#line 145 "limbaj.y"
                                 {par_fct((yyvsp[-1].value), (yyvsp[0].value));}
 #line 1630 "y.tab.c"
     break;
 
   case 70: /* parametru: TIP ID '[' NR ']'  */
-#line 151 "limbaj.y"
+#line 146 "limbaj.y"
                                 {char* y = (char *)malloc(10); sprintf(y, "%s[%s]", (yyvsp[-3].value), (yyvsp[-1].value)); par_fct(strcat((yyvsp[-4].value), "[]"), y);}
 #line 1636 "y.tab.c"
     break;
 
   case 71: /* parametru: %empty  */
-#line 152 "limbaj.y"
+#line 147 "limbaj.y"
                                 {par_fct("", "");}
 #line 1642 "y.tab.c"
     break;
 
   case 74: /* const_: CONST TIP ID ';'  */
-#line 159 "limbaj.y"
+#line 154 "limbaj.y"
                                                   {tip_id_val(true, (yyvsp[-2].value), (yyvsp[-1].value), "");}
 #line 1648 "y.tab.c"
     break;
 
   case 75: /* const_: CONST TIP ID ASSIGN expr ';'  */
-#line 160 "limbaj.y"
+#line 155 "limbaj.y"
                                                   {tip_id_val(true, (yyvsp[-4].value), (yyvsp[-3].value), (yyvsp[-1].value));}
 #line 1654 "y.tab.c"
     break;
 
   case 76: /* const_: CONST TIP ID ASSIGN VARBOOL ';'  */
-#line 161 "limbaj.y"
+#line 156 "limbaj.y"
                                                   {tip_id_val(true, (yyvsp[-4].value), (yyvsp[-3].value), (yyvsp[-1].value));}
 #line 1660 "y.tab.c"
     break;
 
   case 77: /* const_: CONST TIP ID ASSIGN STRING ';'  */
-#line 162 "limbaj.y"
+#line 157 "limbaj.y"
                                                   {tip_id_val(true, (yyvsp[-4].value), (yyvsp[-3].value), (yyvsp[-1].value));}
 #line 1666 "y.tab.c"
     break;
 
   case 82: /* stmt: TIP ID ';'  */
-#line 170 "limbaj.y"
+#line 165 "limbaj.y"
                                                 {tip_id_val(false, (yyvsp[-2].value), (yyvsp[-1].value), "");}
 #line 1672 "y.tab.c"
     break;
 
   case 83: /* stmt: TIP ID ASSIGN expr ';'  */
-#line 171 "limbaj.y"
-                                                {tip_id_val(false, (yyvsp[-4].value), (yyvsp[-3].value), (yyvsp[-1].value));}
+#line 166 "limbaj.y"
+                                                {tip_id_val(false, (yyvsp[-4].value), (yyvsp[-3].value), (yyvsp[-1].value)); verif_type_var((yyvsp[-3].value),(yyvsp[-1].value));}
 #line 1678 "y.tab.c"
     break;
 
   case 84: /* stmt: TIP ID ASSIGN VARBOOL ';'  */
-#line 172 "limbaj.y"
-                                                {tip_id_val(false, (yyvsp[-4].value), (yyvsp[-3].value), (yyvsp[-1].value));}
+#line 167 "limbaj.y"
+                                                {tip_id_val(false, (yyvsp[-4].value), (yyvsp[-3].value), (yyvsp[-1].value)); verif_type_var((yyvsp[-3].value),(yyvsp[-1].value));}
 #line 1684 "y.tab.c"
     break;
 
   case 85: /* stmt: TIP ID ASSIGN STRING ';'  */
-#line 173 "limbaj.y"
-                                                {tip_id_val(false, (yyvsp[-4].value), (yyvsp[-3].value), (yyvsp[-1].value));}
+#line 168 "limbaj.y"
+                                                {tip_id_val(false, (yyvsp[-4].value), (yyvsp[-3].value), (yyvsp[-1].value)); verif_type_var((yyvsp[-3].value),(yyvsp[-1].value));}
 #line 1690 "y.tab.c"
     break;
 
   case 86: /* stmt: ID ASSIGN expr ';'  */
-#line 174 "limbaj.y"
-                                                {search_var((yyvsp[-3].value));}
+#line 169 "limbaj.y"
+                                                {search_var((yyvsp[-3].value)); verif_type_var((yyvsp[-3].value),(yyvsp[-1].value));}
 #line 1696 "y.tab.c"
     break;
 
   case 87: /* stmt: ID ASSIGN VARBOOL ';'  */
-#line 175 "limbaj.y"
-                                                {search_var((yyvsp[-3].value));}
+#line 170 "limbaj.y"
+                                                {search_var((yyvsp[-3].value)); verif_type_var((yyvsp[-3].value),(yyvsp[-1].value));}
 #line 1702 "y.tab.c"
     break;
 
   case 88: /* stmt: ID ASSIGN STRING ';'  */
-#line 176 "limbaj.y"
-                                                {search_var((yyvsp[-3].value));}
+#line 171 "limbaj.y"
+                                                {search_var((yyvsp[-3].value)); verif_type_var((yyvsp[-3].value),(yyvsp[-1].value));}
 #line 1708 "y.tab.c"
     break;
 
   case 89: /* stmt: ID DIGIT ';'  */
-#line 177 "limbaj.y"
+#line 172 "limbaj.y"
                                                 {search_var((yyvsp[-2].value));}
 #line 1714 "y.tab.c"
     break;
 
   case 90: /* stmt: ID '(' apel_fct ')' ';'  */
-#line 178 "limbaj.y"
+#line 173 "limbaj.y"
                                                  {search_function((yyvsp[-4].value));}
 #line 1720 "y.tab.c"
     break;
 
   case 99: /* for_stmt: TIP ID ASSIGN NR  */
-#line 191 "limbaj.y"
-                            {tip_id_val(false, (yyvsp[-3].value), (yyvsp[-2].value), (yyvsp[0].value));}
+#line 186 "limbaj.y"
+                            {tip_id_val(false, (yyvsp[-3].value), (yyvsp[-2].value), (yyvsp[0].value));verif_type_var((yyvsp[-2].value),(yyvsp[0].value));}
 #line 1726 "y.tab.c"
     break;
 
   case 100: /* for_stmt: TIP ID ASSIGN ID  */
-#line 192 "limbaj.y"
-                            {tip_id_val(false, (yyvsp[-3].value), (yyvsp[-2].value), (yyvsp[0].value));}
+#line 187 "limbaj.y"
+                            {tip_id_val(false, (yyvsp[-3].value), (yyvsp[-2].value), (yyvsp[0].value));verif_type_var((yyvsp[-2].value),(yyvsp[0].value));}
 #line 1732 "y.tab.c"
     break;
 
   case 105: /* expr: expr '*' expr  */
-#line 202 "limbaj.y"
-                             { (yyval.value) = createNode("*", (yyvsp[-2].value), (yyvsp[0].value)); /*char* a = (char *)malloc(10); sprintf(a, "%s*%s", $1, $3); $$ = a;*/}
+#line 197 "limbaj.y"
+                             { /*$$ = createNode("*", $1, $3);*/ char* a = (char *)malloc(10); sprintf(a, "%s*%s", (yyvsp[-2].value), (yyvsp[0].value)); (yyval.value) = a;}
 #line 1738 "y.tab.c"
     break;
 
   case 106: /* expr: '(' expr '*' expr ')'  */
-#line 203 "limbaj.y"
-                             { (yyval.value) = createNode("*", (yyvsp[-3].value), (yyvsp[-1].value)); /*char* a = (char *)malloc(10); sprintf(a, "%s*%s", $2, $4); $$ = a;*/}
+#line 198 "limbaj.y"
+                             { /*$$ = createNode("*", $2, $4);*/ char* a = (char *)malloc(10); sprintf(a, "%s*%s", (yyvsp[-3].value), (yyvsp[-1].value)); (yyval.value) = a;}
 #line 1744 "y.tab.c"
     break;
 
   case 107: /* expr: expr '/' expr  */
-#line 204 "limbaj.y"
-                             { (yyval.value) = createNode("/", (yyvsp[-2].value), (yyvsp[0].value)); /*char* b = (char *)malloc(10); sprintf(b, "%s/%s", $1, $3); $$ = b;*/}
+#line 199 "limbaj.y"
+                             { /*$$ = createNode("/", $1, $3);*/ char* b = (char *)malloc(10); sprintf(b, "%s/%s", (yyvsp[-2].value), (yyvsp[0].value)); (yyval.value) = b;}
 #line 1750 "y.tab.c"
     break;
 
   case 108: /* expr: '(' expr '/' expr ')'  */
-#line 205 "limbaj.y"
-                             { (yyval.value) = createNode("/", (yyvsp[-3].value), (yyvsp[-1].value)); /*char* b = (char *)malloc(10); sprintf(b, "%s/%s", $2, $4); $$ = b;*/}
+#line 200 "limbaj.y"
+                             { /*$$ = createNode("/", $2, $4);*/char* b = (char *)malloc(10); sprintf(b, "%s/%s", (yyvsp[-3].value), (yyvsp[-1].value)); (yyval.value) = b;}
 #line 1756 "y.tab.c"
     break;
 
   case 109: /* expr: expr '+' expr  */
-#line 206 "limbaj.y"
-                             { (yyval.value) = createNode("+", (yyvsp[-2].value), (yyvsp[0].value)); /*char* c = (char *)malloc(10); sprintf(c, "%s+%s", $1, $3); $$ = c;*/}
+#line 201 "limbaj.y"
+                             { /*$$ = createNode("+", $1, $3);*/char* c = (char *)malloc(10); sprintf(c, "%s+%s", (yyvsp[-2].value), (yyvsp[0].value)); (yyval.value) = c;}
 #line 1762 "y.tab.c"
     break;
 
   case 110: /* expr: '(' expr '+' expr ')'  */
-#line 207 "limbaj.y"
-                             { (yyval.value) = createNode("+", (yyvsp[-3].value), (yyvsp[-1].value)); /*char* c = (char *)malloc(10); sprintf(c, "%s+%s", $2, $4); $$ = c;*/}
+#line 202 "limbaj.y"
+                             { /*$$ = createNode("+", $2, $4);*/char* c = (char *)malloc(10); sprintf(c, "%s+%s", (yyvsp[-3].value), (yyvsp[-1].value)); (yyval.value) = c;}
 #line 1768 "y.tab.c"
     break;
 
   case 111: /* expr: expr '-' expr  */
-#line 208 "limbaj.y"
-                             { (yyval.value) = createNode("-", (yyvsp[-2].value), (yyvsp[0].value)); /*char* d = (char *)malloc(10); sprintf(d, "%s-%s", $1, $3); $$ = d;*/}
+#line 203 "limbaj.y"
+                             { /*$$ = createNode("-", $1, $3);*/char* d = (char *)malloc(10); sprintf(d, "%s-%s", (yyvsp[-2].value), (yyvsp[0].value)); (yyval.value) = d;}
 #line 1774 "y.tab.c"
     break;
 
   case 112: /* expr: '(' expr '-' expr ')'  */
-#line 209 "limbaj.y"
-                             { (yyval.value) = createNode("-", (yyvsp[-3].value), (yyvsp[-1].value)); /*char* d = (char *)malloc(10); sprintf(d, "%s-%s", $2, $4); $$ = d;*/}
+#line 204 "limbaj.y"
+                             { /*$$ = createNode("-", $2, $4);*/ char* d = (char *)malloc(10); sprintf(d, "%s-%s", (yyvsp[-3].value), (yyvsp[-1].value)); (yyval.value) = d;}
 #line 1780 "y.tab.c"
     break;
 
   case 113: /* expr: expr '%' expr  */
-#line 210 "limbaj.y"
-                             { (yyval.value) = createNode("%", (yyvsp[-2].value), (yyvsp[0].value)); /*char* e = (char *)malloc(10); sprintf(e, "%s%%%s", $1, $3); $$ = e;*/}
+#line 205 "limbaj.y"
+                             { /*$$ = createNode("%", $1, $3);*/ char* e = (char *)malloc(10); sprintf(e, "%s%%%s", (yyvsp[-2].value), (yyvsp[0].value)); (yyval.value) = e;}
 #line 1786 "y.tab.c"
     break;
 
   case 114: /* expr: '(' expr '%' expr ')'  */
-#line 211 "limbaj.y"
-                             { (yyval.value) = createNode("%", (yyvsp[-3].value), (yyvsp[-1].value)); /*char* e = (char *)malloc(10); sprintf(e, "%s%%%s", $2, $4); $$ = e;*/}
+#line 206 "limbaj.y"
+                             { /*$$ = createNode("%", $2, $4);*/char* e = (char *)malloc(10); sprintf(e, "%s%%%s", (yyvsp[-3].value), (yyvsp[-1].value)); (yyval.value) = e;}
 #line 1792 "y.tab.c"
     break;
 
   case 115: /* expr: expr '^' expr  */
-#line 212 "limbaj.y"
-                             { (yyval.value) = createNode("^", (yyvsp[-2].value), (yyvsp[0].value)); /*char* e = (char *)malloc(10); sprintf(e, "%s^%s", $1, $3); $$ = e;*/}
+#line 207 "limbaj.y"
+                             { /*$$ = createNode("^", $1, $3);*/char* e = (char *)malloc(10); sprintf(e, "%s^%s", (yyvsp[-2].value), (yyvsp[0].value)); (yyval.value) = e;}
 #line 1798 "y.tab.c"
     break;
 
   case 116: /* expr: '(' expr '^' expr ')'  */
-#line 213 "limbaj.y"
-                             { (yyval.value) = createNode("^", (yyvsp[-3].value), (yyvsp[-1].value)); /*char* e = (char *)malloc(10); sprintf(e, "%s^%s", $2, $4); $$ = e;*/}
+#line 208 "limbaj.y"
+                             { /*$$ = createNode("^", $2, $4);*/ char* e = (char *)malloc(10); sprintf(e, "%s^%s", (yyvsp[-3].value), (yyvsp[-1].value)); (yyval.value) = e;}
 #line 1804 "y.tab.c"
     break;
 
   case 117: /* expr: NR  */
-#line 214 "limbaj.y"
-                             {(yyval.value) = createNode((yyvsp[0].value), NULL, NULL);}
+#line 209 "limbaj.y"
+                             {(yyval.value) = (yyvsp[0].value);}
 #line 1810 "y.tab.c"
     break;
 
   case 118: /* expr: ID  */
-#line 215 "limbaj.y"
-                             {(yyval.value) = createNode((yyvsp[0].value), NULL, NULL);}
+#line 210 "limbaj.y"
+                             {(yyval.value) = (yyvsp[0].value);}
 #line 1816 "y.tab.c"
     break;
 
@@ -2009,7 +2009,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 230 "limbaj.y"
+#line 225 "limbaj.y"
 
 
 
