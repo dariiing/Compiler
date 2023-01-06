@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
-
+#include  <ctype.h>
 extern int yylineno;
 extern int count_lines;
 int var_used;
@@ -155,6 +155,7 @@ void search_var(char* name) // daca exista sau nu variabila resp
    }
 }
 
+
 //TIP ID ASSIGN expr 
 
 void verif_type_var(char *id, char *expr){
@@ -167,8 +168,6 @@ void verif_type_var(char *id, char *expr){
          }
         }
    if(strstr(type,"int")!=NULL){//daca e de tip int => expresia de tip int
-        if(strstr(expr,"+")==NULL || strstr(expr,"-")==NULL || strstr(expr,"*")==NULL || strstr(expr,"/")==NULL|| strstr(expr,"%")==NULL|| strstr(expr,"^")==NULL) // daca nu contine asta ins ca e doar un nr
-         {
                 if(strstr(expr,".")!=NULL  || strstr(expr,"true")!=NULL || strstr(expr,"false")!=NULL || strstr(expr,"\"")!=NULL) // e nr float
                 {
                   char s[200];
@@ -176,10 +175,87 @@ void verif_type_var(char *id, char *expr){
                   yyerror(s);
                   exit(0);
                 }
-         }
+                else if (strstr(expr,"+")!=NULL || strstr(expr,"-")!=NULL || strstr(expr,"*")!=NULL || strstr(expr,"/")!=NULL|| strstr(expr,"%")!=NULL|| strstr(expr,"^")!=NULL){
+                p = strtok(expr,"+-/*^"); 
+                int exist = 0; 
+                char type_p[20];
+        
+                while(p){
+                   int alfa = 0;
+                        for(i = 0; p[i];i++){
+                                if(isalpha(p[i])){
+                                        alfa = 1;
+                                }
+                        }
+                
+                if(alfa == 1){ // daca e variabila
+                        //verific in tabel 
+                         for (i = 0; i < count; i++) { // caut in tabel tipul variabilei 
+                                if (strstr(table[i].name, p) !=NULL ) {
+                                strcpy(type_p, table[i].type); exist = 1;
+                                }
+                        }
+                        if(exist == 0){
+                            char s[200];
+                            sprintf(s,"Variabila <%s> nu a fost declarata",p);
+                            yyerror(s);
+                            exit(0);    
+                        }
+                        else if(strstr(type_p,"int")==NULL){
+                        char s[200];
+                            sprintf(s,"Variabila <%s> nu este de tip int",p);
+                            yyerror(s);
+                            exit(0);
+                        }
+                   }
+                   p = strtok(NULL,"+-/*^");
+                }
+                }
    }
     else if(strstr(type,"float")!=NULL){
-        if(strstr(expr,"+")==NULL || strstr(expr,"-")==NULL || strstr(expr,"*")==NULL || strstr(expr,"/")==NULL|| strstr(expr,"%")==NULL|| strstr(expr,"^")==NULL) // daca nu contine asta ins ca e doar un nr
+         if(strstr(expr,"+")!=NULL || strstr(expr,"-")!=NULL || strstr(expr,"*")!=NULL || strstr(expr,"/")!=NULL|| strstr(expr,"%")!=NULL|| strstr(expr,"^")!=NULL){ 
+                p = strtok(expr,"+-/*^"); //  ex: 12.3+1223.2-4556.34
+                int exist = 0; 
+                char type_p[20];
+        
+                while(p){
+                   int alfa = 0;
+                        for(i = 0; p[i];i++){
+                                if(isalpha(p[i])){
+                                        alfa = 1;
+                                }
+                        }
+                   if(strstr(p,".")==NULL && alfa == 0){ // daca nu e variabila || nr float
+                        
+                        char s[200];
+                        sprintf(s,"Variabila <%s> nu contine o valoare de tip float",id);
+                        yyerror(s);
+                        exit(0);  
+                   }
+                   else if(alfa == 1){ // daca e variabila
+                        //verific in tabel 
+                         for (i = 0; i < count; i++) { // caut in tabel tipul variabilei 
+                                if (strstr(table[i].name, p) !=NULL ) {
+                                strcpy(type_p, table[i].type); exist = 1;
+                                }
+                        }
+                        if(exist == 0){
+                            char s[200];
+                            sprintf(s,"Variabila <%s> nu a fost declarata",p);
+                            yyerror(s);
+                            exit(0);    
+                        }
+                        else if(strstr(type_p,"float")==NULL){
+                        char s[200];
+                            sprintf(s,"Variabila <%s> nu este de tip float ",p);
+                            yyerror(s);
+                            exit(0);
+                        }
+                   }
+                   p = strtok(NULL,"+-/*^");
+                }
+         }
+         else if(strstr(expr,"+")==NULL || strstr(expr,"-")==NULL || strstr(expr,"*")==NULL || strstr(expr,"/")==NULL|| strstr(expr,"%")==NULL|| strstr(expr,"^")==NULL) // daca nu contine asta ins ca e doar un nr
          {
                 if(strstr(expr,".")==NULL || strstr(expr,"true")!=NULL || strstr(expr,"false")!=NULL || strstr(expr,"\"")!=NULL) // e nr float
                 {
@@ -189,15 +265,11 @@ void verif_type_var(char *id, char *expr){
                   exit(0);
                 }
          }
-   }
+       }
    else if(strstr(type,"bool")!=NULL){
         int ok = 0;
         if(strstr(expr,"false")==NULL) 
        {
-        // char s[200];
-        // sprintf(s,"Variabila <%s> nu contine o valoare de tip bool",id);
-        // yyerror(s);
-        // exit(0);
         ok = 1;
        }
        if(ok == 1 && strstr(expr,"true")==NULL) 

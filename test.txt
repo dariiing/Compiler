@@ -5,11 +5,10 @@
 
 
 float a = 45.6274;
-int b = 52332;
+int b = 5233;
 bool qa = true; 
 char d = "%&asaads%^*";
 const char e = "asta este";
-
 int f; int g; bool h0;
 
 
@@ -21,9 +20,11 @@ bool adv[24];
 class attempt{ 
 
 
-    int m = 123738324438323993;
-    int p1;
-    p1 = p1 + 5;
+    float m = 123738324.438323993+ 12.23;
+    float aaaa = 3.2+12.1;
+    float p1;
+    p1 = p1 + 5.3;
+    int z = 3 + 10;
 
     char madoare = "capuuuuuuuuuul";
 
@@ -60,7 +61,7 @@ int fct1(int y){
      while(x>10)
     {
         int p2;
-        p2 = p2 % 3;
+        p2 = p2 / 3;
 
         int p3;
         p3 = p3 - 10;
@@ -80,7 +81,7 @@ int fct1(int y){
 
     if( x > 10 && 7<10 || true != false && 3<0 ){
         while( true || false ){
-                int z = 3;
+                z = 3;
         }
     }
 
@@ -107,6 +108,7 @@ main(){
     int sdkdkkd = 35;
     int ajjsjddjjs = x + 3;
     int skksksks =  2333;
+    
     fct3(2*3);
     fct1(fct1(x));
     fct1(fct2(2+3), fct3(5));
@@ -128,5 +130,7 @@ main(){
 
      int zzzz;
      zzzz = 3 + 3;
+     b = 135 + 299;
+     bool sjsdjkdckcknd = false;
 
 }
