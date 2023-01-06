@@ -45,6 +45,11 @@ struct data{
 
 
 
+int yyerror(char * s){
+        printf("%s -> eroare la linia: %d\n",s,yylineno);
+        errors = 1;
+}
+
 // parametrii functie
 
 void par_fct(char * typ, char *idd){
@@ -293,11 +298,6 @@ void verif_type_var(char *id, char *expr){
 
 }
 
-int yyerror(char * s){
-        printf("%s -> eroare la linia: %d\n",s,yylineno);
-        errors = 1;
-}
-
 //informatii despre variabile
 
 void tip_id_val(bool cnst, char* typ, char* idd, char* vall){
@@ -336,6 +336,7 @@ void tip_id_val(bool cnst, char* typ, char* idd, char* vall){
                 table[count].value = vall;
                 table[count].line_number = yylineno;
                 count++;
+
         }
         else{
                 char s[200];
@@ -346,6 +347,7 @@ void tip_id_val(bool cnst, char* typ, char* idd, char* vall){
 }
 
 //informatii despre functii
+
 
 void tip_fct(bool cnst, char * typ, char *idd, char *rett){
 
@@ -376,8 +378,26 @@ void tip_fct(bool cnst, char * typ, char *idd, char *rett){
                 if(t_fct[count_fct].nr_param == 0){
                 t_fct[count_fct].rownum = yylineno;
                 }
+                //verific tipul functiei
+                if(strstr(t_fct[count_fct].type,"void")!=NULL && strlen(t_fct[count_fct].ret)>1){
+                        char s[200];
+                        sprintf(s,"Functia void nu trebuie sa aiba return");
+                        yyerror(s);
+                        exit(0);
+                }
                 
-
+                else if(strstr(t_fct[count_fct].type,"void")==NULL && strlen(t_fct[count_fct].ret)<1){
+                        char s[200];
+                        sprintf(s,"Functia trebuie sa aiba return");
+                        yyerror(s);
+                        exit(0);
+                }
+                else if (strstr(t_fct[count_fct].type,t_fct[count_fct].ret)==NULL){
+                        char s[200];
+                        sprintf(s,"Functia trebuie sa aiba return de tip %s",t_fct[count_fct].type);
+                        yyerror(s);
+                        exit(0);
+                }
                 count_fct++;
        }
        else{

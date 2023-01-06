@@ -1577,49 +1577,49 @@ yyreduce:
 
   case 55: /* functie: TIP ID '(' parametri ')' '{' instructiuni '}'  */
 #line 125 "limbaj.y"
-                                                                                {tip_fct(false, (yyvsp[-7].value), (yyvsp[-6].value), "");}
+                                                                                {tip_fct(false, (yyvsp[-7].value), (yyvsp[-6].value), ""); }
 #line 1582 "y.tab.c"
     break;
 
   case 56: /* functie: TIP ID '(' parametri ')' '{' '}'  */
 #line 126 "limbaj.y"
-                                                                                {tip_fct(false, (yyvsp[-6].value), (yyvsp[-5].value), "");}
+                                                                                {tip_fct(false, (yyvsp[-6].value), (yyvsp[-5].value), ""); }
 #line 1588 "y.tab.c"
     break;
 
   case 57: /* functie: TIP ID '(' parametri ')' '{' instructiuni RETURN ret ';' '}'  */
 #line 127 "limbaj.y"
-                                                                                {tip_fct(false, (yyvsp[-10].value), (yyvsp[-9].value), (yyvsp[-10].value));}
+                                                                                {tip_fct(false, (yyvsp[-10].value), (yyvsp[-9].value), (yyvsp[-10].value)); }
 #line 1594 "y.tab.c"
     break;
 
   case 58: /* functie: TIP ID '(' parametri ')' '{' RETURN ret ';' '}'  */
 #line 128 "limbaj.y"
-                                                                                {tip_fct(false, (yyvsp[-9].value), (yyvsp[-8].value), (yyvsp[-9].value));}
+                                                                                {tip_fct(false, (yyvsp[-9].value), (yyvsp[-8].value), (yyvsp[-9].value)); }
 #line 1600 "y.tab.c"
     break;
 
   case 59: /* functie: CONST TIP ID '(' parametri ')' '{' instructiuni '}'  */
 #line 129 "limbaj.y"
-                                                                                {tip_fct(true, (yyvsp[-7].value), (yyvsp[-6].value), (yyvsp[-7].value));}
+                                                                                {tip_fct(true, (yyvsp[-7].value), (yyvsp[-6].value), (yyvsp[-7].value));  }
 #line 1606 "y.tab.c"
     break;
 
   case 60: /* functie: CONST TIP ID '(' parametri ')' '{' '}'  */
 #line 130 "limbaj.y"
-                                                                                {tip_fct(true, (yyvsp[-6].value), (yyvsp[-5].value), (yyvsp[-6].value));}
+                                                                                {tip_fct(true, (yyvsp[-6].value), (yyvsp[-5].value), (yyvsp[-6].value));  }
 #line 1612 "y.tab.c"
     break;
 
   case 61: /* functie: CONST TIP ID '(' parametri ')' '{' instructiuni RETURN ret ';' '}'  */
 #line 131 "limbaj.y"
-                                                                                {tip_fct(true, (yyvsp[-10].value), (yyvsp[-9].value), (yyvsp[-10].value));}
+                                                                                {tip_fct(true, (yyvsp[-10].value), (yyvsp[-9].value), (yyvsp[-10].value));  }
 #line 1618 "y.tab.c"
     break;
 
   case 62: /* functie: CONST TIP ID '(' parametri ')' '{' RETURN ret ';' '}'  */
 #line 132 "limbaj.y"
-                                                                                {tip_fct(true, (yyvsp[-9].value), (yyvsp[-8].value), (yyvsp[-9].value));}
+                                                                                {tip_fct(true, (yyvsp[-9].value), (yyvsp[-8].value), (yyvsp[-9].value));  }
 #line 1624 "y.tab.c"
     break;
 

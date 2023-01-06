@@ -32,14 +32,14 @@ class attempt{
     int djjd;
     djjd ++;
     bool jdjsksddssd = false;
-    const char help(char abc, char bcd){
+    const char help(int abc, char bcd){
         return abc;
     }
 
 };
 
 int atmpt1(){
-    return cf;
+   return ; 
 }
 
 int fct1(int y){
@@ -92,7 +92,8 @@ int fct1(int y){
 }
 
 
-void fct2(){}
+void fct2(){
+}
 
 char fct3(int par1, char par2, int x[5]){
     return par2;
@@ -130,7 +131,6 @@ main(){
 
      int zzzz;
      zzzz = 3 + 3;
-     b = 135 + 299;
      bool sjsdjkdckcknd = false;
 
 }
