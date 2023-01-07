@@ -124,19 +124,21 @@ functii : functii functie
 	
 functie : TIP ID '(' parametri ')' '{' instructiuni '}'                         {tip_fct(false, $1, $2, ""); }
         | TIP ID '(' parametri ')' '{' '}'                                      {tip_fct(false, $1, $2, ""); }
-        | TIP ID '(' parametri ')' '{' instructiuni RETURN ret ';' '}'          {tip_fct(false, $1, $2, $1); }
-        | TIP ID '(' parametri ')' '{' RETURN ret ';' '}'                       {tip_fct(false, $1, $2, $1); }
+        | TIP ID '(' parametri ')' '{' instructiuni RETURN expr ';' '}'         {tip_fct(false, $1, $2, $9); }
+        | TIP ID '(' parametri ')' '{' instructiuni RETURN VARBOOL ';' '}'      {tip_fct(false, $1, $2, $9); }
+        | TIP ID '(' parametri ')' '{' instructiuni RETURN STRING ';' '}'       {tip_fct(false, $1, $2, $9); }
+        | TIP ID '(' parametri ')' '{' RETURN expr ';' '}'                      {tip_fct(false, $1, $2, $8); }
+        | TIP ID '(' parametri ')' '{' RETURN VARBOOL ';' '}'                   {tip_fct(false, $1, $2, $8); }
+        | TIP ID '(' parametri ')' '{' RETURN STRING ';' '}'                    {tip_fct(false, $1, $2, $8); }
         | CONST TIP ID '(' parametri ')' '{' instructiuni'}'                    {tip_fct(true, $2, $3, $2);  }
         | CONST TIP ID '(' parametri ')' '{' '}'                                {tip_fct(true, $2, $3, $2);  }
-        | CONST TIP ID '(' parametri ')' '{' instructiuni RETURN ret ';' '}'    {tip_fct(true, $2, $3, $2);  }
-        | CONST TIP ID '(' parametri ')' '{' RETURN ret ';' '}'                 {tip_fct(true, $2, $3, $2);  }
+        | CONST TIP ID '(' parametri ')' '{' instructiuni RETURN expr ';' '}'   {tip_fct(true, $2, $3, $10); }
+        | CONST TIP ID '(' parametri ')' '{' instructiuni RETURN VARBOOL ';' '}'{tip_fct(true, $2, $3, $10); }
+        | CONST TIP ID '(' parametri ')' '{' instructiuni RETURN STRING ';' '}' {tip_fct(true, $2, $3, $10); }
+        | CONST TIP ID '(' parametri ')' '{' RETURN expr ';' '}'                {tip_fct(true, $2, $3, $9);  }
+        | CONST TIP ID '(' parametri ')' '{' RETURN VARBOOL ';' '}'             {tip_fct(true, $2, $3, $9);  }
+        | CONST TIP ID '(' parametri ')' '{' RETURN STRING ';' '}'              {tip_fct(true, $2, $3, $9);  }
 	;
-
-ret : ID
-    | NR
-    | VARBOOL
-    | STRING
-    ;
 
 parametri : parametru
 	  | parametri ',' parametru
@@ -170,7 +172,7 @@ stmt : const_
      | ID ASSIGN VARBOOL                 ';'    {search_var($1); verif_type_var($1,$3);}
      | ID ASSIGN STRING                  ';'    {search_var($1); verif_type_var($1,$3);}
      | ID DIGIT                          ';'    {search_var($1);} // de verificat si asta
-     | ID '(' apel_fct ')'               ';'     {search_function($1);}
+     | ID '(' apel_fct ')'               ';'    {search_function($1);}
      | IF '(' conditii ')' '{' instructiuni '}'
      | IF '(' conditii ')' '{' instructiuni '}' ELSE '{' instructiuni '}'
      | WHILE '(' conditii ')' '{' instructiuni '}'
