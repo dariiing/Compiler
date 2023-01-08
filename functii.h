@@ -153,7 +153,7 @@ bool fct_found(char *fct_name)
                         // daca denumirea exista, dar tipul e diferit
                         if (strcmp(t_fct[count_fct].type, t_fct[i].type) != 0)
                         {
-                                char s[50];
+                                char s[60];
                                 sprintf(s, "Functiile de tip diferit necesita denumiri diferite\n");
                                 yyerror(s);
                                 exit(0);
@@ -224,6 +224,17 @@ char *search_var(char *name)
         return "";
 }
 
+int search_line_var(char *name)
+{
+        int i;
+        i = sVar(name);
+        if (strstr(table[i].name, name) != NULL)
+        {
+                return table[i].line_number;
+        }
+
+        return -1;
+}
 // TIP ID ASSIGN expr
 
 void verif_type_var(char *id, char *expr)
@@ -498,16 +509,16 @@ void tip_fct(bool cnst, char *typ, char *idd, char *rett)
                 else if (strlen(rett) >= 1)
                 {
                         // tipul variabilei din return
-                        char s[20];
+                        char s[50];
                         strcpy(s, search_var(rett));
-                        printf("Tipul variabilei %s din return de la linia %d este: %s.\n", rett, sVar(rett), s);
-                        if (s == NULL)
+                        printf("Tipul variabilei %s din return de la linia %d este: %s.\n", rett, search_line_var(rett), s);
+                        if (s == NULL) // daca nu e variabila ar trebui sa verificam de ce tip este 
                         {
                                 sprintf(s, "Variabila <%s> nu a fost declarata", rett);
                                 yyerror(s);
                                 exit(0);
                         }
-                        else if (strstr(s, rett) == NULL)
+                        else if (strstr(s, t_fct[count_fct].type) == NULL) 
                         {
                                 sprintf(s, "Functia trebuie sa aiba return de tip %s", t_fct[count_fct].type);
                                 yyerror(s);

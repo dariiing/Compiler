@@ -63,23 +63,23 @@ int evalAST(AstNode *node)
     }
     else if (node->value == SUB)
     {
-        resultEval = evalAST(node->left) + evalAST(node->right);
+        resultEval = evalAST(node->left) - evalAST(node->right);
     }
     else if (node->value == MUL)
     {
-        resultEval = evalAST(node->left) + evalAST(node->right);
+        resultEval = evalAST(node->left) *  evalAST(node->right);
     }
     else if (node->value == DIV)
     {
-        resultEval = evalAST(node->left) + evalAST(node->right);
+        resultEval = evalAST(node->left) / evalAST(node->right);
     }
     else if (node->value == POW)
     {
-        resultEval = evalAST(node->left) + evalAST(node->right);
+        resultEval = evalAST(node->left) ^ evalAST(node->right);
     }
     else if (node->value == MOD)
     {
-        resultEval = evalAST(node->left) + evalAST(node->right);
+        resultEval = evalAST(node->left) % evalAST(node->right);
     }
     else
     {

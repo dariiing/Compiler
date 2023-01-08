@@ -4,7 +4,6 @@
 int abcd = 10;
 float a = 45.0;
 int b = 5233;
-bool qa = true; 
 char d = "%&asaads%^*";
 const char e = "asta este";
 int f;
@@ -18,6 +17,7 @@ char text[256];
 bool adv[24];
 char super;
 string ttt = "2.5";
+bool zambet = true ;
 
 class attempt{ 
 
@@ -42,12 +42,9 @@ void fct2(float y){
 void fctf2(){
 }
 
-int fct(int x){
-    return ttt;
-}
-
-char atmpt1(){
-   return ttt; 
+bool abcdedffds(){
+    
+    return zambet;
 }
 
 int fct1(int y){
@@ -143,6 +140,7 @@ main(){
 
      int zzzz;
      zzzz = 3 + 3;
-     
+     Eval(2+3+1*7-10);
 
 }
+
