@@ -39,7 +39,8 @@ class attempt{
 int fctttt(float y){
     int hello = 2;
     bool mergeoare = true;
-    return mergeoare;
+    return hello;
+    
 }
 void fctf2(){
 }
@@ -51,6 +52,7 @@ bool abcdedffds(){
 
 int fct1(int y){
 
+    fctttt(5+2);
     int q = 0;
     q = 2;
     if(q == 2 && 3*5 < q+8){
@@ -59,7 +61,8 @@ int fct1(int y){
     
     while(x>10)
     {
-        if(q == 2) { q = q * 2; }
+        
+        if(q == 2 && fctttt(10 )<2) { q = q * 2; }
         else 
         {
              if(q <= 20)

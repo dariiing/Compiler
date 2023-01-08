@@ -215,7 +215,7 @@ expr : expr '*' expr {$$.ast = buildAST(MUL, $1.ast, $3.ast); char* a = (char *)
      ;
 
 //expresii boolene
-conditii : expr                   //"<="|"<"|">="|">"|"=="|"!="
+conditii : apel_fct                  //"<="|"<"|">="|">"|"=="|"!="
          | conditii OPR conditii  // ex: true != false
          | '(' conditii OPR conditii ')'
          | conditii AND conditii 
