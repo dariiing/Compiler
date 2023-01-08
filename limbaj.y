@@ -93,9 +93,8 @@ apel_clase : ID '.' ID '(' apel_fct ')'            ';'
            | ID '.' ID                             ';'
            | ID '.' ID ASSIGN expr
 
-apel_fct : apel_fct ',' apel_fct
-         | expr
-         | ID '(' apel_fct ')' 
+apel_fct : apel_fct ',' expr
+         | expr  
          |
          ;
 
@@ -212,6 +211,7 @@ expr : expr '*' expr {$$.ast = buildAST(MUL, $1.ast, $3.ast); char* a = (char *)
      | '(' expr ')'  {$$ = $2; char* f = (char *)malloc(10); sprintf(f, "%s", $2.idk); $$.idk = f;}
      | NR            {$$.ast = addNode(atoi($1)); $$.idk = $1;}
      | ID            {int ct = sVar($1); if(ct > -1 && strstr(table[ct].type, "int") != NULL) {$$.ast = addNode(atoi(table[ct].value));} $$.idk = $1;}
+     | ID '(' apel_fct ')'{$$.ast = addNode(atoi($1)); $$.idk = $1;}
      ;
 
 //expresii boolene

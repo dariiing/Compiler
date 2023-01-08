@@ -1,22 +1,24 @@
 #include <stdio.h>
-#include<string.h>
-#include<fcntl.h>
-int abcd = 10;
-float a = 45.0;
-int b = 5233;
-char d = "%&asaads%^*";
+int initial;
+int a;
+int b;
+
+int arr[10];
+float f2 = 20.0 ;
+float ff;
+
+string d = "%&asaads%^*";
 const char e = "asta este";
-int f;
+int f1;
 int g;
 bool h0;
 int bb = 2;
 float xx = 2.5;
-int x;
+int integer;
 int vector[5];
 char text[256];
 bool adv[24];
 char super;
-string ttt = "2.5";
 
 class attempt{ 
 
@@ -35,117 +37,80 @@ class attempt{
     
 
 };
-
-int fctttt(float y){
-    int hello = 2;
-    bool mergeoare = true;
+int testFunction(int x, float z) {
+    int yyyy = 30;
+    int hello = 2 + 5 * (10 + yyyy);
     return hello;
-    
-}
-void fctf2(){
 }
 
-bool abcdedffds(){
-    bool zambet = true;
-    return zambet;
+int testFunction(int x, int z) {
+    int hlh;
+    if(3 > 2 && testFunction(2, 2.0)>15){
+        hlh++;
+    }
+    return hlh;
 }
 
-int fct1(int y){
-
-    fctttt(5+2);
-    int q = 0;
-    q = 2;
-    if(q == 2 && 3*5 < q+8){
-        q = 4;
+int test(int param1, int param2, float fr) {
+    float fr;
+    int smh;
+    if(param1 + param2 < 5){
+        fr = fr + 1.0;
     }
-    
-    while(x>10)
-    {
-        
-        if(q == 2 && fctttt(10 )<2) { q = q * 2; }
-        else 
-        {
-             if(q <= 20)
-            {
-                q++;
-            }
-        }
-    }
-     while(x>10){
-        int p2;
-        p2 = p2 / 3;
-
-        int p3;
-        p3 = p3 - 10;
-        int p4;
-        p4 = p3 / 3;
-
-        if(q==11) { q = 5; }
-        else 
-        {
-             if(q<20)
-            {
-                p2 = p2 + 1;
-                int hey = 14;
-            }
-        }
-    }
-
-    if( q > 10 && 7<10 || true != false && 3<0 ){
-        while( true || false ){
-                q = 3;
-        }
-    }
-
-    if( q>10 && (3+20)<11 || (((true) && false) < true)){
-        int ajdd;
-    }
-    int cff;
-    for(cff = 0; cff <= 5 && q + 3 >10 + (cff + 5); cff++){
-        q++;
-    }
-    return q;
-
-}
-int fct3(){
-    return q;
+    return smh;
 }
 
-main(){
-
-
+main () {
     attempt.y();
-    Eval(6);
-    int x1 = 10;
-    int x2 = 11;
-    Eval(x1+x2);
-    char whatever;
+    int x = 9;
+    int x3 = 10;
+    int x4 = 11;
+    
+    string whatever;
     bool sjb;
-    int sdkdkkd = 35;
-    int ajjsjddjjs = q + 3;
-    int skksksks =  2333;
-    
-    fct3(2*3);
-    fct1(fct1(q));
-    fct1(fct2(2+3), fct3(5));
-    if( q>10 && (13+0)<11 || (((true) && false) < true)){
-        int ajddddd;
-    }
-    
-    attempt.help(sjb);
-    char sjjsksdjjsksds = "alo gara";
-    int djjdjsjjsksdjjsksds = 1 + 2;
-    sjjsksdjjsksds = sjjsksdjjsksds + 10; 
+    float f;
+    int y;
 
-    if((23+10)<20 && sjb == true){
-        int ajdddjsjssdddd;
-    }
+    int x1;
+    int x2 = 3;
+    string nus = "c";
     
-    attempt.help(sddjb);
+    f = 30.0 ; 
+    sjb = true;
+    whatever = "cf";
+    
 
-     int zzzz;
-     zzzz = 3 + 3;
-     Eval(2+3+1*7-10);
+    int cff;
+    int q = 0;
+    for(cff = 0; cff <= 5 && q + 3 >10 + (cff + 5); cff++){
+        if( q>10 && (13+0)<11 || (((true) && false) < true)){
+            q++;
+        }
+        else{
+            q--;
+        }
+    }      
+    
+    
+    if (x1 + test(x1,x2,f) < 5 + x1 && ((x > 2 || x1 < 4+x2) || x == 2)) {
+        x = 2;
+        sjb = false;
+    }
+
+    int aa = 111;
+    int bbb;
+
+    if(aa > test(test(x1,3,f) + 2, bbb+4) + 2){ 
+        aa = 5;
+    }
+    x1 = aa*10 + 5 * 10 + 2;
+
+    Eval(x4+x3-25);
+    Eval(6);
+    Eval(x3*10+10);
+    Eval(x4);
+    Eval(x2*10+20) ;
+        
+    
 
 }
-

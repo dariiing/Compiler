@@ -67,7 +67,7 @@ int evalAST(AstNode *node)
     }
     else if (node->value == MUL)
     {
-        resultEval = evalAST(node->left) *  evalAST(node->right);
+        resultEval = evalAST(node->left) * evalAST(node->right);
     }
     else if (node->value == DIV)
     {
