@@ -17,7 +17,6 @@ char text[256];
 bool adv[24];
 char super;
 string ttt = "2.5";
-bool zambet = true ;
 
 class attempt{ 
 
@@ -37,13 +36,16 @@ class attempt{
 
 };
 
-void fct2(float y){
+int fctttt(float y){
+    int hello = 2;
+    bool mergeoare = true;
+    return mergeoare;
 }
 void fctf2(){
 }
 
 bool abcdedffds(){
-    
+    bool zambet = true;
     return zambet;
 }
 
@@ -88,7 +90,7 @@ int fct1(int y){
 
     if( q > 10 && 7<10 || true != false && 3<0 ){
         while( true || false ){
-                z = 3;
+                q = 3;
         }
     }
 

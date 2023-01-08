@@ -511,7 +511,7 @@ void tip_fct(bool cnst, char *typ, char *idd, char *rett)
                         // tipul variabilei din return
                         char s[50];
                         strcpy(s, search_var(rett));
-                        printf("Tipul variabilei %s din return de la linia %d este: %s.\n", rett, search_line_var(rett), s);
+                        // printf("Tipul variabilei %s din return de la linia %d este: %s.\n", rett, search_line_var(rett), s);
                         if (s == NULL) // daca nu e variabila ar trebui sa verificam de ce tip este 
                         {
                                 sprintf(s, "Variabila <%s> nu a fost declarata", rett);
