@@ -44,8 +44,8 @@ int testFunction(int x, float z) {
 }
 
 int testFunction(int x, int z) {
+    z = 5;
     int hlh;
-    int x = 3;
     if(3 > 2 && testFunction(2, 2.0)>15){
         hlh++;
     }
@@ -104,6 +104,7 @@ main () {
     if(aa > test(test(x1,3,f) + 2, bbb+4) + 2){ 
         aa = 5;
     }
+    aa = test(test(x1,3,f)+2, y+4) + (30 - y * 2) - 10;
     x1 = aa*10 + 5 * 10 + 2;
 
     Eval(x4+x3-25);

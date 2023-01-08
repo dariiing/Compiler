@@ -86,51 +86,5 @@ int evalAST(AstNode *node)
         printf("error if-else evalAST\n");
         exit(-1);
     }
-    /*
-    switch (node->value)
-    {
-    case NUMBER:
-    {
-        resp = ((info *)node)->val;
-        break;
-    }
-    case ADD:
-    {
-        resp = evalAST(node->left) + evalAST(node->right);
-        break;
-    }
-    case POW:
-    {
-        resp = evalAST(node->left) ^ evalAST(node->right);
-        break;
-    }
-    case DIV:
-    {
-        resp = evalAST(node->left) / evalAST(node->right);
-        break;
-    }
-    case MUL:
-    {
-        resp = evalAST(node->left) * evalAST(node->right);
-        break;
-    }
-    case MOD:
-    {
-        resp = evalAST(node->left) % evalAST(node->right);
-        break;
-    }
-    case SUB:
-    {
-        resp = evalAST(node->left) - evalAST(node->right);
-        break;
-    }
-    default:
-    {
-        printf("cv e gresit pa\n");
-        exit(-1);
-        break;
-    }
-    }
-    */
     return resultEval;
 }

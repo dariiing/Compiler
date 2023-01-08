@@ -31,7 +31,7 @@ struct fct
         int nr_param;
         bool const_fct;
 
-} t_fct[40];
+} t_fct[50];
 
 struct data
 {
@@ -43,7 +43,7 @@ struct data
         int line_number;
         bool const_var;
 
-} table[100];
+} table[150];
 
 int yyerror(char *s)
 {
@@ -88,16 +88,6 @@ bool found(char *variable)
         for (i = 0; i < count; i++)
         {
 
-                // char *x;
-                // x = (char *)malloc(strlen(table[i].name));
-                // strcpy(x, table[i].name);
-                // char *pch;
-                // pch = strtok(x, " ");
-
-                // if (pch != NULL)
-                // {
-                //         strcpy(x, pch);
-                // }
                 if (strcmp(table[i].name, variable) == 0)
                 {
                         var_used = table[i].line_number;
@@ -407,12 +397,6 @@ void verif_type_var(char *id, char *expr)
                         exit(0);
                 }
         }
-        // else if(strstr(type, "") != NULL){
-        //         char s[200];
-        //         sprintf(s, "fucking work");
-        //         yyerror(s);
-        //          exit(0);
-        //}
 }
 
 // informatii despre variabile
@@ -426,10 +410,6 @@ void tip_id_val(bool cnst, char *typ, char *idd, char *vall)
                 {
                         char *const_ptr;
                         const_ptr = (char *)malloc(24);
-
-                        // strcat(const_ptr, "     ");
-                        // strcat(const_ptr, typ);
-                        // strcat(const_ptr, "   ");
                         table[count].type = typ;
                 }
                 else
@@ -437,23 +417,11 @@ void tip_id_val(bool cnst, char *typ, char *idd, char *vall)
 
                         char *const_ptr;
                         const_ptr = (char *)malloc(24);
-
                         strcat(const_ptr, "const ");
                         strcat(const_ptr, typ);
                         table[count].type = const_ptr;
                 }
-                // if (strlen(idd) < 10)
-                // {
-                //         char *const_ptr;
-                //         const_ptr = (char *)malloc(24);
-                //         strcat(const_ptr, "       ");
-                //         strcat(const_ptr, idd);
-                //         table[count].name = const_ptr;
-                // }
-                // else
-                // {
-                        table[count].name = idd;
-                //}
+                table[count].name = idd;
                 table[count].value = vall;
                 table[count].line_number = yylineno;
                 count++;
@@ -478,9 +446,6 @@ void tip_fct(bool cnst, char *typ, char *idd, char *rett)
         {
                 char *const_ptr;
                 const_ptr = (char *)malloc(24);
-                // strcat(const_ptr, "   ");
-                // strcat(const_ptr, typ);
-                //strcat(const_ptr, "   ");
                 t_fct[count_fct].type = typ;
         }
         // verifica daca fct e const (si adauga in tabel "const")
@@ -489,7 +454,6 @@ void tip_fct(bool cnst, char *typ, char *idd, char *rett)
 
                 char *const_ptr;
                 const_ptr = (char *)malloc(24);
-
                 strcat(const_ptr, "const ");
                 strcat(const_ptr, typ);
                 t_fct[count_fct].type = const_ptr;
@@ -566,54 +530,6 @@ void print_table(int errors)
                 fprintf(fp, "TYPE -> NAME -> VALUE -> LINE NO             \n");
                 fprintf(fp, "--------------------------------------------------------------------------\n");
                 int i, max = 0;
-                // for (i = 0; i < count; i++)
-                // {
-                //         if (strlen(table[i].name) > max)
-                //         {
-                //                 max = strlen(table[i].name);
-                //         }
-                // }
-                // int temp;
-                // for (i = 0; i < count; i++)
-                // {
-                //         if (strlen(table[i].name) != max)
-                //         {
-                //                 temp = max - strlen(table[i].name);
-                //                 char *const_ptr;
-                //                 const_ptr = (char *)malloc(24);
-                //                 strcat(const_ptr, table[i].name);
-                //                 while (temp != 0)
-                //                 {
-                //                         strcat(const_ptr, " ");
-                //                         temp--;
-                //                 }
-                //                 table[i].name = const_ptr;
-                //         }
-                // }
-                // max = 0;
-                // for (i = 0; i < count; i++)
-                // {
-                //         if (strlen(table[i].value) > max)
-                //         {
-                //                 max = strlen(table[i].value);
-                //         }
-                // }
-                // for (i = 0; i < count; i++)
-                // {
-                //         if (strlen(table[i].value) != max)
-                //         {
-                //                 temp = max - strlen(table[i].value);
-                //                 char *const_ptr;
-                //                 const_ptr = (char *)malloc(24);
-                //                 strcat(const_ptr, table[i].value);
-                //                 while (temp != 0)
-                //                 {
-                //                         strcat(const_ptr, " ");
-                //                         temp--;
-                //                 }
-                //                 table[i].value = const_ptr;
-                //         }
-                // }
                 for (i = 0; i < count; i++)
                 {
                         fprintf(fp, "%s -> %s -> %s -> %d\n", table[i].type, table[i].name, table[i].value, table[i].line_number);
@@ -626,54 +542,7 @@ void print_table(int errors)
                 fprintf(fp, "LINE NO -> TYPE-> NAME -> RETURN -> PARAM                          \n");
                 fprintf(fp, "----------------------------------------------------------------------\n");
                 int j;
-                // max = 0;
-                // for (i = 0; i < count_fct; i++)
-                // {
-                //         if (strlen(t_fct[i].name) > max)
-                //         {
-                //                 max = strlen(t_fct[i].name);
-                //         }
-                // }
-                // for (i = 0; i < count_fct; i++)
-                // {
-                //         if (strlen(t_fct[i].name) != max)
-                //         {
-                //                 temp = max - strlen(t_fct[i].name);
-                //                 char *const_ptr;
-                //                 const_ptr = (char *)malloc(24);
-                //                 strcat(const_ptr, t_fct[i].name);
-                //                 while (temp != 0)
-                //                 {
-                //                         strcat(const_ptr, " ");
-                //                         temp--;
-                //                 }
-                //                 t_fct[i].name = const_ptr;
-                //         }
-                // }
-                // max = 0;
-                // for (i = 0; i < count_fct; i++)
-                // {
-                //         if (strlen(t_fct[i].ret) > max)
-                //         {
-                //                 max = strlen(t_fct[i].ret);
-                //         }
-                // }
-                // for (i = 0; i < count_fct; i++)
-                // {
-                //         if (strlen(t_fct[i].ret) != max)
-                //         {
-                //                 temp = max - strlen(t_fct[i].ret);
-                //                 char *const_ptr;
-                //                 const_ptr = (char *)malloc(24);
-                //                 strcat(const_ptr, t_fct[i].ret);
-                //                 while (temp != 0)
-                //                 {
-                //                         strcat(const_ptr, " ");
-                //                         temp--;
-                //                 }
-                //                 t_fct[i].ret = const_ptr;
-                //         }
-                // }
+
                 for (j = 0; j < count_fct; j++)
                 {
                         fprintf(fp, "%d -> %s -> %s -> %s ", t_fct[j].rownum, t_fct[j].type, t_fct[j].name, t_fct[j].ret);
