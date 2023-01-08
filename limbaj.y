@@ -188,7 +188,7 @@ stmt : const_
      | eval_type /* in main()*/           ';'
      ;
 
-eval_type : EVAL '(' expr ')' {printf("EVAL: %d\n", evalAST($3.ast)); freeAST($3.ast);}
+eval_type : EVAL '(' expr ')' {printf("output eval: %d\n", evalAST($3.ast)); freeAST($3.ast);}
           | TYPEOF '(' expr ')' 
           ;
 

@@ -1788,7 +1788,7 @@ yyreduce:
 
   case 101: /* eval_type: EVAL '(' expr ')'  */
 #line 191 "limbaj.y"
-                              {printf("EVAL: %d\n", evalAST((yyvsp[-1].ptr).ast)); freeAST((yyvsp[-1].ptr).ast);}
+                              {printf("output eval: %d\n", evalAST((yyvsp[-1].ptr).ast)); freeAST((yyvsp[-1].ptr).ast);}
 #line 1793 "y.tab.c"
     break;
 

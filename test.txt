@@ -1,24 +1,23 @@
 #include <stdio.h>
 #include<string.h>
 #include<fcntl.h>
-
 int abcd = 10;
-
 float a = 45.0;
 int b = 5233;
 bool qa = true; 
 char d = "%&asaads%^*";
 const char e = "asta este";
-int f; int g; bool h0;
-
+int f;
+int g;
+bool h0;
 int bb = 2;
 float xx = 2.5;
-   int x;
+int x;
 int vector[5];
 char text[256];
 bool adv[24];
 char super;
-char ttt = "2.5";
+string ttt = "2.5";
 
 class attempt{ 
 
@@ -39,14 +38,12 @@ class attempt{
 };
 
 void fct2(float y){
-
 }
-void fctf2(float y){
-
+void fctf2(){
 }
 
 int fct(int x){
-    return abcd;
+    return ttt;
 }
 
 char atmpt1(){
@@ -72,8 +69,7 @@ int fct1(int y){
             }
         }
     }
-     while(x>10)
-    {
+     while(x>10){
         int p2;
         p2 = p2 / 3;
 

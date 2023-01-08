@@ -107,9 +107,13 @@ bool found(char *variable)
         return false;
 }
 
-int sVar(char* name){
-        for(int i = 0; i < count; ++i){
-                if(strstr(table[i].name, name) != NULL){
+// returneaza indexul din tabelul de variabile unde gaseste variabila respectiva
+int sVar(char *name)
+{
+        for (int i = 0; i < count; ++i)
+        {
+                if (strstr(table[i].name, name) != NULL)
+                {
                         return i;
                 }
         }
@@ -186,7 +190,7 @@ bool fct_found(char *fct_name)
         return false;
 }
 
-// search_function verifica daca exista functii neinitializate;
+// search_function verifica daca exista declararea functiei;
 
 void search_function(char *name) // daca exista sau nu functia resp
 {
@@ -207,18 +211,14 @@ void search_function(char *name) // daca exista sau nu functia resp
         }
 }
 
-// search_var verifica daca exista variabile neinitializate;
-char *search_var(char* name)
+// search_var returneaza tipul variabilei daca o gaseste;
+char *search_var(char *name)
 {
         int i;
-
-        for (i = 0; i < count; i++)
+        i = sVar(name);
+        if (strstr(table[i].name, name) != NULL)
         {
-                // printf("%d, %s, %s\n", i, table[i].type, table[i].name);
-                if (strstr(table[i].name, name) != NULL)
-                {
-                        return table[i].type;
-                }
+                return table[i].type;
         }
 
         return "";
@@ -390,7 +390,7 @@ void verif_type_var(char *id, char *expr)
 
 // informatii despre variabile
 
-void tip_id_val(bool cnst, char* typ, char* idd, char *vall)
+void tip_id_val(bool cnst, char *typ, char *idd, char *vall)
 {
 
         if (found(idd) == false)
@@ -495,27 +495,25 @@ void tip_fct(bool cnst, char *typ, char *idd, char *rett)
                         yyerror(s);
                         exit(0);
                 }
-                // else if (strlen(rett) >= 1)
-                // {
-
-                //         char s[200];
-                //         strcpy(s, search_var(rett));
-                //         if (s != NULL)
-                //         {
-                //                 if (strstr(typ, s) == NULL)
-                //                 {
-                //                         sprintf(s, "Functia trebuie sa aiba return de tip %s", t_fct[count_fct].type);
-                //                         yyerror(s);
-                //                         exit(0);
-                //                 }
-                //         }
-                //         else
-                //         {
-                //                 sprintf(s, "Variabila <%s> nu a fost declarata", rett);
-                //                 yyerror(s);
-                //                 exit(0);
-                //         }
-                // }
+                else if (strlen(rett) >= 1)
+                {
+                        // tipul variabilei din return
+                        char s[20];
+                        strcpy(s, search_var(rett));
+                        printf("Tipul variabilei %s din return de la linia %d este: %s.\n", rett, sVar(rett), s);
+                        if (s == NULL)
+                        {
+                                sprintf(s, "Variabila <%s> nu a fost declarata", rett);
+                                yyerror(s);
+                                exit(0);
+                        }
+                        else if (strstr(s, rett) == NULL)
+                        {
+                                sprintf(s, "Functia trebuie sa aiba return de tip %s", t_fct[count_fct].type);
+                                yyerror(s);
+                                exit(0);
+                        }
+                }
                 count_fct++;
         }
         else
