@@ -1735,43 +1735,43 @@ yyreduce:
 
   case 86: /* stmt: TIP ID ASSIGN expr ';'  */
 #line 174 "limbaj.y"
-                                                {tip_id_val(false, (yyvsp[-4].value), (yyvsp[-3].value), (yyvsp[-1].ptr).idk); verif_type_var((yyvsp[-3].value),(yyvsp[-1].ptr).idk);}
+                                                {tip_id_val(false, (yyvsp[-4].value), (yyvsp[-3].value), (yyvsp[-1].ptr).idk); verif_type_var(strdup((yyvsp[-3].value)),strdup((yyvsp[-1].ptr).idk));}
 #line 1740 "y.tab.c"
     break;
 
   case 87: /* stmt: TIP ID ASSIGN VARBOOL ';'  */
 #line 175 "limbaj.y"
-                                                {tip_id_val(false, (yyvsp[-4].value), (yyvsp[-3].value), (yyvsp[-1].value)); verif_type_var((yyvsp[-3].value),(yyvsp[-1].value));}
+                                                {tip_id_val(false, (yyvsp[-4].value), (yyvsp[-3].value), (yyvsp[-1].value)); verif_type_var(strdup((yyvsp[-3].value)),strdup((yyvsp[-1].value)));}
 #line 1746 "y.tab.c"
     break;
 
   case 88: /* stmt: TIP ID ASSIGN STRING ';'  */
 #line 176 "limbaj.y"
-                                                {tip_id_val(false, (yyvsp[-4].value), (yyvsp[-3].value), (yyvsp[-1].value)); verif_type_var((yyvsp[-3].value),(yyvsp[-1].value));}
+                                                {tip_id_val(false, (yyvsp[-4].value), (yyvsp[-3].value), (yyvsp[-1].value)); verif_type_var(strdup((yyvsp[-3].value)),strdup((yyvsp[-1].value)));}
 #line 1752 "y.tab.c"
     break;
 
   case 89: /* stmt: ID ASSIGN expr ';'  */
 #line 177 "limbaj.y"
-                                                {search_var((yyvsp[-3].value)); verif_type_var((yyvsp[-3].value),(yyvsp[-1].ptr).idk);}
+                                                {search_var(strdup((yyvsp[-3].value))); verif_type_var(strdup((yyvsp[-3].value)),strdup((yyvsp[-1].ptr).idk));}
 #line 1758 "y.tab.c"
     break;
 
   case 90: /* stmt: ID ASSIGN VARBOOL ';'  */
 #line 178 "limbaj.y"
-                                                {search_var((yyvsp[-3].value)); verif_type_var((yyvsp[-3].value),(yyvsp[-1].value));}
+                                                {search_var(strdup((yyvsp[-3].value))); verif_type_var(strdup((yyvsp[-3].value)),strdup((yyvsp[-1].value)));}
 #line 1764 "y.tab.c"
     break;
 
   case 91: /* stmt: ID ASSIGN STRING ';'  */
 #line 179 "limbaj.y"
-                                                {search_var((yyvsp[-3].value)); verif_type_var((yyvsp[-3].value),(yyvsp[-1].value));}
+                                                {search_var(strdup((yyvsp[-3].value))); verif_type_var(strdup((yyvsp[-3].value)),strdup((yyvsp[-1].value)));}
 #line 1770 "y.tab.c"
     break;
 
   case 92: /* stmt: ID DIGIT ';'  */
 #line 180 "limbaj.y"
-                                                {search_var((yyvsp[-2].value));}
+                                                {search_var(strdup((yyvsp[-2].value)));}
 #line 1776 "y.tab.c"
     break;
 

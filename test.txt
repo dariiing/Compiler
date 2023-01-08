@@ -43,15 +43,26 @@ int testFunction(int x, float z) {
     return hello;
 }
 
-int testFunction(int x, int z) {
+string test1Function(int x, int z) {
     int hlh;
-    int x = 3;
+     x = 3;
     if(3 > 2 && testFunction(2, 2.0)>15){
         hlh++;
     }
-    return hlh;
+    return "2";
 }
+ string alo(){
+    return "eu";
+ }
 
+char hai(int z){
+    int qqqq;
+    z = qqqq;
+    return "unde";
+}
+bool pa(int unde,int crapi, int alo){
+    return true;
+}
 int test(int param1, int param2, float fr) {
     float fr;
     int smh;

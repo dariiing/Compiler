@@ -171,13 +171,13 @@ const_ : CONST TIP ID                  ';'        {tip_id_val(true, $2, $3, "");
 
 stmt : const_
      | TIP ID                            ';'    {tip_id_val(false, $1, $2, "");}
-     | TIP ID ASSIGN expr                ';'    {tip_id_val(false, $1, $2, $4.idk); verif_type_var($2,$4.idk);}	
-     | TIP ID ASSIGN VARBOOL             ';'    {tip_id_val(false, $1, $2, $4); verif_type_var($2,$4);}
-     | TIP ID ASSIGN STRING              ';'    {tip_id_val(false, $1, $2, $4); verif_type_var($2,$4);}
-     | ID ASSIGN expr                    ';'    {search_var($1); verif_type_var($1,$3.idk);}
-     | ID ASSIGN VARBOOL                 ';'    {search_var($1); verif_type_var($1,$3);}
-     | ID ASSIGN STRING                  ';'    {search_var($1); verif_type_var($1,$3);}
-     | ID DIGIT                          ';'    {search_var($1);} 
+     | TIP ID ASSIGN expr                ';'    {tip_id_val(false, $1, $2, $4.idk); verif_type_var(strdup($2),strdup($4.idk));}	
+     | TIP ID ASSIGN VARBOOL             ';'    {tip_id_val(false, $1, $2, $4); verif_type_var(strdup($2),strdup($4));}
+     | TIP ID ASSIGN STRING              ';'    {tip_id_val(false, $1, $2, $4); verif_type_var(strdup($2),strdup($4));}
+     | ID ASSIGN expr                    ';'    {search_var(strdup($1)); verif_type_var(strdup($1),strdup($3.idk));}
+     | ID ASSIGN VARBOOL                 ';'    {search_var(strdup($1)); verif_type_var(strdup($1),strdup($3));}
+     | ID ASSIGN STRING                  ';'    {search_var(strdup($1)); verif_type_var(strdup($1),strdup($3));}
+     | ID DIGIT                          ';'    {search_var(strdup($1));} 
      | ID '(' apel_fct ')'               ';'    {search_function($1);}
      | IF '(' conditii ')' '{' instructiuni '}'
      | IF '(' conditii ')' '{' instructiuni '}' ELSE '{' instructiuni '}'

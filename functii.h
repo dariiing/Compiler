@@ -215,13 +215,14 @@ void search_function(char *name) // daca exista sau nu functia resp
 char *search_var(char *name)
 {
         int i;
-        i = sVar(name);
+        for(i=0;i<count;i++)
+        {
         if (strcmp(table[i].name, name) == 0)
         {
                 return table[i].type;
         }
-
-        return "";
+        }
+        return "none";
 }
 
 int search_line_var(char *name)
@@ -239,9 +240,12 @@ int search_line_var(char *name)
 
 void verif_type_var(char *id, char *expr)
 {
-        int i, ok = 1,tabel = 0;
+        printf("Id %s\n", id);
+        printf("Expr %s\n", expr);
+        int i, ok = 1,tabel = 0,j, este_param = 0;
         char type[30];
         char *p;
+        printf("inainte\n");
         for (i = 0; i < count; i++)
         { // caut in tabel tipul variabilei
                 if (strcmp(table[i].name, id) == 0)
@@ -250,7 +254,12 @@ void verif_type_var(char *id, char *expr)
                         tabel = 1;
                 }
         }
-        if (strstr(type, "int") != NULL)
+        printf("dupa for\n");
+        if(tabel == 0){
+                strcpy(type,"undefined");
+        }
+        //printf("type: %s\n",type);
+        if (strstr(type, "int") != NULL && tabel ==1)
         { // daca e de tip int => expresia de tip int
 
                 if (strstr(expr, ".") != NULL || strstr(expr, "true") != NULL || strstr(expr, "false") != NULL || strstr(expr, "\"") != NULL) // e nr float
@@ -307,7 +316,7 @@ void verif_type_var(char *id, char *expr)
                         }
                 }
         }
-        else if (strstr(type, "float") != NULL)
+        else if (strstr(type, "float") != NULL && tabel ==1)
         {
                 if (strstr(expr, "+") != NULL || strstr(expr, "-") != NULL || strstr(expr, "*") != NULL || strstr(expr, "/") != NULL || strstr(expr, "%") != NULL || strstr(expr, "^") != NULL)
                 {
@@ -373,7 +382,7 @@ void verif_type_var(char *id, char *expr)
                         }
                 }
         }
-        else if (strstr(type, "bool") != NULL)
+        else if (strstr(type, "bool") != NULL && tabel ==1)
         {
                 int ok = 0;
                 if (strstr(expr, "false") == NULL)
@@ -388,7 +397,7 @@ void verif_type_var(char *id, char *expr)
                         exit(0);
                 }
         }
-        else if (strstr(type, "char") != NULL)
+        else if (strstr(type, "char") != NULL && tabel ==1)
         {
                 if (strstr(expr, "\"") == NULL || strstr(expr, "true") != NULL || strstr(expr, "false") != NULL)
                 {
@@ -398,7 +407,7 @@ void verif_type_var(char *id, char *expr)
                         exit(0);
                 }
         }
-        else if (strstr(type, "string") != NULL){
+        else if (strstr(type, "string") != NULL && tabel ==1){
                 if (strstr(expr, "\"") == NULL || strstr(expr, "true") != NULL || strstr(expr, "false") != NULL)
                 {
                         char s[200];
@@ -407,12 +416,55 @@ void verif_type_var(char *id, char *expr)
                         exit(0);
                 }
         }
-        // else if(strstr(type, "") != NULL){
-        //         char s[200];
-        //         sprintf(s, "fucking work");
-        //         yyerror(s);
-        //          exit(0);
-        //}
+        else if(strstr(type, "undefined") != NULL){
+                for(i=0;i<=count_fct;i++)
+                {
+                        for(j=0;j<=t_fct[j].nr_param;j++)
+                        {
+                                if(strcmp(t_fct[j].param_fct[j].name,id)==0){
+                                        este_param=1;
+                                }
+                        }
+                }
+                if(este_param == 0){
+                        char s[200];
+                        sprintf(s, "Nu exista parametru sau variabila declarata: <%s>",id);
+                        yyerror(s);
+                        exit(0);
+                }
+                else{
+                char type_param[20];
+                for(i=0;i<=count_fct;i++)
+                {
+                        for(j=0;j<=t_fct[j].nr_param;j++)
+                        {
+                                if(strcmp(t_fct[j].param_fct[j].name,id)==0){
+                                        strcpy(type_param,t_fct[j].param_fct[j].type); // am copiat tipul parametrului
+                                }
+                        }
+                }
+                char type_expr[20];
+                if(strstr(expr,".")!=NULL && strstr(expr,"\"")==NULL){
+                        strcpy(type_expr,"float");
+                }
+                else if(strstr(expr,"true")!=NULL|| strstr(expr,"false")!=NULL && strstr(expr,"\"")==NULL){
+                        strcpy(type_expr,"bool");
+                }
+                else if(strstr(expr,"\"")!=NULL){
+                        strcpy(type_expr,"string char");
+                }
+                else{
+                        strcpy(type_expr,"int");
+                }
+                if(strstr(type_expr,type_param)==NULL){
+                        char s[200];
+                        sprintf(s, "Variabila <%s> nu este de tip %s",id,type_expr);
+                        yyerror(s);
+                        exit(0);
+                }
+                }
+
+        }
 }
 
 // informatii despre variabile
@@ -525,22 +577,87 @@ void tip_fct(bool cnst, char *typ, char *idd, char *rett)
                 else if (strlen(rett) >= 1)
                 {
                         // tipul variabilei din return
-                        char s[50];
+                        char s[50]; int i, j, este_param = 0;
                         strcpy(s, search_var(rett));
                         // printf("Tipul variabilei %s din return de la linia %d este: %s.\n", rett, search_line_var(rett), s);
-                        if (s == NULL) // daca nu e variabila ar trebui sa verificam de ce tip este 
+                        if (strstr(s,"none")!=NULL) // daca nu e variabila din tabel
                         {
-                                sprintf(s, "Variabila <%s> nu a fost declarata", rett);
-                                yyerror(s);
-                                exit(0);
+                                // verific daca este printre parametrii
+                                for(i=0;i<=count_fct;i++)
+                                        {
+                                        for(j=0;j<=t_fct[j].nr_param;j++)
+                                                {       
+                                                        if(strcmp(t_fct[j].param_fct[j].name,rett)==0){
+                                                        este_param=1;
+                                                         }
+                                                }
+                                        }
+                                 if(este_param == 0){// daca nu e nici parametru
+                                        //verific daca e de tip numar int, float, string, bool
+                                        char type_expr[20];
+                                        if(strstr(rett,".")!=NULL && strstr(rett,"\"")==NULL){
+                                                 strcpy(type_expr,"float");
+                                        }
+                                        else if((strstr(rett,"true")!=NULL|| strstr(rett,"false")!=NULL) && strstr(rett,"\"")==NULL){
+                                                strcpy(type_expr,"bool");
+                                        }
+                                        else if(strstr(rett,"\"")!=NULL){
+                                             strcpy(type_expr,"string char");
+                                       }
+                                        else{
+                                                strcpy(type_expr,"int");
+                                        }
+                                        if(strstr(type_expr,typ)==NULL)
+                                        {
+                                           char s[200];
+                                           sprintf(s, "Returnul <%s> nu este de tipul: <%s>",rett,typ);
+                                           yyerror(s);
+                                           exit(0);
+                                        }
+                                 }
                         }
-                        else if (strstr(s, t_fct[count_fct].type) == NULL) 
-                        {
-                                sprintf(s, "Functia trebuie sa aiba return de tip %s", t_fct[count_fct].type);
-                                yyerror(s);
-                                exit(0);
+                                else{
+                                        char type_param[20];
+                                        for(i=0;i<=count_fct;i++)
+                                                {
+                                                for(j=0;j<=t_fct[j].nr_param;j++)
+                                                        {
+                                                                if(strcmp(t_fct[j].param_fct[j].name,rett)==0){
+                                                                          strcpy(type_param,t_fct[j].param_fct[j].type); // am copiat tipul parametrului
+                                                         }
+                                                }
+                                        if(strstr(typ,type_param)==NULL){
+                                        char s[200];
+                                        sprintf(s, "Variabila <%s> nu este de tip %s",rett,typ);
+                                        yyerror(s);
+                                        exit(0);
+                                }
+                                        }
+                                // char type_expr[20];
+                                // if(strstr(rett,".")!=NULL && strstr(rett,"\"")==NULL){
+                                //         strcpy(type_expr,"float");
+                                //  }
+                                // else if(strstr(rett,"true")!=NULL|| strstr(rett,"false")!=NULL && strstr(rett,"\"")==NULL){
+                                //            strcpy(type_expr,"bool");
+                                //  }
+                                //   else if(strstr(rett,"\"")!=NULL){
+                                //            strcpy(type_expr,"string char");
+                                //    }
+                                // else{
+                                //      strcpy(type_expr,"int");
+                                //   }
+                                
+                                // sprintf(s, "Variabila <%s> nu a fost declarata", rett);
+                                // yyerror(s);
+                                // exit(0);
                         }
                 }
+                // if (strstr(type_expr, t_fct[count_fct].type) == NULL) 
+                //         {
+                //                 sprintf(s, "Functia trebuie sa aiba return de tip %s", t_fct[count_fct].type);
+                //                 yyerror(s);
+                //                 exit(0);
+                //         }
                 count_fct++;
         }
         else
@@ -551,6 +668,7 @@ void tip_fct(bool cnst, char *typ, char *idd, char *rett)
                 exit(0);
         }
 }
+
 
 // FUNCTIE PENTRU TABEL
 
