@@ -43,7 +43,7 @@ struct data
         int line_number;
         bool const_var;
 
-} table[40];
+} table[100];
 
 int yyerror(char *s)
 {
@@ -63,9 +63,7 @@ void par_fct(char *typ, char *idd)
         {
 
                 t_fct[count_fct].param_fct[contor].type = typ;
-
                 t_fct[count_fct].param_fct[contor].name = idd;
-                printf("param: %s, %s\n", typ, idd);
         }
         else
         {
@@ -109,11 +107,21 @@ bool found(char *variable)
         return false;
 }
 
+int sVar(char* name){
+        for(int i = 0; i < count; ++i){
+                if(strstr(table[i].name, name) != NULL){
+                        return i;
+                }
+        }
+        return -1;
+}
+
 bool fct_found(char *fct_name)
 {
 
         // fct_found == true  => fct deja exista
         // fct_found == false => fct nu exista
+
         int i;
         fct_used = 0;
 
@@ -146,14 +154,14 @@ bool fct_found(char *fct_name)
                                 yyerror(s);
                                 exit(0);
                         }
-                        // daca denumirea deja exista, verific daca parametrii sunt la fel
+                        // daca denumirea exista, verific daca parametrii sunt la fel
 
                         // verific daca au acelasi nr de param
                         int contor_new_fct = 0;
                         contor_new_fct = t_fct[count_fct].nr_param;
 
                         // daca nr_param e diferit, atunci fct sunt diferite
-                        
+
                         if (contor_new_fct != contor_exist_fct)
                         {
                                 return false;
@@ -161,20 +169,24 @@ bool fct_found(char *fct_name)
                         else
                         {
                                 int count_param_identici = 0;
-                                for(int j = 0; j < contor_exist_fct; ++j){
-                                        if(strcmp(t_fct[count_fct].param_fct[j].type, t_fct[i].param_fct[j].type) == 0){
+                                for (int j = 0; j < contor_exist_fct; ++j)
+                                {
+                                        if (strcmp(t_fct[count_fct].param_fct[j].type, t_fct[i].param_fct[j].type) == 0)
+                                        {
                                                 count_param_identici++;
                                         }
                                 }
-                                if(count_param_identici == contor_exist_fct){
-                                                printf("au aceeasi def\n");
-                                                return true;
+                                if (count_param_identici == contor_exist_fct)
+                                {
+                                        return true;
                                 }
                         }
                 }
         }
         return false;
 }
+
+// search_function verifica daca exista functii neinitializate;
 
 void search_function(char *name) // daca exista sau nu functia resp
 {
@@ -195,26 +207,21 @@ void search_function(char *name) // daca exista sau nu functia resp
         }
 }
 
-void search_var(char *name) // daca exista sau nu variabila resp
+// search_var verifica daca exista variabile neinitializate;
+char *search_var(char* name)
 {
         int i;
-        int ok = 0;
+
         for (i = 0; i < count; i++)
         {
+                // printf("%d, %s, %s\n", i, table[i].type, table[i].name);
                 if (strstr(table[i].name, name) != NULL)
                 {
-                        // return table[i].type;
-                        ok = 1;
+                        return table[i].type;
                 }
         }
-        if (ok == 0)
-        {
 
-                char s[200];
-                sprintf(s, "Variabila <%s> nu a fost declarata", name);
-                yyerror(s);
-                exit(0);
-        }
+        return "";
 }
 
 // TIP ID ASSIGN expr
@@ -383,7 +390,7 @@ void verif_type_var(char *id, char *expr)
 
 // informatii despre variabile
 
-void tip_id_val(bool cnst, char *typ, char *idd, char *vall)
+void tip_id_val(bool cnst, char* typ, char* idd, char *vall)
 {
 
         if (found(idd) == false)
@@ -439,8 +446,6 @@ void tip_id_val(bool cnst, char *typ, char *idd, char *vall)
 
 void tip_fct(bool cnst, char *typ, char *idd, char *rett)
 {
-
-        printf("tip_fct(): %d\n", yylineno);
         // formatare tabel
         if (cnst == false)
         {
@@ -474,7 +479,7 @@ void tip_fct(bool cnst, char *typ, char *idd, char *rett)
         // daca nu exista fct cu aceeasi denumire si aceiasi parametri
         if (fct_found(idd) == false)
         {
-                // verific tipul functiei
+                // verific tipul functiei si return
                 if (strstr(t_fct[count_fct].type, "void") != NULL && strlen(t_fct[count_fct].ret) >= 1)
                 {
                         char s[200];
@@ -490,13 +495,26 @@ void tip_fct(bool cnst, char *typ, char *idd, char *rett)
                         yyerror(s);
                         exit(0);
                 }
-                // else if (strstr(t_fct[count_fct].type, t_fct[count_fct].ret) == NULL)
+                // else if (strlen(rett) >= 1)
                 // {
 
                 //         char s[200];
-                //         sprintf(s, "Functia trebuie sa aiba return de tip %s", t_fct[count_fct].type);
-                //         yyerror(s);
-                //         exit(0);
+                //         strcpy(s, search_var(rett));
+                //         if (s != NULL)
+                //         {
+                //                 if (strstr(typ, s) == NULL)
+                //                 {
+                //                         sprintf(s, "Functia trebuie sa aiba return de tip %s", t_fct[count_fct].type);
+                //                         yyerror(s);
+                //                         exit(0);
+                //                 }
+                //         }
+                //         else
+                //         {
+                //                 sprintf(s, "Variabila <%s> nu a fost declarata", rett);
+                //                 yyerror(s);
+                //                 exit(0);
+                //         }
                 // }
                 count_fct++;
         }
@@ -509,7 +527,7 @@ void tip_fct(bool cnst, char *typ, char *idd, char *rett)
         }
 }
 
-// FUNCTII PENTRU TABEL
+// FUNCTIE PENTRU TABEL
 
 void print_table(int errors)
 {
@@ -646,74 +664,4 @@ void print_table(int errors)
         }
 }
 
-typedef struct node
-{
-        char *value;
-        struct node *left;
-        struct node *right;
-} Node;
-
-Node *root;
-
-Node *createNode(char *value, Node *left, Node *right)
-{
-        Node *node = (Node *)malloc(sizeof(Node));
-        node->value = value;
-        node->left = left;
-        node->right = right;
-        return node;
-}
-
-void printTree(Node *node, int level)
-{
-        if (node == NULL)
-                return;
-        printTree(node->right, level + 1);
-        int i;
-        for (i = 0; i < level; i++)
-        {
-                printf(" ");
-        }
-        printf("%s\n", node->value);
-        printTree(node->left, level + 1);
-}
-
-void free_ast(Node *root)
-{
-        if (root != NULL)
-        {
-                free_ast(root->left);
-                free_ast(root->right);
-                free(root);
-        }
-}
-
-int evaluateTree(Node *node)
-{
-        if (node == NULL)
-                return 0;
-        if (node->left == NULL && node->right == NULL)
-        {
-                return atoi(node->value);
-        }
-        int left = evaluateTree(node->left);
-        int right = evaluateTree(node->right);
-        if (strcmp(node->value, "+") == 0)
-        {
-                return left + right;
-        }
-        if (strcmp(node->value, "-") == 0)
-        {
-                return left - right;
-        }
-        if (strcmp(node->value, "*") == 0)
-        {
-                return left * right;
-        }
-        if (strcmp(node->value, "/") == 0)
-        {
-                return left / right;
-        }
-        return 0;
-}
 #endif

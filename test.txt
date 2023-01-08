@@ -2,9 +2,9 @@
 #include<string.h>
 #include<fcntl.h>
 
-int cfffffffff = 10;
+int abcd = 10;
 
-float a = 45.6274;
+float a = 45.0;
 int b = 5233;
 bool qa = true; 
 char d = "%&asaads%^*";
@@ -13,11 +13,11 @@ int f; int g; bool h0;
 
 int bb = 2;
 float xx = 2.5;
-
+   int x;
 int vector[5];
 char text[256];
 bool adv[24];
-
+char super;
 char ttt = "2.5";
 
 class attempt{ 
@@ -30,7 +30,7 @@ class attempt{
 
     char madoare = "capuuuuuuuuuul";
 
-    int x;
+ 
     int djjd;
     djjd ++;
     bool jdj = false;
@@ -38,24 +38,29 @@ class attempt{
 
 };
 
-void fct2(int x, float y){
-
-}
 void fct2(float y){
-    return x;
+
+}
+void fctf2(float y){
+
 }
 
-int atmpt1(){
-   return bb; 
+int fct(int x){
+    return abcd;
+}
+
+char atmpt1(){
+   return ttt; 
 }
 
 int fct1(int y){
 
     int q = 0;
-    x = 2;
-    if(x == 2 && 3*5 < x+8){
-        x = 4;
+    q = 2;
+    if(q == 2 && 3*5 < q+8){
+        q = 4;
     }
+    
     while(x>10)
     {
         if(q == 2) { q = q * 2; }
@@ -77,10 +82,10 @@ int fct1(int y){
         int p4;
         p4 = p3 / 3;
 
-        if(x==11) { x = 5; }
+        if(q==11) { q = 5; }
         else 
         {
-             if(x<20)
+             if(q<20)
             {
                 p2 = p2 + 1;
                 int hey = 14;
@@ -88,40 +93,44 @@ int fct1(int y){
         }
     }
 
-    if( x > 10 && 7<10 || true != false && 3<0 ){
+    if( q > 10 && 7<10 || true != false && 3<0 ){
         while( true || false ){
                 z = 3;
         }
     }
 
-    if( x>10 && (3+20)<11 || (((true) && false) < true)){
+    if( q>10 && (3+20)<11 || (((true) && false) < true)){
         int ajdd;
     }
     int cff;
-    for(cff = 0; cff <= 5 && x + 3 >10 + (cff + 5); cff++){
-        x++;
+    for(cff = 0; cff <= 5 && q + 3 >10 + (cff + 5); cff++){
+        q++;
     }
     return q;
 
 }
-
+int fct3(){
+    return q;
+}
 
 main(){
 
 
     attempt.y();
-    
+    Eval(6);
+    int x1 = 10;
+    int x2 = 11;
+    Eval(x1+x2);
     char whatever;
-    int sjb;
+    bool sjb;
     int sdkdkkd = 35;
-    int ajjsjddjjs = x + 3;
+    int ajjsjddjjs = q + 3;
     int skksksks =  2333;
     
-    
     fct3(2*3);
-    fct1(fct1(x));
+    fct1(fct1(q));
     fct1(fct2(2+3), fct3(5));
-    if( x>10 && (13+0)<11 || (((true) && false) < true)){
+    if( q>10 && (13+0)<11 || (((true) && false) < true)){
         int ajddddd;
     }
     
@@ -130,7 +139,7 @@ main(){
     int djjdjsjjsksdjjsksds = 1 + 2;
     sjjsksdjjsksds = sjjsksdjjsksds + 10; 
 
-    if( (23+10)<20 ){
+    if((23+10)<20 && sjb == true){
         int ajdddjsjssdddd;
     }
     
@@ -138,6 +147,6 @@ main(){
 
      int zzzz;
      zzzz = 3 + 3;
-     bool sjsdjkdckcknd = false;
+     
 
 }

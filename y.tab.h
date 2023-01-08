@@ -111,11 +111,12 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 9 "limbaj.y"
+#line 15 "limbaj.y"
 
         char *value;
+        ExprInfo ptr;
 
-#line 119 "y.tab.h"
+#line 120 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
