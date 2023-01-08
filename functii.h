@@ -239,7 +239,7 @@ int search_line_var(char *name)
 
 void verif_type_var(char *id, char *expr)
 {
-        int i, ok = 1;
+        int i, ok = 1,tabel = 0;
         char type[30];
         char *p;
         for (i = 0; i < count; i++)
@@ -247,6 +247,7 @@ void verif_type_var(char *id, char *expr)
                 if (strcmp(table[i].name, id) == 0)
                 {
                         strcpy(type, table[i].type);
+                        tabel = 1;
                 }
         }
         if (strstr(type, "int") != NULL)
@@ -397,6 +398,21 @@ void verif_type_var(char *id, char *expr)
                         exit(0);
                 }
         }
+        else if (strstr(type, "string") != NULL){
+                if (strstr(expr, "\"") == NULL || strstr(expr, "true") != NULL || strstr(expr, "false") != NULL)
+                {
+                        char s[200];
+                        sprintf(s, "Variabila <%s> nu contine o valoare de tip string", id);
+                        yyerror(s);
+                        exit(0);
+                }
+        }
+        // else if(strstr(type, "") != NULL){
+        //         char s[200];
+        //         sprintf(s, "fucking work");
+        //         yyerror(s);
+        //          exit(0);
+        //}
 }
 
 // informatii despre variabile
@@ -464,7 +480,7 @@ void tip_fct(bool cnst, char *typ, char *idd, char *rett)
                 const_ptr = (char *)malloc(24);
                 // strcat(const_ptr, "   ");
                 // strcat(const_ptr, typ);
-                strcat(const_ptr, "   ");
+                //strcat(const_ptr, "   ");
                 t_fct[count_fct].type = typ;
         }
         // verifica daca fct e const (si adauga in tabel "const")
