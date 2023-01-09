@@ -1,36 +1,137 @@
-#include <stdlib.h
-int x = 23;
-int x1;
-int x1
-int x2;
-float f1 = 50.0;
-string s = “ana”’;
-int testFunction(int x, float z) {
-  return x;
+#include <stdio.h
+
+int initial;
+int a;
+int a;
+int b = 2 + 3;
+
+int arr[10];
+float f2 = 20.0 ;
+float ff;
+
+string d = "%&asaads%^*";
+const char e = asta este";
+int f1;
+int g;
+bool h0;
+int bb = 2;
+float xx = 2.5;
+int integer;
+bool adv[24];
+char super;
+
+class attempt{ 
+
+
+    float m = 123738324.438323993+ 1223;
+    float aaaa = 3.2+12.1;
+    int z = 3 + 10.0;
+    int djjd;
+    djjd ++;
+    bool jdj = false;
+    char alfabet = abcd;
+
+    string fctt(string name){
+        return name;
+    }
+    
+
+};
+
+class atmp2{};
+
+
+int testFunction(int x, int z) {
+    z = 5;
+    int hlh;
+    if(3 > 2 && testFunction(2, 2.0)>15){
+        hlh++;
+    }
 }
 
-int testFunction(int x, float z) {
-  return x;
+
+ string soare(){
+    return luna;
+ }
+
+ string alo(int x){
+    return "cf";
+ }
+
+char munte(int z){
+    z = qqqq;
+    return "mare";
 }
 
-int testFunction(float x, float z) {
-  return x;
+bool adevarat(int i,int o, int a){
+    return "T";
 }
 
-int test(int param) {
-  return x;
+int test(int param1, int param2, float fr) {
+    float fr;
+    int smh;
+    if(param1 + param2 < 5){
+        fr = fr + 1.0;
+    }
+    return 0;
 }
 
-int main () {
-    x3 = x + 2;
-	f1 = x + x2;
-	f1 = test (5) + x;
-    x = test(5) + f1; 
-	x = s + f1;
-    test(f1);
-	test(5,f1);
-    Eval(f1);
-    Eval(f1+x);
-	test(5+f1);
-  Eval(20/0);
+main () {
+    attempt.y();
+    attempt.djjd;
+    int x = 9
+    int x3 = 10;
+    int x3 = 11;
+    
+    string wh;
+    bool sjb = "trui";
+    float f;
+    int y;
+
+    int x1;
+    int x2 = 33.2;
+    string nus = "c";
+    
+    f = 30.0 ; 
+    sjb = true;
+    wh = "cf";
+    
+
+    int cff;
+    int q = 0;
+    for(cff = 0; cff <= 5 && q + 3 >10 + (cff + 5); cff++){
+        if( q>10 && (13+0)<11 || (((true) && false) < true)){
+            q++
+        }
+        else{
+            q--;
+        }
+    }      
+    
+    
+    if (x1 + test(x1,x2,f) < 5 + x1 && ((x > 2 || x1 < 4+x2) || x == 2)) {
+        x = 2;
+        sjb = false;
+    }
+
+    int aa = "numar";
+    int bbb;
+
+    if(aa > test(test(x1,3,f) + 2, bbb+4) + 2){ 
+        aa = 5;
+    }
+    aa = test(test(x1,3,f)+2, y+4);
+    x1 = aa*10 + 5 * 10 + 2;
+
+    Eval(6);
+    Eval(x3*10+10);
+    Eval(x4);
+    Eval(x2*10+20) ;
+    Eval(x4+x3-25);
+ 
+    Eval(x3*10+10);
+    Eval(x+ test(x1,x,f)) ; 
+    Eval(x2*10+20) ; 
+    Eval(20/0);
+
 }

@@ -81,6 +81,7 @@ int test(int param1, int param2, float fr) {
 
 main () {
     attempt.y();
+    attempt.djjd;
     int x = 9;
     int x3 = 10;
     int x4 = 11;
