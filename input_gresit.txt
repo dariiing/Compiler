@@ -1,0 +1,36 @@
+#include <stdlib.h
+int x = 23;
+int x1;
+int x1
+int x2;
+float f1 = 50.0;
+string s = “ana”’;
+int testFunction(int x, float z) {
+  return x;
+}
+
+int testFunction(int x, float z) {
+  return x;
+}
+
+int testFunction(float x, float z) {
+  return x;
+}
+
+int test(int param) {
+  return x;
+}
+
+int main () {
+    x3 = x + 2;
+	f1 = x + x2;
+	f1 = test (5) + x;
+    x = test(5) + f1; 
+	x = s + f1;
+    test(f1);
+	test(5,f1);
+    Eval(f1);
+    Eval(f1+x);
+	test(5+f1);
+  Eval(20/0);
+}

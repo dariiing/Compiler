@@ -71,7 +71,14 @@ int evalAST(AstNode *node)
     }
     else if (node->value == DIV)
     {
+        int nod = evalAST(node->right);
+        if(nod!= 0){
         resultEval = evalAST(node->left) / evalAST(node->right);
+        }
+        else{
+            printf("Eroare: impartire la 0\n");
+            exit(-1);
+        }
     }
     else if (node->value == POW)
     {
@@ -79,11 +86,18 @@ int evalAST(AstNode *node)
     }
     else if (node->value == MOD)
     {
+        int nod = evalAST(node->right);
+        if(nod!= 0){
         resultEval = evalAST(node->left) % evalAST(node->right);
+        }
+        else{
+            printf("Eroare: impartire la 0\n");
+            exit(-1);
+        }
     }
     else
     {
-        printf("error if-else evalAST\n");
+        printf("Apelati eval doar cu int\n");
         exit(-1);
     }
     return resultEval;

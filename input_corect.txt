@@ -1,7 +1,8 @@
 #include <stdio.h>
+
 int initial;
 int a;
-int b;
+int b = 2 + 3;
 
 int arr[10];
 float f2 = 20.0 ;
@@ -25,23 +26,21 @@ class attempt{
 
     float m = 123738324.438323993+ 12.23;
     float aaaa = 3.2+12.1;
-    
     int z = 3 + 10;
-
-    char madoare = "capuuuuuuuuuul";
-
- 
     int djjd;
     djjd ++;
     bool jdj = false;
+    char alfabet = "abcd";
+
+    string fctt(string name){
+        return name;
+    }
     
 
 };
-int testFunction(int x, float z) {
-    int yyyy = 30;
-    int hello = 2 + 5 * (10 + yyyy);
-    return hello;
-}
+
+class atmp2{};
+
 
 int testFunction(int x, int z) {
     z = 5;
@@ -49,32 +48,35 @@ int testFunction(int x, int z) {
     if(3 > 2 && testFunction(2, 2.0)>15){
         hlh++;
     }
-    return 2;
+    return z;
 }
 
-int expr(int x){
-    return x;
-}
 
-int alo(){
-    return eu;
+ string soare(){
+    return "luna";
  }
 
-char hai(int z){
+ string alo(int x){
+    return "cf";
+ }
+
+char munte(int z){
     int qqqq;
     z = qqqq;
-    return "unde";
+    return "mare";
 }
-bool pa(int unde,int crapi, int alo){
+
+bool adevarat(int i,int o, int a){
     return true;
 }
+
 int test(int param1, int param2, float fr) {
     float fr;
     int smh;
     if(param1 + param2 < 5){
         fr = fr + 1.0;
     }
-    return smh;
+    return 0;
 }
 
 main () {
@@ -83,7 +85,7 @@ main () {
     int x3 = 10;
     int x4 = 11;
     
-    string whatever;
+    string wh;
     bool sjb;
     float f;
     int y;
@@ -94,7 +96,7 @@ main () {
     
     f = 30.0 ; 
     sjb = true;
-    whatever = "cf";
+    wh = "cf";
     
 
     int cff;
@@ -120,14 +122,18 @@ main () {
     if(aa > test(test(x1,3,f) + 2, bbb+4) + 2){ 
         aa = 5;
     }
+    aa = test(test(x1,3,f)+2, y+4);
     x1 = aa*10 + 5 * 10 + 2;
 
-    Eval(x4+x3-25);
     Eval(6);
     Eval(x3*10+10);
     Eval(x4);
     Eval(x2*10+20) ;
-        
+    Eval(x4+x3-25);
+ 
+    Eval(x3*10+10);
+    Eval(x+ test(x1,x,f)) ; 
+    Eval(x2*10+20) ; 
     
 
 }

@@ -120,6 +120,19 @@ int sVar(char *name)
         return -1;
 }
 
+// returneaza indexul din tabelul de functii unde gaseste functia respectiva
+int sFct(char *name)
+{
+        for (int i = 0; i < count_fct; ++i)
+        {
+                if (strcmp(t_fct[i].name, name) == 0)
+                {
+                        return i;
+                }
+        }
+        return -1;
+}
+
 bool fct_found(char *fct_name)
 {
 
@@ -136,13 +149,6 @@ bool fct_found(char *fct_name)
                 char *name;
                 name = (char *)malloc(strlen(t_fct[i].name));
                 strcpy(name, t_fct[i].name);
-                char *trim;
-                trim = strtok(name, " ");
-
-                if (trim != NULL)
-                {
-                        strcpy(name, trim);
-                }
 
                 int contor_exist_fct = 0;
                 contor_exist_fct = t_fct[i].nr_param;
@@ -215,12 +221,12 @@ void search_function(char *name) // daca exista sau nu functia resp
 char *search_var(char *name)
 {
         int i;
-        for(i=0;i<count;i++)
+        for (i = 0; i < count; i++)
         {
-        if (strcmp(table[i].name, name) == 0)
-        {
-                return table[i].type;
-        }
+                if (strcmp(table[i].name, name) == 0)
+                {
+                        return table[i].type;
+                }
         }
         return "none";
 }
@@ -240,12 +246,12 @@ int search_line_var(char *name)
 
 void verif_type_var(char *id, char *expr)
 {
-        printf("Id %s\n", id);
-        printf("Expr %s\n", expr);
-        int i, ok = 1,tabel = 0,j, este_param = 0;
+        //printf("Id %s\n", id);
+        //printf("Expr %s\n", expr);
+        int i, ok = 1, tabel = 0, j, este_param = 0;
         char type[30];
         char *p;
-        printf("inainte\n");
+        //printf("inainte\n");
         for (i = 0; i < count; i++)
         { // caut in tabel tipul variabilei
                 if (strcmp(table[i].name, id) == 0)
@@ -254,12 +260,13 @@ void verif_type_var(char *id, char *expr)
                         tabel = 1;
                 }
         }
-        printf("dupa for\n");
-        if(tabel == 0){
-                strcpy(type,"undefined");
+        //printf("dupa for\n");
+        if (tabel == 0)
+        {
+                strcpy(type, "undefined");
         }
-        //printf("type: %s\n",type);
-        if (strstr(type, "int") != NULL && tabel ==1)
+        // printf("type: %s\n",type);
+        if (strstr(type, "int") != NULL && tabel == 1)
         { // daca e de tip int => expresia de tip int
 
                 if (strstr(expr, ".") != NULL || strstr(expr, "true") != NULL || strstr(expr, "false") != NULL || strstr(expr, "\"") != NULL) // e nr float
@@ -316,7 +323,7 @@ void verif_type_var(char *id, char *expr)
                         }
                 }
         }
-        else if (strstr(type, "float") != NULL && tabel ==1)
+        else if (strstr(type, "float") != NULL && tabel == 1)
         {
                 if (strstr(expr, "+") != NULL || strstr(expr, "-") != NULL || strstr(expr, "*") != NULL || strstr(expr, "/") != NULL || strstr(expr, "%") != NULL || strstr(expr, "^") != NULL)
                 {
@@ -382,7 +389,7 @@ void verif_type_var(char *id, char *expr)
                         }
                 }
         }
-        else if (strstr(type, "bool") != NULL && tabel ==1)
+        else if (strstr(type, "bool") != NULL && tabel == 1)
         {
                 int ok = 0;
                 if (strstr(expr, "false") == NULL)
@@ -397,7 +404,7 @@ void verif_type_var(char *id, char *expr)
                         exit(0);
                 }
         }
-        else if (strstr(type, "char") != NULL && tabel ==1)
+        else if (strstr(type, "char") != NULL && tabel == 1)
         {
                 if (strstr(expr, "\"") == NULL || strstr(expr, "true") != NULL || strstr(expr, "false") != NULL)
                 {
@@ -407,7 +414,8 @@ void verif_type_var(char *id, char *expr)
                         exit(0);
                 }
         }
-        else if (strstr(type, "string") != NULL && tabel ==1){
+        else if (strstr(type, "string") != NULL && tabel == 1)
+        {
                 if (strstr(expr, "\"") == NULL || strstr(expr, "true") != NULL || strstr(expr, "false") != NULL)
                 {
                         char s[200];
@@ -416,54 +424,63 @@ void verif_type_var(char *id, char *expr)
                         exit(0);
                 }
         }
-        else if(strstr(type, "undefined") != NULL){
-                for(i=0;i<=count_fct;i++)
+        else if (strstr(type, "undefined") != NULL)
+        {
+                for (i = 0; i <= count_fct; i++)
                 {
-                        for(j=0;j<=t_fct[j].nr_param;j++)
+                        for (j = 0; j <= t_fct[j].nr_param; j++)
                         {
-                                if(strcmp(t_fct[j].param_fct[j].name,id)==0){
-                                        este_param=1;
+                                if (strcmp(t_fct[j].param_fct[j].name, id) == 0)
+                                {
+                                        este_param = 1;
                                 }
                         }
                 }
-                if(este_param == 0){
+                if (este_param == 0)
+                {
                         char s[200];
-                        sprintf(s, "Nu exista parametru sau variabila declarata: <%s>",id);
+                        sprintf(s, "Nu exista parametru sau variabila declarata: <%s>", id);
                         yyerror(s);
                         exit(0);
                 }
-                else{
-                char type_param[20];
-                for(i=0;i<=count_fct;i++)
+                else
                 {
-                        for(j=0;j<=t_fct[j].nr_param;j++)
+                        char type_param[20];
+                        for (i = 0; i <= count_fct; i++)
                         {
-                                if(strcmp(t_fct[j].param_fct[j].name,id)==0){
-                                        strcpy(type_param,t_fct[j].param_fct[j].type); // am copiat tipul parametrului
+                                for (j = 0; j <= t_fct[j].nr_param; j++)
+                                {
+                                        if (strcmp(t_fct[j].param_fct[j].name, id) == 0)
+                                        {
+                                                strcpy(type_param, t_fct[j].param_fct[j].type); // am copiat tipul parametrului
+                                        }
                                 }
                         }
+                        char type_expr[20];
+                        if (strstr(expr, ".") != NULL && strstr(expr, "\"") == NULL)
+                        {
+                                strcpy(type_expr, "float");
+                        }
+                        else if (strstr(expr, "true") != NULL || strstr(expr, "false") != NULL && strstr(expr, "\"") == NULL)
+                        {
+                                strcpy(type_expr, "bool");
+                        }
+                        else if (strstr(expr, "\"") != NULL)
+                        {
+                                strcpy(type_expr, "string char");
+                        }
+                        else
+                        {
+                                strcpy(type_expr, "int");
+                        }
+                        if (strstr(type_expr, type_param) == NULL)
+                        {
+                                char s[200];
+                                sprintf(s, "Variabila <%s> nu este de tip %s", id, type_expr);
+                                yyerror(s);
+                                exit(0);
+                        }
                 }
-                char type_expr[20];
-                if(strstr(expr,".")!=NULL && strstr(expr,"\"")==NULL){
-                        strcpy(type_expr,"float");
-                }
-                else if(strstr(expr,"true")!=NULL|| strstr(expr,"false")!=NULL && strstr(expr,"\"")==NULL){
-                        strcpy(type_expr,"bool");
-                }
-                else if(strstr(expr,"\"")!=NULL){
-                        strcpy(type_expr,"string char");
-                }
-                else{
-                        strcpy(type_expr,"int");
-                }
-                if(strstr(type_expr,type_param)==NULL){
-                        char s[200];
-                        sprintf(s, "Variabila <%s> nu este de tip %s",id,type_expr);
-                        yyerror(s);
-                        exit(0);
-                }
-                }
-
         }
 }
 
@@ -478,10 +495,6 @@ void tip_id_val(bool cnst, char *typ, char *idd, char *vall)
                 {
                         char *const_ptr;
                         const_ptr = (char *)malloc(24);
-
-                        // strcat(const_ptr, "     ");
-                        // strcat(const_ptr, typ);
-                        // strcat(const_ptr, "   ");
                         table[count].type = typ;
                 }
                 else
@@ -494,18 +507,8 @@ void tip_id_val(bool cnst, char *typ, char *idd, char *vall)
                         strcat(const_ptr, typ);
                         table[count].type = const_ptr;
                 }
-                // if (strlen(idd) < 10)
-                // {
-                //         char *const_ptr;
-                //         const_ptr = (char *)malloc(24);
-                //         strcat(const_ptr, "       ");
-                //         strcat(const_ptr, idd);
-                //         table[count].name = const_ptr;
-                // }
-                // else
-                // {
-                        table[count].name = idd;
-                //}
+
+                table[count].name = idd;
                 table[count].value = vall;
                 table[count].line_number = yylineno;
                 count++;
@@ -530,9 +533,7 @@ void tip_fct(bool cnst, char *typ, char *idd, char *rett)
         {
                 char *const_ptr;
                 const_ptr = (char *)malloc(24);
-                // strcat(const_ptr, "   ");
-                // strcat(const_ptr, typ);
-                //strcat(const_ptr, "   ");
+
                 t_fct[count_fct].type = typ;
         }
         // verifica daca fct e const (si adauga in tabel "const")
@@ -577,87 +578,75 @@ void tip_fct(bool cnst, char *typ, char *idd, char *rett)
                 else if (strlen(rett) >= 1)
                 {
                         // tipul variabilei din return
-                        char s[50]; int i, j, este_param = 0;
+                        char s[50];
+                        int i, j, este_param = 0;
                         strcpy(s, search_var(rett));
-                        // printf("Tipul variabilei %s din return de la linia %d este: %s.\n", rett, search_line_var(rett), s);
-                        if (strstr(s,"none")!=NULL) // daca nu e variabila din tabel
+
+                        if (strstr(s, "none") != NULL) // daca nu e variabila din tabel
                         {
                                 // verific daca este printre parametrii
-                                for(i=0;i<=count_fct;i++)
+                                for (i = 0; i <= count_fct; i++)
+                                {
+                                        for (j = 0; j <= t_fct[j].nr_param; j++)
                                         {
-                                        for(j=0;j<=t_fct[j].nr_param;j++)
-                                                {       
-                                                        if(strcmp(t_fct[j].param_fct[j].name,rett)==0){
-                                                        este_param=1;
-                                                         }
-                                                }
-                                        }
-                                 if(este_param == 0){// daca nu e nici parametru
-                                        //verific daca e de tip numar int, float, string, bool
-                                        char type_expr[20];
-                                        if(strstr(rett,".")!=NULL && strstr(rett,"\"")==NULL){
-                                                 strcpy(type_expr,"float");
-                                        }
-                                        else if((strstr(rett,"true")!=NULL|| strstr(rett,"false")!=NULL) && strstr(rett,"\"")==NULL){
-                                                strcpy(type_expr,"bool");
-                                        }
-                                        else if(strstr(rett,"\"")!=NULL){
-                                             strcpy(type_expr,"string char");
-                                       }
-                                        else{
-                                                strcpy(type_expr,"int");
-                                        }
-                                        if(strstr(type_expr,typ)==NULL)
-                                        {
-                                           char s[200];
-                                           sprintf(s, "Returnul <%s> nu este de tipul: <%s>",rett,typ);
-                                           yyerror(s);
-                                           exit(0);
-                                        }
-                                 }
-                        }
-                                else{
-                                        char type_param[20];
-                                        for(i=0;i<=count_fct;i++)
+                                                if (strcmp(t_fct[j].param_fct[j].name, rett) == 0)
                                                 {
-                                                for(j=0;j<=t_fct[j].nr_param;j++)
-                                                        {
-                                                                if(strcmp(t_fct[j].param_fct[j].name,rett)==0){
-                                                                          strcpy(type_param,t_fct[j].param_fct[j].type); // am copiat tipul parametrului
-                                                         }
+                                                        este_param = 1;
                                                 }
-                                        if(strstr(typ,type_param)==NULL){
-                                        char s[200];
-                                        sprintf(s, "Variabila <%s> nu este de tip %s",rett,typ);
-                                        yyerror(s);
-                                        exit(0);
-                                }
                                         }
-                                // char type_expr[20];
-                                // if(strstr(rett,".")!=NULL && strstr(rett,"\"")==NULL){
-                                //         strcpy(type_expr,"float");
-                                //  }
-                                // else if(strstr(rett,"true")!=NULL|| strstr(rett,"false")!=NULL && strstr(rett,"\"")==NULL){
-                                //            strcpy(type_expr,"bool");
-                                //  }
-                                //   else if(strstr(rett,"\"")!=NULL){
-                                //            strcpy(type_expr,"string char");
-                                //    }
-                                // else{
-                                //      strcpy(type_expr,"int");
-                                //   }
-                                
-                                // sprintf(s, "Variabila <%s> nu a fost declarata", rett);
-                                // yyerror(s);
-                                // exit(0);
+                                }
+                                if (este_param == 0)
+                                { // daca nu e nici parametru
+                                        // verific daca e de tip numar int, float, string, bool
+                                        char type_expr[20];
+                                        if (strstr(rett, ".") != NULL && strstr(rett, "\"") == NULL)
+                                        {
+                                                strcpy(type_expr, "float");
+                                        }
+                                        else if ((strstr(rett, "true") != NULL || strstr(rett, "false") != NULL) && strstr(rett, "\"") == NULL)
+                                        {
+                                                strcpy(type_expr, "bool");
+                                        }
+                                        else if (strstr(rett, "\"") != NULL)
+                                        {
+                                                strcpy(type_expr, "string char");
+                                        }
+                                        else
+                                        {
+                                                strcpy(type_expr, "int");
+                                        }
+                                        if (strstr(type_expr, typ) == NULL)
+                                        {
+                                                char s[200];
+                                                sprintf(s, "Returnul <%s> nu este de tipul: <%s>", rett, typ);
+                                                yyerror(s);
+                                                exit(0);
+                                        }
+                                }
+                        }
+                        else
+                        {
+                                char type_param[20];
+                                for (i = 0; i <= count_fct; i++)
+                                {
+                                        for (j = 0; j <= t_fct[j].nr_param; j++)
+                                        {
+                                                if (strcmp(t_fct[j].param_fct[j].name, rett) == 0)
+                                                {
+                                                        strcpy(type_param, t_fct[j].param_fct[j].type); // am copiat tipul parametrului
+                                                }
+                                        }
+                                        if (strstr(typ, type_param) == NULL)
+                                        {
+                                                char s[200];
+                                                sprintf(s, "Variabila <%s> nu este de tip %s", rett, typ);
+                                                yyerror(s);
+                                                exit(0);
+                                        }
+                                }
                         }
                 }
-                // if (strstr(type_expr, t_fct[count_fct].type) == NULL) 
-                //         {
-                //                 sprintf(s, "Functia trebuie sa aiba return de tip %s", t_fct[count_fct].type);
-                //                 yyerror(s);
-                //                 exit(0);
-                //         }
+
                 count_fct++;
         }
         else
@@ -668,7 +657,6 @@ void tip_fct(bool cnst, char *typ, char *idd, char *rett)
                 exit(0);
         }
 }
-
 
 // FUNCTIE PENTRU TABEL
 
@@ -684,54 +672,7 @@ void print_table(int errors)
                 fprintf(fp, "TYPE -> NAME -> VALUE -> LINE NO             \n");
                 fprintf(fp, "--------------------------------------------------------------------------\n");
                 int i, max = 0;
-                // for (i = 0; i < count; i++)
-                // {
-                //         if (strlen(table[i].name) > max)
-                //         {
-                //                 max = strlen(table[i].name);
-                //         }
-                // }
-                // int temp;
-                // for (i = 0; i < count; i++)
-                // {
-                //         if (strlen(table[i].name) != max)
-                //         {
-                //                 temp = max - strlen(table[i].name);
-                //                 char *const_ptr;
-                //                 const_ptr = (char *)malloc(24);
-                //                 strcat(const_ptr, table[i].name);
-                //                 while (temp != 0)
-                //                 {
-                //                         strcat(const_ptr, " ");
-                //                         temp--;
-                //                 }
-                //                 table[i].name = const_ptr;
-                //         }
-                // }
-                // max = 0;
-                // for (i = 0; i < count; i++)
-                // {
-                //         if (strlen(table[i].value) > max)
-                //         {
-                //                 max = strlen(table[i].value);
-                //         }
-                // }
-                // for (i = 0; i < count; i++)
-                // {
-                //         if (strlen(table[i].value) != max)
-                //         {
-                //                 temp = max - strlen(table[i].value);
-                //                 char *const_ptr;
-                //                 const_ptr = (char *)malloc(24);
-                //                 strcat(const_ptr, table[i].value);
-                //                 while (temp != 0)
-                //                 {
-                //                         strcat(const_ptr, " ");
-                //                         temp--;
-                //                 }
-                //                 table[i].value = const_ptr;
-                //         }
-                // }
+
                 for (i = 0; i < count; i++)
                 {
                         fprintf(fp, "%s -> %s -> %s -> %d\n", table[i].type, table[i].name, table[i].value, table[i].line_number);
@@ -744,54 +685,7 @@ void print_table(int errors)
                 fprintf(fp, "LINE NO -> TYPE-> NAME -> RETURN -> PARAM                          \n");
                 fprintf(fp, "----------------------------------------------------------------------\n");
                 int j;
-                // max = 0;
-                // for (i = 0; i < count_fct; i++)
-                // {
-                //         if (strlen(t_fct[i].name) > max)
-                //         {
-                //                 max = strlen(t_fct[i].name);
-                //         }
-                // }
-                // for (i = 0; i < count_fct; i++)
-                // {
-                //         if (strlen(t_fct[i].name) != max)
-                //         {
-                //                 temp = max - strlen(t_fct[i].name);
-                //                 char *const_ptr;
-                //                 const_ptr = (char *)malloc(24);
-                //                 strcat(const_ptr, t_fct[i].name);
-                //                 while (temp != 0)
-                //                 {
-                //                         strcat(const_ptr, " ");
-                //                         temp--;
-                //                 }
-                //                 t_fct[i].name = const_ptr;
-                //         }
-                // }
-                // max = 0;
-                // for (i = 0; i < count_fct; i++)
-                // {
-                //         if (strlen(t_fct[i].ret) > max)
-                //         {
-                //                 max = strlen(t_fct[i].ret);
-                //         }
-                // }
-                // for (i = 0; i < count_fct; i++)
-                // {
-                //         if (strlen(t_fct[i].ret) != max)
-                //         {
-                //                 temp = max - strlen(t_fct[i].ret);
-                //                 char *const_ptr;
-                //                 const_ptr = (char *)malloc(24);
-                //                 strcat(const_ptr, t_fct[i].ret);
-                //                 while (temp != 0)
-                //                 {
-                //                         strcat(const_ptr, " ");
-                //                         temp--;
-                //                 }
-                //                 t_fct[i].ret = const_ptr;
-                //         }
-                // }
+
                 for (j = 0; j < count_fct; j++)
                 {
                         fprintf(fp, "%d -> %s -> %s -> %s ", t_fct[j].rownum, t_fct[j].type, t_fct[j].name, t_fct[j].ret);

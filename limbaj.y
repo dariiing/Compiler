@@ -67,15 +67,14 @@ clase : clase CLASS ID '{' instr_clasa '}' ';' // class abcd{ }
  
 
 instr_clasa : functii
+            | stmt_clasa
             | instructiuni_clasa functii
-            | functii instructiuni_clasa
-            | instructiuni_clasa
-            | functii instructiuni_clasa functii
-            | instructiuni_clasa functii instructiuni_clasa
+            | instructiuni_clasa stmt_clasa
+            |
             ;
 
 instructiuni_clasa : stmt_clasa
-	           | instructiuni_clasa  stmt_clasa
+	           | instructiuni_clasa stmt_clasa
 	           ;
 
 stmt_clasa : TIP ID                            ';'    {tip_id_val(false, $1, $2, "");}
@@ -111,10 +110,9 @@ instr_main: instr_main stmt
           
 variabila : TIP  ID                   /* variabila simpla */  {tip_id_val(false, $1, $2, "");}	              
 	  | TIP  ID '[' NR ']'	      /* vectori */           {char* x = (char *)malloc(10); sprintf(x, "%s[%s]", $2, $4); tip_id_val(false, strcat($1, "[]"), x, "");}	
-          | TIP  ID ASSIGN NR                                 {tip_id_val(false, $1, $2, $4); verif_type_var($2,$4);}
-          | TIP  ID ASSIGN ID                                 {tip_id_val(false, $1, $2, $4); verif_type_var($2,$4);}
           | TIP  ID ASSIGN VARBOOL                            {tip_id_val(false, $1, $2, $4); verif_type_var($2,$4);}
           | TIP  ID ASSIGN STRING                             {tip_id_val(false, $1, $2, $4); verif_type_var($2,$4);}
+          | TIP  ID ASSIGN expr                               {tip_id_val(true, $1, $2, $4.idk); verif_type_var($2,$4.idk);}
           | CONST TIP ID                                      {tip_id_val(true, $2, $3, "");}    
           | CONST TIP ID ASSIGN expr                          {tip_id_val(true, $2, $3, $5.idk); verif_type_var($3,$5.idk);}
           | CONST TIP ID ASSIGN VARBOOL                       {tip_id_val(true, $2, $3, $5); verif_type_var($3,$5);}
@@ -171,13 +169,13 @@ const_ : CONST TIP ID                  ';'        {tip_id_val(true, $2, $3, "");
 
 stmt : const_
      | TIP ID                            ';'    {tip_id_val(false, $1, $2, "");}
-     | TIP ID ASSIGN expr                ';'    {tip_id_val(false, $1, $2, $4.idk); verif_type_var(strdup($2),strdup($4.idk));}	
-     | TIP ID ASSIGN VARBOOL             ';'    {tip_id_val(false, $1, $2, $4); verif_type_var(strdup($2),strdup($4));}
-     | TIP ID ASSIGN STRING              ';'    {tip_id_val(false, $1, $2, $4); verif_type_var(strdup($2),strdup($4));}
-     | ID ASSIGN expr                    ';'    {search_var(strdup($1)); verif_type_var(strdup($1),strdup($3.idk));}
-     | ID ASSIGN VARBOOL                 ';'    {search_var(strdup($1)); verif_type_var(strdup($1),strdup($3));}
-     | ID ASSIGN STRING                  ';'    {search_var(strdup($1)); verif_type_var(strdup($1),strdup($3));}
-     | ID DIGIT                          ';'    {search_var(strdup($1));} 
+     | TIP ID ASSIGN expr                ';'    {tip_id_val(false, $1, $2, $4.idk); verif_type_var($2,$4.idk);}	
+     | TIP ID ASSIGN VARBOOL             ';'    {tip_id_val(false, $1, $2, $4); verif_type_var($2,$4);}
+     | TIP ID ASSIGN STRING              ';'    {tip_id_val(false, $1, $2, $4); verif_type_var($2,$4);}
+     | ID ASSIGN expr                    ';'    {search_var($1); verif_type_var($1,$3.idk);}
+     | ID ASSIGN VARBOOL                 ';'    {search_var($1); verif_type_var($1,$3);}
+     | ID ASSIGN STRING                  ';'    {search_var($1); verif_type_var($1,$3);}
+     | ID DIGIT                          ';'    {search_var($1);} 
      | ID '(' apel_fct ')'               ';'    {search_function($1);}
      | IF '(' conditii ')' '{' instructiuni '}'
      | IF '(' conditii ')' '{' instructiuni '}' ELSE '{' instructiuni '}'
@@ -209,9 +207,9 @@ expr : expr '*' expr {$$.ast = buildAST(MUL, $1.ast, $3.ast); char* a = (char *)
      | expr '%' expr {$$.ast = buildAST(MOD, $1.ast, $3.ast); char* e = (char *)malloc(10); sprintf(e, "%s%%%s", $1.idk, $3.idk); $$.idk = e;}
      | expr '^' expr {$$.ast = buildAST(POW, $1.ast, $3.ast); char* f = (char *)malloc(10); sprintf(f, "%s^%s", $1.idk, $3.idk); $$.idk = f;}
      | '(' expr ')'  {$$ = $2; char* f = (char *)malloc(10); sprintf(f, "%s", $2.idk); $$.idk = f;}
+     | ID '(' apel_fct ')'{int ct = sFct($1); if(ct > -1 && strstr(t_fct[ct].type, "int") != NULL) {$$.ast = addNode(0);} $$.idk = $1;}
      | NR            {$$.ast = addNode(atoi($1)); $$.idk = $1;}
      | ID            {int ct = sVar($1); if(ct > -1 && strstr(table[ct].type, "int") != NULL) {$$.ast = addNode(atoi(table[ct].value));} $$.idk = $1;}
-     | ID '(' apel_fct ')'{$$.ast = addNode(atoi($1)); $$.idk = $1;}
      ;
 
 //expresii boolene
