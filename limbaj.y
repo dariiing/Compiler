@@ -2,7 +2,7 @@
 #include "functii.h"
 #include "code.h"
 
-AstNode* buildAST(DATATYPE, AstNode *, AstNode *);
+AstNode* buildAST(AstNode *, AstNode *, DATATYPE);
 int evalAST(AstNode *);
 void freeAST(AstNode*);
 AstNode* addNode(int);
@@ -200,12 +200,12 @@ for_expr : ID ASSIGN expr
 	 ;
 
 //expresii aritmetice 
-expr : expr '*' expr {$$.ast = buildAST(MUL, $1.ast, $3.ast); char* a = (char *)malloc(10); sprintf(a, "%s*%s", $1.idk, $3.idk); $$.idk = a;} 
-     | expr '/' expr {$$.ast = buildAST(DIV, $1.ast, $3.ast); char* b = (char *)malloc(10); sprintf(b, "%s/%s", $1.idk, $3.idk); $$.idk = b;}
-     | expr '+' expr {$$.ast = buildAST(ADD, $1.ast, $3.ast); char* c = (char *)malloc(10); sprintf(c, "%s+%s", $1.idk, $3.idk); $$.idk = c;}
-     | expr '-' expr {$$.ast = buildAST(SUB, $1.ast, $3.ast); char* d = (char *)malloc(10); sprintf(d, "%s-%s", $1.idk, $3.idk); $$.idk = d;}
-     | expr '%' expr {$$.ast = buildAST(MOD, $1.ast, $3.ast); char* e = (char *)malloc(10); sprintf(e, "%s%%%s", $1.idk, $3.idk); $$.idk = e;}
-     | expr '^' expr {$$.ast = buildAST(POW, $1.ast, $3.ast); char* f = (char *)malloc(10); sprintf(f, "%s^%s", $1.idk, $3.idk); $$.idk = f;}
+expr : expr '*' expr {$$.ast = buildAST($1.ast, $3.ast, MUL); char* a = (char *)malloc(10); sprintf(a, "%s*%s", $1.idk, $3.idk); $$.idk = a;} 
+     | expr '/' expr {$$.ast = buildAST($1.ast, $3.ast, DIV); char* b = (char *)malloc(10); sprintf(b, "%s/%s", $1.idk, $3.idk); $$.idk = b;}
+     | expr '+' expr {$$.ast = buildAST($1.ast, $3.ast, ADD); char* c = (char *)malloc(10); sprintf(c, "%s+%s", $1.idk, $3.idk); $$.idk = c;}
+     | expr '-' expr {$$.ast = buildAST($1.ast, $3.ast, SUB); char* d = (char *)malloc(10); sprintf(d, "%s-%s", $1.idk, $3.idk); $$.idk = d;}
+     | expr '%' expr {$$.ast = buildAST($1.ast, $3.ast, MOD); char* e = (char *)malloc(10); sprintf(e, "%s%%%s", $1.idk, $3.idk); $$.idk = e;}
+     | expr '^' expr {$$.ast = buildAST($1.ast, $3.ast, POW); char* f = (char *)malloc(10); sprintf(f, "%s^%s", $1.idk, $3.idk); $$.idk = f;}
      | '(' expr ')'  {$$ = $2; char* f = (char *)malloc(10); sprintf(f, "%s", $2.idk); $$.idk = f;}
      | ID '(' apel_fct ')'{int ct = sFct($1); if(ct > -1 && strstr(t_fct[ct].type, "int") != NULL) {$$.ast = addNode(0);} $$.idk = $1;}
      | NR            {$$.ast = addNode(atoi($1)); $$.idk = $1;}

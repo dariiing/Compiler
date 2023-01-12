@@ -72,7 +72,7 @@
 #include "functii.h"
 #include "code.h"
 
-AstNode* buildAST(DATATYPE, AstNode *, AstNode *);
+AstNode* buildAST(AstNode *, AstNode *, DATATYPE);
 int evalAST(AstNode *);
 void freeAST(AstNode*);
 AstNode* addNode(int);
@@ -1793,37 +1793,37 @@ yyreduce:
 
   case 106: /* expr: expr '*' expr  */
 #line 203 "limbaj.y"
-                     {(yyval.ptr).ast = buildAST(MUL, (yyvsp[-2].ptr).ast, (yyvsp[0].ptr).ast); char* a = (char *)malloc(10); sprintf(a, "%s*%s", (yyvsp[-2].ptr).idk, (yyvsp[0].ptr).idk); (yyval.ptr).idk = a;}
+                     {(yyval.ptr).ast = buildAST((yyvsp[-2].ptr).ast, (yyvsp[0].ptr).ast, MUL); char* a = (char *)malloc(10); sprintf(a, "%s*%s", (yyvsp[-2].ptr).idk, (yyvsp[0].ptr).idk); (yyval.ptr).idk = a;}
 #line 1798 "y.tab.c"
     break;
 
   case 107: /* expr: expr '/' expr  */
 #line 204 "limbaj.y"
-                     {(yyval.ptr).ast = buildAST(DIV, (yyvsp[-2].ptr).ast, (yyvsp[0].ptr).ast); char* b = (char *)malloc(10); sprintf(b, "%s/%s", (yyvsp[-2].ptr).idk, (yyvsp[0].ptr).idk); (yyval.ptr).idk = b;}
+                     {(yyval.ptr).ast = buildAST((yyvsp[-2].ptr).ast, (yyvsp[0].ptr).ast, DIV); char* b = (char *)malloc(10); sprintf(b, "%s/%s", (yyvsp[-2].ptr).idk, (yyvsp[0].ptr).idk); (yyval.ptr).idk = b;}
 #line 1804 "y.tab.c"
     break;
 
   case 108: /* expr: expr '+' expr  */
 #line 205 "limbaj.y"
-                     {(yyval.ptr).ast = buildAST(ADD, (yyvsp[-2].ptr).ast, (yyvsp[0].ptr).ast); char* c = (char *)malloc(10); sprintf(c, "%s+%s", (yyvsp[-2].ptr).idk, (yyvsp[0].ptr).idk); (yyval.ptr).idk = c;}
+                     {(yyval.ptr).ast = buildAST((yyvsp[-2].ptr).ast, (yyvsp[0].ptr).ast, ADD); char* c = (char *)malloc(10); sprintf(c, "%s+%s", (yyvsp[-2].ptr).idk, (yyvsp[0].ptr).idk); (yyval.ptr).idk = c;}
 #line 1810 "y.tab.c"
     break;
 
   case 109: /* expr: expr '-' expr  */
 #line 206 "limbaj.y"
-                     {(yyval.ptr).ast = buildAST(SUB, (yyvsp[-2].ptr).ast, (yyvsp[0].ptr).ast); char* d = (char *)malloc(10); sprintf(d, "%s-%s", (yyvsp[-2].ptr).idk, (yyvsp[0].ptr).idk); (yyval.ptr).idk = d;}
+                     {(yyval.ptr).ast = buildAST((yyvsp[-2].ptr).ast, (yyvsp[0].ptr).ast, SUB); char* d = (char *)malloc(10); sprintf(d, "%s-%s", (yyvsp[-2].ptr).idk, (yyvsp[0].ptr).idk); (yyval.ptr).idk = d;}
 #line 1816 "y.tab.c"
     break;
 
   case 110: /* expr: expr '%' expr  */
 #line 207 "limbaj.y"
-                     {(yyval.ptr).ast = buildAST(MOD, (yyvsp[-2].ptr).ast, (yyvsp[0].ptr).ast); char* e = (char *)malloc(10); sprintf(e, "%s%%%s", (yyvsp[-2].ptr).idk, (yyvsp[0].ptr).idk); (yyval.ptr).idk = e;}
+                     {(yyval.ptr).ast = buildAST((yyvsp[-2].ptr).ast, (yyvsp[0].ptr).ast, MOD); char* e = (char *)malloc(10); sprintf(e, "%s%%%s", (yyvsp[-2].ptr).idk, (yyvsp[0].ptr).idk); (yyval.ptr).idk = e;}
 #line 1822 "y.tab.c"
     break;
 
   case 111: /* expr: expr '^' expr  */
 #line 208 "limbaj.y"
-                     {(yyval.ptr).ast = buildAST(POW, (yyvsp[-2].ptr).ast, (yyvsp[0].ptr).ast); char* f = (char *)malloc(10); sprintf(f, "%s^%s", (yyvsp[-2].ptr).idk, (yyvsp[0].ptr).idk); (yyval.ptr).idk = f;}
+                     {(yyval.ptr).ast = buildAST((yyvsp[-2].ptr).ast, (yyvsp[0].ptr).ast, POW); char* f = (char *)malloc(10); sprintf(f, "%s^%s", (yyvsp[-2].ptr).idk, (yyvsp[0].ptr).idk); (yyval.ptr).idk = f;}
 #line 1828 "y.tab.c"
     break;
 

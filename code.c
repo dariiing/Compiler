@@ -2,21 +2,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-AstNode *buildAST(DATATYPE value, AstNode *left, AstNode *right)
-{
-    AstNode *node = (AstNode *)malloc(sizeof(AstNode));
-
-    if (!node)
-    {
-        printf("error building ast\n");
-        exit(-1);
-    }
-    node->value = value;
-    node->left = left;
-    node->right = right;
-    return node;
-}
-
 void freeAST(AstNode *root)
 {
     if (root != NULL)
@@ -33,6 +18,23 @@ void freeAST(AstNode *root)
     }
 }
 
+// opr
+AstNode *buildAST(AstNode *left, AstNode *right, DATATYPE value)
+{
+    AstNode *node = (AstNode *)malloc(sizeof(AstNode));
+
+    if (!node)
+    {
+        printf("error building ast\n");
+        exit(-1);
+    }
+    node->value = value;
+    node->left = left;
+    node->right = right;
+    return node;
+}
+
+// valori
 AstNode *addNode(int valoare)
 {
     info *obj = (info *)malloc(sizeof(info));
@@ -97,7 +99,7 @@ int evalAST(AstNode *node)
     }
     else
     {
-        printf("Apelati eval doar cu int\n");
+        printf("0\n");
         exit(-1);
     }
     return resultEval;
